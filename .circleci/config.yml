@@ -1,0 +1,32 @@
+---
+version: 2.1
+
+jobs:
+  test:
+    working_directory: /tmp/project
+    docker:
+    - image: golang:1.18-alpine
+    resource_class: small
+    steps:
+    - checkout
+    - restore_cache:
+        keys:
+        - terraform-provider-stdlib
+    - run:
+        name: install prereqs
+        command: apk add --no-cache --update build-base
+    - run:
+        name: build
+        command: make build
+    - run:
+        name: acceptance test
+        command: make accept
+    - save_cache:
+        paths:
+        - ~/go/pkg
+        key: terraform-provider-stdlib
+
+workflows:
+  execute_tests:
+    jobs:
+    - test
