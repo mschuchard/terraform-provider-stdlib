@@ -9,7 +9,7 @@ import (
 func TestAccKeyDeleteDataSource(test *testing.T) {
   // init input params
   key := "foo"
-  test.Skip("Skipping test until segfault in TF plugin framework fixed")
+  //test.Skip("Skipping test until segfault in TF plugin framework fixed")
 
   // invoke test
   resource.Test(test, resource.TestCase{
@@ -24,9 +24,11 @@ func TestAccKeyDeleteDataSource(test *testing.T) {
         Check: resource.ComposeAggregateTestCheckFunc(
           // verify input params are stored correctly
           resource.TestCheckResourceAttr("data.stdlib_key_delete.test", "key", key),
-          resource.TestCheckResourceAttr("data.stdlib_key_delete.test", "map", "{\"hello\" = \"world\", \"foo\" = \"bar\"}"),
+          resource.TestCheckResourceAttr("data.stdlib_key_delete.test", "map.hello", "world"),
+          resource.TestCheckResourceAttr("data.stdlib_key_delete.test", "map.foo", "bar"),
           // verify map removal result is stored correctly
-          resource.TestCheckResourceAttr("data.stdlib_key_delete.test", "result", "{\"hello\" = \"world\"}"),
+          resource.TestCheckResourceAttr("data.stdlib_key_delete.test", "result.hello", "world"),
+          resource.TestCheckNoResourceAttr("data.stdlib_key_delete.test", "result.foo"),
           // verify id stored correctly
           resource.TestCheckResourceAttr("data.stdlib_key_delete.test", "id", key),
         ),

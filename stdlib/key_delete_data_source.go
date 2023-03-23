@@ -7,7 +7,6 @@ import (
   "github.com/hashicorp/terraform-plugin-framework/datasource"
   "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
   "github.com/hashicorp/terraform-plugin-framework/types"
-  "github.com/hashicorp/terraform-plugin-framework/types/basetypes"
   "github.com/hashicorp/terraform-plugin-framework/diag"
   "github.com/hashicorp/terraform-plugin-log/tflog"
 )
@@ -52,11 +51,15 @@ func (tfData *keyDeleteDataSource) Schema(_ context.Context, _ datasource.Schema
       },
       "map": schema.MapAttribute{
         Description: "Input map parameter from which to delete a key.",
+        // TODO: allow non-strings with interface or generics
+        ElementType: types.StringType,
         Required:    true,
       },
       "result": schema.MapAttribute{
         Computed:    true,
         Description: "Function result storing the map with the key removed.",
+        // TODO: allow non-strings with interface or generics
+        ElementType: types.StringType,
       },
     },
   }
@@ -96,7 +99,7 @@ func (tfData *keyDeleteDataSource) Read(ctx context.Context, req datasource.Read
   state.ID = types.StringValue(deleteKey)
   // TODO: allow non-strings with interface or generics
   var mapConvertDiags diag.Diagnostics
-  state.Result, mapConvertDiags = types.MapValueFrom(ctx, basetypes.StringType{}, inputMap)
+  state.Result, mapConvertDiags = types.MapValueFrom(ctx, types.StringType, inputMap)
   resp.Diagnostics.Append(mapConvertDiags...)
 
   // set state
