@@ -75,6 +75,7 @@ func (tfData *flattenMapDataSource) Schema(_ context.Context, _ datasource.Schem
   }
 }
 
+// TODO: need to revisit when plugin framework supports list(map) in the schema
 // read executes the actual function
 func (tfData *flattenMapDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
   // determine input values
@@ -99,8 +100,8 @@ func (tfData *flattenMapDataSource) Read(ctx context.Context, req datasource.Rea
   ctx = tflog.SetField(ctx, "stdlib_flatten_map_result", outputMap)
   tflog.Debug(ctx, fmt.Sprintf("Flattened map is \"%v\"", outputMap))
 
-  // store first key of first map in input list as id
-  state.ID = types.StringValue(maps.Keys(inputList[0])[0])
+  // store first key of output map in input list as id
+  state.ID = types.StringValue(maps.Keys(outputMap)[0])
   // TODO: allow non-strings with interface or generics
   var mapConvertDiags diag.Diagnostics
   state.Result, mapConvertDiags = types.MapValueFrom(ctx, types.StringType, outputMap)

@@ -9,7 +9,6 @@ import (
 func TestAccKeyDeleteDataSource(test *testing.T) {
   // init input params
   key := "foo"
-  //test.Skip("Skipping test until segfault in TF plugin framework fixed")
 
   // invoke test
   resource.Test(test, resource.TestCase{

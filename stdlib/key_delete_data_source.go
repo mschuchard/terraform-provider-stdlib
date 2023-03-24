@@ -74,6 +74,7 @@ func (tfData *keyDeleteDataSource) Read(ctx context.Context, req datasource.Read
     return
   }
 
+  // initialize map and key
   deleteKey := state.Key.ValueString()
   // TODO: allow non-strings with interface or generics
   var inputMap map[string]string
