@@ -1,15 +1,15 @@
 package stdlib
 
 import (
-  //"fmt"
+  "fmt"
   "context"
 
+  "golang.org/x/exp/maps"
   "github.com/hashicorp/terraform-plugin-framework/datasource"
   "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
   "github.com/hashicorp/terraform-plugin-framework/types"
-  //"github.com/hashicorp/terraform-plugin-framework/diag"
+  "github.com/hashicorp/terraform-plugin-framework/diag"
   "github.com/hashicorp/terraform-plugin-log/tflog"
-  //"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 )
 
 // ensure the implementation satisfies the expected interfaces
@@ -28,8 +28,13 @@ type flattenMapDataSource struct{}
 // maps the data source schema data
 type flattenMapDataSourceModel struct {
   ID     types.String `tfsdk:"id"`
-  Param  types.Map `tfsdk:"map"`
+  Param  []paramModel `tfsdk:"param"`
   Result types.Map `tfsdk:"result"`
+}
+
+// maps param schema data
+type paramModel struct {
+  Map types.Map `tfsdk:"map"`
 }
 
 // data source metadata
@@ -45,13 +50,20 @@ func (tfData *flattenMapDataSource) Schema(_ context.Context, _ datasource.Schem
         Computed:    true,
         Description: "Aliased to name of first key in map for efficiency.",
       },
-      "param": schema.ListAttribute{
-        Description: "Input map parameter from which to delete a key.",
-        // TODO: allow non-strings with interface or generics
-        // https://github.com/hashicorp/terraform-plugin-framework/issues/700
-        ElementType: types.StringType,
-        //ElementType: basetypes.MapType{},
+      // TODO: also support set
+      "param": schema.ListNestedAttribute{
+        Description: "Input list of maps to flatten.",
         Required:    true,
+        NestedObject: schema.NestedAttributeObject{
+          Attributes: map[string]schema.Attribute{
+            "map": schema.MapAttribute{
+              Computed:    true,
+              Description: "The map elements of the input list.",
+              // TODO: allow non-strings with interface or generics
+              ElementType: types.StringType,
+            },
+          },
+        },
       },
       "result": schema.MapAttribute{
         Computed:    true,
@@ -71,6 +83,28 @@ func (tfData *flattenMapDataSource) Read(ctx context.Context, req datasource.Rea
   if resp.Diagnostics.HasError() {
     return
   }
+
+  // TODO: allow non-strings with interface or generics
+  // initialize input list of maps, nested maps, and output map
+  var nestedMap map[string]string
+  var outputMap map[string]string
+
+  // iterate through list of maps and merge the maps into new map
+  for _, nestedMaps := range state.Param {
+    nestedMaps.Map.ElementsAs(ctx, &nestedMap, false)
+    maps.Copy(outputMap, nestedMap)
+  }
+  // provide debug logging
+  ctx = tflog.SetField(ctx, "stdlib_flatten_map_param", state.Param)
+  ctx = tflog.SetField(ctx, "stdlib_flatten_map_result", outputMap)
+  tflog.Debug(ctx, fmt.Sprintf("Flattened map is \"%v\"", outputMap))
+
+  // store first key of first map in input list as id
+  state.ID = types.StringValue(maps.Keys(inputList[0])[0])
+  // TODO: allow non-strings with interface or generics
+  var mapConvertDiags diag.Diagnostics
+  state.Result, mapConvertDiags = types.MapValueFrom(ctx, types.StringType, outputMap)
+  resp.Diagnostics.Append(mapConvertDiags...)
 
   // set state
   diagnostics := resp.State.Set(ctx, &state)

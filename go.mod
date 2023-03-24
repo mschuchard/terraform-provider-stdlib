@@ -7,6 +7,7 @@ require (
 	github.com/hashicorp/terraform-plugin-go v0.14.3
 	github.com/hashicorp/terraform-plugin-log v0.8.0
 	github.com/hashicorp/terraform-plugin-testing v1.1.0
+	golang.org/x/exp v0.0.0-20230321023759-10a507213a29
 )
 
 require (
