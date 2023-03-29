@@ -53,11 +53,9 @@ func (tfData *hasKeyDataSource) Schema(_ context.Context, _ datasource.SchemaReq
         ElementType: types.StringType,
         Required:    true,
       },
-      "result": schema.MapAttribute{
+      "result": schema.BoolAttribute{
         Computed:    true,
         Description: "Function result storing whether the key exists in the map.",
-        // TODO: allow non-strings with interface or generics
-        ElementType: types.BoolType,
       },
     },
   }
