@@ -40,6 +40,7 @@ func (tfProvider *stdlibProvider) Configure(ctx context.Context, req provider.Co
 func (tfProvider *stdlibProvider) DataSources(_ context.Context) []func() datasource.DataSource {
   return []func() datasource.DataSource {
     NewFlattenMapDataSource,
+    NewHasKeyDataSource,
     NewKeyDeleteDataSource,
     NewLastCharDataSource,
   }
