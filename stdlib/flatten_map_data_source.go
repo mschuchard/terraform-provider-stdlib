@@ -28,13 +28,8 @@ type flattenMapDataSource struct{}
 // maps the data source schema data
 type flattenMapDataSourceModel struct {
   ID     types.String `tfsdk:"id"`
-  Param  []paramModel `tfsdk:"param"`
+  Param  types.List `tfsdk:"param"`
   Result types.Map `tfsdk:"result"`
-}
-
-// maps param schema data
-type paramModel struct {
-  Map types.Map `tfsdk:"map"`
 }
 
 // data source metadata
@@ -51,19 +46,12 @@ func (tfData *flattenMapDataSource) Schema(_ context.Context, _ datasource.Schem
         Description: "Aliased to name of first key in map for efficiency.",
       },
       // TODO: also support set
-      "param": schema.ListNestedAttribute{
+      "param": schema.ListAttribute{
         Description: "Input list of maps to flatten.",
-        Required:    true,
-        NestedObject: schema.NestedAttributeObject{
-          Attributes: map[string]schema.Attribute{
-            "map": schema.MapAttribute{
-              Computed:    true,
-              Description: "The map elements of the input list.",
-              // TODO: allow non-strings with interface or generics
-              ElementType: types.StringType,
-            },
-          },
+        ElementType: types.MapType{
+          ElemType: types.StringType,
         },
+        Required:    true,
       },
       "result": schema.MapAttribute{
         Computed:    true,
@@ -87,12 +75,14 @@ func (tfData *flattenMapDataSource) Read(ctx context.Context, req datasource.Rea
 
   // TODO: allow non-strings with interface or generics
   // initialize input list of maps, nested maps, and output map
+  var inputList []types.Map
+  state.Param.ElementsAs(ctx, &inputList, false)
   var nestedMap map[string]string
-  var outputMap map[string]string
+  outputMap := make(map[string]string)
 
   // iterate through list of maps and merge the maps into new map
-  for _, nestedMaps := range state.Param {
-    nestedMaps.Map.ElementsAs(ctx, &nestedMap, false)
+  for _, nestedTFMap := range inputList {
+    nestedTFMap.ElementsAs(ctx, &nestedMap, false)
     maps.Copy(outputMap, nestedMap)
   }
   // provide debug logging
