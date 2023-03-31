@@ -21,9 +21,13 @@ func TestAccFlattenMapDataSource(test *testing.T) {
         }`,
         Check: resource.ComposeAggregateTestCheckFunc(
           // verify input params are stored correctly
+          resource.TestCheckResourceAttr("data.stdlib_flatten_map.test", "param.#", "2"),
+          resource.TestCheckResourceAttr("data.stdlib_flatten_map.test", "param.0.%", "1"),
           resource.TestCheckResourceAttr("data.stdlib_flatten_map.test", "param.0.hello", "world"),
+          resource.TestCheckResourceAttr("data.stdlib_flatten_map.test", "param.1.%", "1"),
           resource.TestCheckResourceAttr("data.stdlib_flatten_map.test", "param.1.foo", "bar"),
           // verify result is stored correctly
+          resource.TestCheckResourceAttr("data.stdlib_flatten_map.test", "result.%", "2"),
           resource.TestCheckResourceAttr("data.stdlib_flatten_map.test", "result.hello", "world"),
           resource.TestCheckResourceAttr("data.stdlib_flatten_map.test", "result.foo", "bar"),
           // verify id stored correctly

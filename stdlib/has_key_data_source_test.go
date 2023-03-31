@@ -31,6 +31,7 @@ func TestAcHasKeyDataSource(test *testing.T) {
           Check: resource.ComposeAggregateTestCheckFunc(
             // verify input params are stored correctly
             resource.TestCheckResourceAttr(dataSourceName, "key", key),
+            resource.TestCheckResourceAttr(dataSourceName, "map.%", "2"),
             resource.TestCheckResourceAttr(dataSourceName, "map.hello", "world"),
             resource.TestCheckResourceAttr(dataSourceName, "map.foo", "bar"),
             // verify key existence result is stored correctly
