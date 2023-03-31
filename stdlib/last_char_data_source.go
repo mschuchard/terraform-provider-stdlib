@@ -8,6 +8,7 @@ import (
   "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
   "github.com/hashicorp/terraform-plugin-framework/types"
   "github.com/hashicorp/terraform-plugin-log/tflog"
+  "github.com/hashicorp/terraform-plugin-framework/path"
 
   "github.com/mschuchard/terraform-provider-stdlib/internal"
 )
@@ -65,7 +66,16 @@ func (tfData *lastCharDataSource) Read(ctx context.Context, req datasource.ReadR
   inputString := state.Param.ValueString()
 
   // determine last char of string
-  lastCharacter := inputString[len(inputString)-1:]
+  var lastCharacter string
+  if len(inputString) > 0 {
+    lastCharacter = inputString[len(inputString)-1:]
+  } else {
+    resp.Diagnostics.AddAttributeError(
+      path.Root("param"),
+      "Empty Value",
+      "Expected param value to be non-empty",
+    )
+  }
 
   // provide debug logging
   ctx = tflog.SetField(ctx, "stdlib_last_char_param", inputString)

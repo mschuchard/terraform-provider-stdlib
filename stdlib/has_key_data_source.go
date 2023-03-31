@@ -73,7 +73,10 @@ func (tfData *hasKeyDataSource) Read(ctx context.Context, req datasource.ReadReq
   keyCheck := state.Key.ValueString()
   // TODO: allow non-strings with interface or generics
   var inputMap map[string]string
-  state.Map.ElementsAs(ctx, &inputMap, false)
+  resp.Diagnostics.Append(state.Map.ElementsAs(ctx, &inputMap, false)...)
+  if resp.Diagnostics.HasError() {
+		return
+	}
 
   // provide debug logging
   ctx = tflog.SetField(ctx, "stdlib_has_key_key", keyCheck)

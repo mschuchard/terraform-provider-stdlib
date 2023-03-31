@@ -75,7 +75,11 @@ func (tfData *flattenMapDataSource) Read(ctx context.Context, req datasource.Rea
   // TODO: allow non-strings with interface or generics
   // initialize input list of maps, nested maps, and output map
   var inputList []types.Map
-  state.Param.ElementsAs(ctx, &inputList, false)
+  resp.Diagnostics.Append(state.Param.ElementsAs(ctx, &inputList, false)...)
+  if resp.Diagnostics.HasError() {
+		return
+	}
+
   var nestedMap map[string]string
   outputMap := make(map[string]string)
 
@@ -90,7 +94,11 @@ func (tfData *flattenMapDataSource) Read(ctx context.Context, req datasource.Rea
   tflog.Debug(ctx, fmt.Sprintf("Flattened map is \"%v\"", outputMap))
 
   // store first key of output map in input list as id
-  state.ID = types.StringValue(maps.Keys(outputMap)[0])
+  if len(outputMap) > 0 {
+    state.ID = types.StringValue(maps.Keys(outputMap)[0])
+  } else {
+    state.ID = types.StringValue("empty")
+  }
   // TODO: allow non-strings with interface or generics
   var mapConvertDiags diag.Diagnostics
   state.Result, mapConvertDiags = types.MapValueFrom(ctx, types.StringType, outputMap)
