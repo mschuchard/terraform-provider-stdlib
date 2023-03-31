@@ -9,6 +9,8 @@ import (
   "github.com/hashicorp/terraform-plugin-framework/types"
   "github.com/hashicorp/terraform-plugin-framework/diag"
   "github.com/hashicorp/terraform-plugin-log/tflog"
+
+  "github.com/mschuchard/terraform-provider-stdlib/internal"
 )
 
 // ensure the implementation satisfies the expected interfaces
@@ -41,10 +43,7 @@ func (tfData *keyDeleteDataSource) Metadata(_ context.Context, req datasource.Me
 func (tfData *keyDeleteDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
   resp.Schema = schema.Schema{
     Attributes: map[string]schema.Attribute{
-      "id": schema.StringAttribute{
-        Computed:    true,
-        Description: "Aliased to name of key to delete for efficiency.",
-      },
+      "id": utils.IDStringAttribute(),
       "key": schema.StringAttribute{
         Description: "Name of the key to delete from the map.",
         Required:    true,

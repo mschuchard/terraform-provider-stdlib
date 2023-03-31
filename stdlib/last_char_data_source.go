@@ -8,6 +8,8 @@ import (
   "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
   "github.com/hashicorp/terraform-plugin-framework/types"
   "github.com/hashicorp/terraform-plugin-log/tflog"
+
+  "github.com/mschuchard/terraform-provider-stdlib/internal"
 )
 
 // ensure the implementation satisfies the expected interfaces
@@ -39,10 +41,7 @@ func (tfData *lastCharDataSource) Metadata(_ context.Context, req datasource.Met
 func (tfData *lastCharDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
   resp.Schema = schema.Schema{
     Attributes: map[string]schema.Attribute{
-      "id": schema.StringAttribute{
-        Computed:    true,
-        Description: "Aliased to input parameter for efficiency.",
-      },
+      "id": utils.IDStringAttribute(),
       "param": schema.StringAttribute{
         Description: "Input string parameter for determining the last character.",
         Required:    true,

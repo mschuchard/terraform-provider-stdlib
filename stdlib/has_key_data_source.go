@@ -7,6 +7,8 @@ import (
   "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
   "github.com/hashicorp/terraform-plugin-framework/types"
   "github.com/hashicorp/terraform-plugin-log/tflog"
+
+  "github.com/mschuchard/terraform-provider-stdlib/internal"
 )
 
 // ensure the implementation satisfies the expected interfaces
@@ -39,10 +41,7 @@ func (tfData *hasKeyDataSource) Metadata(_ context.Context, req datasource.Metad
 func (tfData *hasKeyDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
   resp.Schema = schema.Schema{
     Attributes: map[string]schema.Attribute{
-      "id": schema.StringAttribute{
-        Computed:    true,
-        Description: "Aliased to name of key to check for existence for efficiency.",
-      },
+      "id": utils.IDStringAttribute(),
       "key": schema.StringAttribute{
         Description: "Name of the key to check for existence in the map.",
         Required:    true,
