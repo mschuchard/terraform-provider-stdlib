@@ -2,6 +2,7 @@ package stdlib
 
 import (
   "context"
+  "fmt"
 
   "github.com/hashicorp/terraform-plugin-framework/datasource"
   "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
@@ -57,6 +58,7 @@ func (tfData *hasKeyDataSource) Schema(_ context.Context, _ datasource.SchemaReq
         Description: "Function result storing whether the key exists in the map.",
       },
     },
+    MarkdownDescription: "Return whether the input key parameter is present in the input map parameter.",
   }
 }
 
@@ -92,6 +94,7 @@ func (tfData *hasKeyDataSource) Read(ctx context.Context, req datasource.ReadReq
 
   // provide more debug logging
   ctx = tflog.SetField(ctx, "stdlib_has_key_result", keyExists)
+  tflog.Debug(ctx, fmt.Sprintf("Result of whether key '%s' is in map is: %t", keyCheck, keyExists))
 
   // store resultant map in state
   state.ID = types.StringValue(keyCheck)

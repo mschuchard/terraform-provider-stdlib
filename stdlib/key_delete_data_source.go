@@ -61,6 +61,7 @@ func (tfData *keyDeleteDataSource) Schema(_ context.Context, _ datasource.Schema
         ElementType: types.StringType,
       },
     },
+    MarkdownDescription: "Return the input map parameter with the key parameter deleted from the map.",
   }
 }
 

@@ -52,6 +52,7 @@ func (tfData *lastCharDataSource) Schema(_ context.Context, _ datasource.SchemaR
         Description: "Function result storing the last character of the input string.",
       },
     },
+    MarkdownDescription: "Return the last character of an input string parameter.",
   }
 }
 

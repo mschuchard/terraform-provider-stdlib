@@ -4,7 +4,7 @@ description: |-
   The stdlib provider provides additional functions for use within Terraform's HCL2 configuration language.
 ---
 
-# STDLIB Provider
+# {{ .ProviderShortName | upper }} Provider
 
 PLACEHOLDER
 
@@ -12,15 +12,4 @@ Use the navigation to the left to read about the available data sources which ar
 
 ## Example Usage
 
-```terraform
-terraform {
-  required_providers {
-    stdlib = {
-      source  = "mschuchard/stdlib"
-      version = "~> 1.0"
-    }
-  }
-}
-
-provider "stdlib" {}
-```
+{{ tffile "examples/provider/provider.tf" }}

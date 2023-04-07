@@ -59,6 +59,7 @@ func (tfData *flattenMapDataSource) Schema(_ context.Context, _ datasource.Schem
         ElementType: types.StringType,
       },
     },
+    MarkdownDescription: "Return the flattened map of an input list of maps parameter.",
   }
 }
 

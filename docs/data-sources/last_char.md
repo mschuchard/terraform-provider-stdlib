@@ -3,12 +3,12 @@
 page_title: "stdlib_last_char Data Source - stdlib"
 subcategory: ""
 description: |-
-  
+  Return the last character of an input string parameter.
 ---
 
 # stdlib_last_char (Data Source)
 
-
+Return the last character of an input string parameter.
 
 
 
@@ -21,7 +21,7 @@ description: |-
 
 ### Read-Only
 
-- `id` (String) Aliased to input parameter for efficiency.
+- `id` (String) Aliased to string input parameter for efficiency.
 - `result` (String) Function result storing the last character of the input string.
 
 
