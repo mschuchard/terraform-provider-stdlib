@@ -15,12 +15,16 @@ var (
 )
 
 // helper pseudo-constructor to simplify provider server and testing implementation
-func New() provider.Provider {
-  return &stdlibProvider{}
+func New(version string) provider.Provider {
+  return &stdlibProvider{
+    Version: version,
+  }
 }
 
 // provider implementation
-type stdlibProvider struct{}
+type stdlibProvider struct{
+  Version string
+}
 
 // provider metadata
 func (tfProvider *stdlibProvider) Metadata(_ context.Context, _ provider.MetadataRequest, resp *provider.MetadataResponse) {

@@ -2,6 +2,7 @@ package main
 
 import (
   "context"
+  "log"
 
   "github.com/hashicorp/terraform-plugin-framework/providerserver"
 
@@ -12,7 +13,12 @@ import (
 //go:generate tfplugindocs generate --provider-name stdlib
 
 func main() {
-  providerserver.Serve(context.Background(), stdlib.New, providerserver.ServeOpts{
+  // start provider server
+  err := providerserver.Serve(context.Background(), stdlib.New, providerserver.ServeOpts{
     Address: "registry.terraform.io/mschuchard/stdlib",
   })
+
+  if err != nil {
+    log.Fatal(err.Error())
+  }
 }

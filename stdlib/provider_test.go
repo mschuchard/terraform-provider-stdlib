@@ -15,6 +15,6 @@ provider "stdlib" {}
 var (
   // factory function for provider instantiation
   testAccProtoV6ProviderFactories = map[string]func() (tfprotov6.ProviderServer, error){
-    "stdlib": providerserver.NewProtocol6WithError(New()),
+    "stdlib": providerserver.NewProtocol6WithError(New("test")),
   }
 )
