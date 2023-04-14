@@ -56,6 +56,30 @@ func (tfData *lastCharDataSource) Schema(_ context.Context, _ datasource.SchemaR
   }
 }
 
+// validate data source config
+func (tfData *lastCharDataSource) ValidateConfig(ctx context.Context, req datasource.ValidateConfigRequest, resp *datasource.ValidateConfigResponse) {
+  // determine input param string value
+  var state lastCharDataSourceModel
+  resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)
+  if resp.Diagnostics.HasError() {
+    return
+  }
+
+  // return if param is unknown
+  if state.Param.IsUnknown() {
+    return
+  }
+
+  // validate param is not empty string
+  if len(state.Param.ValueString()) == 0 {
+    resp.Diagnostics.AddAttributeError(
+      path.Root("param"),
+      "Empty Value",
+      "Expected param value to be non-empty",
+    )
+  }
+}
+
 // read executes the actual function
 func (tfData *lastCharDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
   // determine input param string value

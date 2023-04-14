@@ -9,6 +9,7 @@ import (
   "github.com/hashicorp/terraform-plugin-framework/types"
   "github.com/hashicorp/terraform-plugin-framework/diag"
   "github.com/hashicorp/terraform-plugin-log/tflog"
+  "github.com/hashicorp/terraform-plugin-framework/path"
 
   "github.com/mschuchard/terraform-provider-stdlib/internal"
 )
@@ -62,6 +63,39 @@ func (tfData *keyDeleteDataSource) Schema(_ context.Context, _ datasource.Schema
       },
     },
     MarkdownDescription: "Return the input map parameter with the key parameter deleted from the map.",
+  }
+}
+
+// validate data source config
+func (tfData *keyDeleteDataSource) ValidateConfig(ctx context.Context, req datasource.ValidateConfigRequest, resp *datasource.ValidateConfigResponse) {
+  // determine input values
+  var state keyDeleteDataSourceModel
+  resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)
+  if resp.Diagnostics.HasError() {
+    return
+  }
+
+  // return if map or key is unknown
+  if state.Key.IsUnknown() || state.Map.IsUnknown() {
+    return
+  }
+
+  // initialize map and key
+  deleteKey := state.Key.ValueString()
+  // TODO: allow non-strings with interface or generics
+  var inputMap map[string]string
+  resp.Diagnostics.Append(state.Map.ElementsAs(ctx, &inputMap, false)...)
+  if resp.Diagnostics.HasError() {
+		return
+	}
+
+  // verify key exists in map
+  _, ok := inputMap[deleteKey]; if !ok {
+    resp.Diagnostics.AddAttributeError(
+      path.Root("key"),
+      "Improper Attribute Value",
+      fmt.Sprintf("The key to be deleted '%s' does not exist in the input map", deleteKey),
+    )
   }
 }
 
