@@ -6,9 +6,11 @@ import (
 
   "github.com/hashicorp/terraform-plugin-framework/datasource"
   "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+  "github.com/hashicorp/terraform-plugin-framework/schema/validator"
   "github.com/hashicorp/terraform-plugin-framework/types"
-  "github.com/hashicorp/terraform-plugin-log/tflog"
   "github.com/hashicorp/terraform-plugin-framework/path"
+  "github.com/hashicorp/terraform-plugin-log/tflog"
+  "github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 
   "github.com/mschuchard/terraform-provider-stdlib/internal"
 )
@@ -46,6 +48,9 @@ func (tfData *lastCharDataSource) Schema(_ context.Context, _ datasource.SchemaR
       "param": schema.StringAttribute{
         Description: "Input string parameter for determining the last character.",
         Required:    true,
+        Validators: []validator.String{
+          stringvalidator.LengthAtLeast(1),
+        },
       },
       "result": schema.StringAttribute{
         Computed:    true,
@@ -53,30 +58,6 @@ func (tfData *lastCharDataSource) Schema(_ context.Context, _ datasource.SchemaR
       },
     },
     MarkdownDescription: "Return the last character of an input string parameter.",
-  }
-}
-
-// validate data source config
-func (tfData *lastCharDataSource) ValidateConfig(ctx context.Context, req datasource.ValidateConfigRequest, resp *datasource.ValidateConfigResponse) {
-  // determine input param string value
-  var state lastCharDataSourceModel
-  resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)
-  if resp.Diagnostics.HasError() {
-    return
-  }
-
-  // return if param is unknown
-  if state.Param.IsUnknown() {
-    return
-  }
-
-  // validate param is not empty string
-  if len(state.Param.ValueString()) == 0 {
-    resp.Diagnostics.AddAttributeError(
-      path.Root("param"),
-      "Empty Value",
-      "Expected param value to be non-empty",
-    )
   }
 }
 
