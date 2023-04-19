@@ -35,21 +35,21 @@ type stdlibProvider struct{
 }
 
 // provider metadata
-func (tfProvider *stdlibProvider) Metadata(_ context.Context, _ provider.MetadataRequest, resp *provider.MetadataResponse) {
+func (_ *stdlibProvider) Metadata(_ context.Context, _ provider.MetadataRequest, resp *provider.MetadataResponse) {
   resp.TypeName = "stdlib"
 }
 
 // define the provider-level schema for configuration data
-func (tfProvider *stdlibProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *provider.SchemaResponse) {
+func (_ *stdlibProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *provider.SchemaResponse) {
   resp.Schema = schema.Schema{}
 }
 
 // prepare an API client for data sources and resources
-func (tfProvider *stdlibProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
+func (_ *stdlibProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
 }
 
 // define the data sources implemented in the provider
-func (tfProvider *stdlibProvider) DataSources(_ context.Context) []func() datasource.DataSource {
+func (_ *stdlibProvider) DataSources(_ context.Context) []func() datasource.DataSource {
   return []func() datasource.DataSource {
     NewFlattenMapDataSource,
     NewHasKeyDataSource,
@@ -59,6 +59,6 @@ func (tfProvider *stdlibProvider) DataSources(_ context.Context) []func() dataso
 }
 
 // define the resources implemented in the provider
-func (tfProvider *stdlibProvider) Resources(_ context.Context) []func() resource.Resource {
+func (_ *stdlibProvider) Resources(_ context.Context) []func() resource.Resource {
   return nil
 }

@@ -36,12 +36,12 @@ type keyDeleteDataSourceModel struct {
 }
 
 // data source metadata
-func (tfData *keyDeleteDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (_ *keyDeleteDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
   resp.TypeName = req.ProviderTypeName + "_key_delete"
 }
 
 // define the provider-level schema for configuration data
-func (tfData *keyDeleteDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (_ *keyDeleteDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
   resp.Schema = schema.Schema{
     Attributes: map[string]schema.Attribute{
       "id": utils.IDStringAttribute(),
@@ -67,7 +67,7 @@ func (tfData *keyDeleteDataSource) Schema(_ context.Context, _ datasource.Schema
 }
 
 // validate data source config
-func (tfData *keyDeleteDataSource) ValidateConfig(ctx context.Context, req datasource.ValidateConfigRequest, resp *datasource.ValidateConfigResponse) {
+func (_ *keyDeleteDataSource) ValidateConfig(ctx context.Context, req datasource.ValidateConfigRequest, resp *datasource.ValidateConfigResponse) {
   // determine input values
   var state keyDeleteDataSourceModel
   resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)
@@ -100,7 +100,7 @@ func (tfData *keyDeleteDataSource) ValidateConfig(ctx context.Context, req datas
 }
 
 // read executes the actual function
-func (tfData *keyDeleteDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (_ *keyDeleteDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
   // determine input values
   var state keyDeleteDataSourceModel
   resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)

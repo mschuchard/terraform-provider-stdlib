@@ -35,12 +35,12 @@ type flattenMapDataSourceModel struct {
 }
 
 // data source metadata
-func (tfData *flattenMapDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (_ *flattenMapDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
   resp.TypeName = req.ProviderTypeName + "_flatten_map"
 }
 
 // define the provider-level schema for configuration data
-func (tfData *flattenMapDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (_ *flattenMapDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
   resp.Schema = schema.Schema{
     Attributes: map[string]schema.Attribute{
       "id": utils.IDStringAttribute(),
@@ -65,7 +65,7 @@ func (tfData *flattenMapDataSource) Schema(_ context.Context, _ datasource.Schem
 
 // TODO: need to revisit when plugin framework supports list(map) in the schema
 // read executes the actual function
-func (tfData *flattenMapDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (_ *flattenMapDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
   // determine input values
   var state flattenMapDataSourceModel
   resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)
