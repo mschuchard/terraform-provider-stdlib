@@ -48,7 +48,7 @@ func (tfData *lastCharDataSource) Schema(_ context.Context, _ datasource.SchemaR
       "param": schema.StringAttribute{
         Description: "Input string parameter for determining the last character.",
         Required:    true,
-        Validators: []validator.String{
+        Validators:  []validator.String{
           stringvalidator.LengthAtLeast(1),
         },
       },

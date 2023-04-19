@@ -14,8 +14,16 @@ var (
   _ provider.Provider = &stdlibProvider{}
 )
 
-// helper pseudo-constructor to simplify provider server and testing implementation
-func New(version string) provider.Provider {
+// helper pseudo-constructors to simplify provider server and testing implementation
+func New(version string) func() provider.Provider {
+  return func() provider.Provider {
+    return &stdlibProvider{
+      Version: version,
+    }
+  }
+}
+
+func NewStruct(version string) provider.Provider {
   return &stdlibProvider{
     Version: version,
   }

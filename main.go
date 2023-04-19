@@ -13,8 +13,10 @@ import (
 //go:generate tfplugindocs generate --provider-name stdlib
 
 func main() {
+  const version string = "1.0.0"
+
   // start provider server
-  err := providerserver.Serve(context.Background(), stdlib.New, providerserver.ServeOpts{
+  err := providerserver.Serve(context.Background(), stdlib.New(version), providerserver.ServeOpts{
     Address: "registry.terraform.io/mschuchard/stdlib",
   })
 
