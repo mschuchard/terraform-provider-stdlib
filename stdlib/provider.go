@@ -53,6 +53,7 @@ func (_ *stdlibProvider) DataSources(_ context.Context) []func() datasource.Data
   return []func() datasource.DataSource {
     NewFlattenMapDataSource,
     NewHasKeyDataSource,
+    NewHasValueDataSource,
     NewKeyDeleteDataSource,
     NewLastCharDataSource,
   }
