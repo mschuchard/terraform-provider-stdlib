@@ -127,6 +127,12 @@ func (_ *keyDeleteDataSource) Read(ctx context.Context, req datasource.ReadReque
     delete(inputMap, deleteKey)
   } else {
     tflog.Error(ctx, fmt.Sprintf("The key to be deleted '%s' does not exist in the input map", deleteKey))
+    resp.Diagnostics.AddAttributeError(
+      path.Root("key"),
+      "Improper Attribute Value",
+      fmt.Sprintf("The key to be deleted '%s' does not exist in the input map", deleteKey),
+    )
+    return
   }
 
   // provide more debug logging

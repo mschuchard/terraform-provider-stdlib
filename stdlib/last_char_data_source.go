@@ -71,17 +71,17 @@ func (_ *lastCharDataSource) Read(ctx context.Context, req datasource.ReadReques
 	}
   inputString := state.Param.ValueString()
 
-  // determine last char of string
-  var lastCharacter string
-  if len(inputString) > 0 {
-    lastCharacter = inputString[len(inputString)-1:]
-  } else {
+  // re-validate input string
+  if len(inputString) == 0 {
     resp.Diagnostics.AddAttributeError(
       path.Root("param"),
       "Empty Value",
       "Expected param value to be non-empty",
     )
+    return
   }
+  // determine last char of string
+  lastCharacter := inputString[len(inputString)-1:]
 
   // provide debug logging
   ctx = tflog.SetField(ctx, "stdlib_last_char_param", inputString)
