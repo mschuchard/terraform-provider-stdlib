@@ -15,9 +15,7 @@ import (
 )
 
 // ensure the implementation satisfies the expected interfaces
-var (
-	_ datasource.DataSource = &flattenMapDataSource{}
-)
+var _ datasource.DataSource = &flattenMapDataSource{}
 
 // helper pseudo-constructor to simplify provider server and testing implementation
 func NewFlattenMapDataSource() datasource.DataSource {
@@ -82,7 +80,7 @@ func (_ *flattenMapDataSource) Read(ctx context.Context, req datasource.ReadRequ
 	}
 
 	var nestedMap map[string]string
-	outputMap := make(map[string]string)
+	outputMap := map[string]string{}
 
 	// iterate through list of maps and merge the maps into new map
 	for _, nestedTFMap := range inputList {

@@ -13,9 +13,7 @@ import (
 )
 
 // ensure the implementation satisfies the expected interfaces
-var (
-	_ datasource.DataSource = &hasKeyDataSource{}
-)
+var _ datasource.DataSource = &hasKeyDataSource{}
 
 // helper pseudo-constructor to simplify provider server and testing implementation
 func NewHasKeyDataSource() datasource.DataSource {

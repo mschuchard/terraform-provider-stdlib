@@ -13,9 +13,7 @@ import (
 )
 
 // ensure the implementation satisfies the expected interfaces
-var (
-	_ datasource.DataSource = &hasValueDataSource{}
-)
+var _ datasource.DataSource = &hasValueDataSource{}
 
 // helper pseudo-constructor to simplify provider server and testing implementation
 func NewHasValueDataSource() datasource.DataSource {

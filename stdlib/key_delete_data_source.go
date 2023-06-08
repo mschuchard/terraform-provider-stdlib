@@ -15,9 +15,7 @@ import (
 )
 
 // ensure the implementation satisfies the expected interfaces
-var (
-	_ datasource.DataSource = &keyDeleteDataSource{}
-)
+var _ datasource.DataSource = &keyDeleteDataSource{}
 
 // helper pseudo-constructor to simplify provider server and testing implementation
 func NewKeyDeleteDataSource() datasource.DataSource {

@@ -16,9 +16,7 @@ import (
 )
 
 // ensure the implementation satisfies the expected interfaces
-var (
-	_ datasource.DataSource = &lastCharDataSource{}
-)
+var _ datasource.DataSource = &lastCharDataSource{}
 
 // helper pseudo-constructor to simplify provider server and testing implementation
 func NewLastCharDataSource() datasource.DataSource {
@@ -69,6 +67,8 @@ func (_ *lastCharDataSource) Read(ctx context.Context, req datasource.ReadReques
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	// initialize input string
 	inputString := state.Param.ValueString()
 
 	// re-validate input string
