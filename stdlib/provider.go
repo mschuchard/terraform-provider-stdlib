@@ -10,28 +10,24 @@ import (
 )
 
 // ensure the implementation satisfies the expected interfaces
-var (
-	_ provider.Provider = &stdlibProvider{}
-)
+var _ provider.Provider = &stdlibProvider{}
 
-// helper pseudo-constructors to simplify provider server and testing implementation
+// helper pseudo-constructors to simplify provider server and testing implementation (second needed due to nuance in TF testing framework)
 func New(version string) func() provider.Provider {
 	return func() provider.Provider {
-		return &stdlibProvider{
-			Version: version,
-		}
+		return NewStruct(version)
 	}
 }
 
 func NewStruct(version string) provider.Provider {
 	return &stdlibProvider{
-		Version: version,
+		version: version,
 	}
 }
 
 // provider implementation
 type stdlibProvider struct {
-	Version string
+	version string
 }
 
 // provider metadata
