@@ -25,7 +25,7 @@ func NewKeyDeleteDataSource() datasource.DataSource {
 // data source implementation
 type keyDeleteDataSource struct{}
 
-// maps the data source schema data
+// maps the data source schema data to the model
 type keyDeleteDataSourceModel struct {
 	ID     types.String `tfsdk:"id"`
 	Key    types.String `tfsdk:"key"`

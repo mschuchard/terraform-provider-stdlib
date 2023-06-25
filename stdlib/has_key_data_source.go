@@ -23,7 +23,7 @@ func NewHasKeyDataSource() datasource.DataSource {
 // data source implementation
 type hasKeyDataSource struct{}
 
-// maps the data source schema data
+// maps the data source schema data to the model
 type hasKeyDataSourceModel struct {
 	ID     types.String `tfsdk:"id"`
 	Key    types.String `tfsdk:"key"`

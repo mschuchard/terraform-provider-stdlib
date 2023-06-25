@@ -26,7 +26,7 @@ func NewLastCharDataSource() datasource.DataSource {
 // data source implementation
 type lastCharDataSource struct{}
 
-// maps the data source schema data
+// maps the data source schema data to the model
 type lastCharDataSourceModel struct {
 	ID     types.String `tfsdk:"id"`
 	Param  types.String `tfsdk:"param"`

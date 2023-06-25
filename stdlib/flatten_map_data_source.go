@@ -25,7 +25,7 @@ func NewFlattenMapDataSource() datasource.DataSource {
 // data source implementation
 type flattenMapDataSource struct{}
 
-// maps the data source schema data
+// maps the data source schema data to the model
 type flattenMapDataSourceModel struct {
 	ID     types.String `tfsdk:"id"`
 	Param  types.List   `tfsdk:"param"`
