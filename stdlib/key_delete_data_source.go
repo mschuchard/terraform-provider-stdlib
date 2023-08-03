@@ -42,7 +42,7 @@ func (_ *keyDeleteDataSource) Metadata(_ context.Context, req datasource.Metadat
 func (_ *keyDeleteDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
-			"id": utils.IDStringAttribute(),
+			"id": util.IDStringAttribute(),
 			"key": schema.StringAttribute{
 				Description: "Name of the key to delete from the map.",
 				Required:    true,
@@ -147,8 +147,7 @@ func (_ *keyDeleteDataSource) Read(ctx context.Context, req datasource.ReadReque
 	resp.Diagnostics.Append(mapConvertDiags...)
 
 	// set state
-	diagnostics := resp.State.Set(ctx, &state)
-	resp.Diagnostics.Append(diagnostics...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &state)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}

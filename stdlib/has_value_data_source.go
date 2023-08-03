@@ -40,7 +40,7 @@ func (_ *hasValueDataSource) Metadata(_ context.Context, req datasource.Metadata
 func (_ *hasValueDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
-			"id": utils.IDStringAttribute(),
+			"id": util.IDStringAttribute(),
 			"value": schema.StringAttribute{
 				Description: "Name of the value to check for existence in the map.",
 				Required:    true,
@@ -98,8 +98,7 @@ func (_ *hasValueDataSource) Read(ctx context.Context, req datasource.ReadReques
 	state.Result = types.BoolValue(valueExists)
 
 	// set state
-	diagnostics := resp.State.Set(ctx, &state)
-	resp.Diagnostics.Append(diagnostics...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &state)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}

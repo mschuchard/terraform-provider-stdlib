@@ -1,4 +1,4 @@
-package utils
+package util
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"

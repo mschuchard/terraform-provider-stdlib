@@ -40,7 +40,7 @@ func (_ *hasKeyDataSource) Metadata(_ context.Context, req datasource.MetadataRe
 func (_ *hasKeyDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
-			"id": utils.IDStringAttribute(),
+			"id": util.IDStringAttribute(),
 			"key": schema.StringAttribute{
 				Description: "Name of the key to check for existence in the map.",
 				Required:    true,
@@ -98,8 +98,7 @@ func (_ *hasKeyDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 	state.Result = types.BoolValue(keyExists)
 
 	// set state
-	diagnostics := resp.State.Set(ctx, &state)
-	resp.Diagnostics.Append(diagnostics...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &state)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}

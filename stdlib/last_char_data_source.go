@@ -42,7 +42,7 @@ func (_ *lastCharDataSource) Metadata(_ context.Context, req datasource.Metadata
 func (_ *lastCharDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
-			"id": utils.IDStringAttribute(),
+			"id": util.IDStringAttribute(),
 			"param": schema.StringAttribute{
 				Description: "Input string parameter for determining the last character.",
 				Required:    true,
@@ -93,8 +93,7 @@ func (_ *lastCharDataSource) Read(ctx context.Context, req datasource.ReadReques
 	state.Result = types.StringValue(lastCharacter)
 
 	// set state
-	diagnostics := resp.State.Set(ctx, &state)
-	resp.Diagnostics.Append(diagnostics...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &state)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}

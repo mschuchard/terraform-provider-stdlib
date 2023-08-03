@@ -41,7 +41,7 @@ func (_ *flattenMapDataSource) Metadata(_ context.Context, req datasource.Metada
 func (_ *flattenMapDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
-			"id": utils.IDStringAttribute(),
+			"id": util.IDStringAttribute(),
 			// TODO: also support set
 			"param": schema.ListAttribute{
 				Description: "Input list of maps to flatten.",
@@ -104,8 +104,7 @@ func (_ *flattenMapDataSource) Read(ctx context.Context, req datasource.ReadRequ
 	resp.Diagnostics.Append(mapConvertDiags...)
 
 	// set state
-	diagnostics := resp.State.Set(ctx, &state)
-	resp.Diagnostics.Append(diagnostics...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &state)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
