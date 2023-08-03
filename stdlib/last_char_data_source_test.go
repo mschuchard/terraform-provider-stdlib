@@ -12,7 +12,7 @@ func TestAccLastCharDataSource(test *testing.T) {
 	param := "hello"
 
 	// invoke test
-	resource.Test(test, resource.TestCase{
+	resource.ParallelTest(test, resource.TestCase{
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			// test basic string slice last char

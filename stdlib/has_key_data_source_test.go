@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
-func TestAcHasKeyDataSource(test *testing.T) {
+func TestAccHasKeyDataSource(test *testing.T) {
 	// initialize test params
 	resourceConfig := `data "stdlib_has_key" "test_%s" {
     map = { "hello" = "world", "foo" = "bar" }

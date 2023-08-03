@@ -8,7 +8,7 @@ import (
 
 func TestAccFlattenMapDataSource(test *testing.T) {
 	// invoke test
-	resource.Test(test, resource.TestCase{
+	resource.ParallelTest(test, resource.TestCase{
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			// test basic key removal from map

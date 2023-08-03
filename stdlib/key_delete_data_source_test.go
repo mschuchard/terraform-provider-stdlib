@@ -12,7 +12,7 @@ func TestAccKeyDeleteDataSource(test *testing.T) {
 	key := "foo"
 
 	// invoke test
-	resource.Test(test, resource.TestCase{
+	resource.ParallelTest(test, resource.TestCase{
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			// test basic key removal from map
