@@ -1,10 +1,12 @@
-package stdlib
+package stringfunc_test
 
 import (
 	"fmt"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
+
+	"github.com/mschuchard/terraform-provider-stdlib/stdlib"
 )
 
 func TestAccLastCharDataSource(test *testing.T) {
@@ -13,7 +15,7 @@ func TestAccLastCharDataSource(test *testing.T) {
 
 	// invoke test
 	resource.ParallelTest(test, resource.TestCase{
-		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		ProtoV6ProviderFactories: provider.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			// test basic string slice last char
 			{

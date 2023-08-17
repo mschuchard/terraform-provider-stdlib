@@ -27,9 +27,9 @@ install:
 	@go install .
 
 unit:
-	@go test -v
+	@go test -v ./...
 
 accept:
-	TF_ACC=1 go test -v ./stdlib
+	TF_ACC=1 go test -v ./stdlib/...
 
 test: unit accept

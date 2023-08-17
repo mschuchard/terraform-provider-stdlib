@@ -1,15 +1,17 @@
-package stdlib
+package collection_test
 
 import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
+
+	"github.com/mschuchard/terraform-provider-stdlib/stdlib"
 )
 
 func TestAccFlattenMapDataSource(test *testing.T) {
 	// invoke test
 	resource.ParallelTest(test, resource.TestCase{
-		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		ProtoV6ProviderFactories: provider.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			// test basic key removal from map
 			{

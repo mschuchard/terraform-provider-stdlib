@@ -1,10 +1,12 @@
-package stdlib
+package collection_test
 
 import (
 	"fmt"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
+
+	"github.com/mschuchard/terraform-provider-stdlib/stdlib"
 )
 
 func TestAccKeyDeleteDataSource(test *testing.T) {
@@ -13,7 +15,7 @@ func TestAccKeyDeleteDataSource(test *testing.T) {
 
 	// invoke test
 	resource.ParallelTest(test, resource.TestCase{
-		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		ProtoV6ProviderFactories: provider.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			// test basic key removal from map
 			{

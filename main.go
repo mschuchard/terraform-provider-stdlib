@@ -16,7 +16,7 @@ const version string = "1.0.0"
 
 func main() {
 	// start provider server
-	err := providerserver.Serve(context.Background(), stdlib.New(version), providerserver.ServeOpts{
+	err := providerserver.Serve(context.Background(), provider.New(version), providerserver.ServeOpts{
 		Address: "registry.terraform.io/mschuchard/stdlib",
 	})
 

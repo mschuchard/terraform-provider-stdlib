@@ -1,4 +1,4 @@
-package stdlib
+package provider
 
 import (
 	"context"
@@ -7,6 +7,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
+
+	"github.com/mschuchard/terraform-provider-stdlib/stdlib/collection"
+	"github.com/mschuchard/terraform-provider-stdlib/stdlib/string"
 )
 
 // ensure the implementation satisfies the expected interfaces
@@ -47,11 +50,11 @@ func (_ *stdlibProvider) Configure(ctx context.Context, req provider.ConfigureRe
 // define the data sources implemented in the provider
 func (_ *stdlibProvider) DataSources(_ context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
-		NewFlattenMapDataSource,
-		NewHasKeyDataSource,
-		NewHasValueDataSource,
-		NewKeyDeleteDataSource,
-		NewLastCharDataSource,
+		collection.NewFlattenMapDataSource,
+		collection.NewHasKeyDataSource,
+		collection.NewHasValueDataSource,
+		collection.NewKeyDeleteDataSource,
+		stringfunc.NewLastCharDataSource,
 	}
 }
 

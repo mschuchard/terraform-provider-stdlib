@@ -1,4 +1,4 @@
-package stdlib
+package collection
 
 import (
 	"context"
@@ -13,40 +13,41 @@ import (
 )
 
 // ensure the implementation satisfies the expected interfaces
-var _ datasource.DataSource = &hasValueDataSource{}
+var _ datasource.DataSource = &hasKeyDataSource{}
 
 // helper pseudo-constructor to simplify provider server and testing implementation
-func NewHasValueDataSource() datasource.DataSource {
-	return &hasValueDataSource{}
+func NewHasKeyDataSource() datasource.DataSource {
+	return &hasKeyDataSource{}
 }
 
 // data source implementation
-type hasValueDataSource struct{}
+type hasKeyDataSource struct{}
 
 // maps the data source schema data to the model
-type hasValueDataSourceModel struct {
+type hasKeyDataSourceModel struct {
 	ID     types.String `tfsdk:"id"`
-	Value  types.String `tfsdk:"value"`
+	Key    types.String `tfsdk:"key"`
 	Map    types.Map    `tfsdk:"map"`
 	Result types.Bool   `tfsdk:"result"`
 }
 
 // data source metadata
-func (_ *hasValueDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_has_value"
+func (_ *hasKeyDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_has_key"
 }
 
 // define the provider-level schema for configuration data
-func (_ *hasValueDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (_ *hasKeyDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
-			"value": schema.StringAttribute{
-				Description: "Name of the value to check for existence in the map.",
+			"key": schema.StringAttribute{
+				Description: "Name of the key to check for existence in the map.",
 				Required:    true,
 			},
 			"map": schema.MapAttribute{
-				Description: "Input map parameter from which to check a value's existence.",
+				Description: "Input map parameter from which to check a key's existence.",
+				// TODO: allow non-strings with interface or generics
 				ElementType: types.StringType,
 				Required:    true,
 			},
@@ -60,16 +61,17 @@ func (_ *hasValueDataSource) Schema(_ context.Context, _ datasource.SchemaReques
 }
 
 // read executes the actual function
-func (_ *hasValueDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (_ *hasKeyDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	// determine input values
-	var state hasValueDataSourceModel
+	var state hasKeyDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
 	// initialize map and key
-	valueCheck := state.Value.ValueString()
+	keyCheck := state.Key.ValueString()
+	// TODO: allow non-strings with interface or generics
 	var inputMap map[string]string
 	resp.Diagnostics.Append(state.Map.ElementsAs(ctx, &inputMap, false)...)
 	if resp.Diagnostics.HasError() {
@@ -77,30 +79,28 @@ func (_ *hasValueDataSource) Read(ctx context.Context, req datasource.ReadReques
 	}
 
 	// provide debug logging
-	ctx = tflog.SetField(ctx, "stdlib_has_value_value", valueCheck)
-	ctx = tflog.SetField(ctx, "stdlib_has_value_map", inputMap)
+	ctx = tflog.SetField(ctx, "stdlib_has_key_key", keyCheck)
+	ctx = tflog.SetField(ctx, "stdlib_has_key_map", inputMap)
 
 	// check key's existence
-	valueExists := false
-	for _, value := range inputMap {
-		if value == valueCheck {
-			valueExists = true
-			break
-		}
+	keyExists := false
+	_, ok := inputMap[keyCheck]
+	if ok {
+		keyExists = true
 	}
 
 	// provide more debug logging
-	ctx = tflog.SetField(ctx, "stdlib_has_value_result", valueExists)
-	tflog.Debug(ctx, fmt.Sprintf("Result of whether key '%s' is in map is: %t", valueCheck, valueExists))
+	ctx = tflog.SetField(ctx, "stdlib_has_key_result", keyExists)
+	tflog.Debug(ctx, fmt.Sprintf("Result of whether key '%s' is in map is: %t", keyCheck, keyExists))
 
 	// store resultant map in state
-	state.ID = types.StringValue(valueCheck)
-	state.Result = types.BoolValue(valueExists)
+	state.ID = types.StringValue(keyCheck)
+	state.Result = types.BoolValue(keyExists)
 
 	// set state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &state)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	tflog.Info(ctx, "Determined whether value exists in map", map[string]any{"success": true})
+	tflog.Info(ctx, "Determined whether key exists in map", map[string]any{"success": true})
 }

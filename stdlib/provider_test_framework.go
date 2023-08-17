@@ -1,4 +1,4 @@
-package stdlib
+package provider
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
@@ -6,6 +6,6 @@ import (
 )
 
 // factory function for provider instantiation
-var testAccProtoV6ProviderFactories = map[string]func() (tfprotov6.ProviderServer, error){
+var TestAccProtoV6ProviderFactories = map[string]func() (tfprotov6.ProviderServer, error){
 	"stdlib": providerserver.NewProtocol6WithError(NewStruct("test")),
 }

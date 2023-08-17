@@ -1,4 +1,4 @@
-package stdlib
+package stringfunc
 
 import (
 	"context"
