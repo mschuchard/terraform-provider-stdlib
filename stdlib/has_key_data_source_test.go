@@ -27,7 +27,7 @@ func TestAccHasKeyDataSource(test *testing.T) {
 			Steps: []resource.TestStep{
 				// test basic key existence in map
 				{
-					Config: providerConfig + fmt.Sprintf(resourceConfig, key, key),
+					Config: fmt.Sprintf(resourceConfig, key, key),
 					Check: resource.ComposeAggregateTestCheckFunc(
 						// verify input params are stored correctly
 						resource.TestCheckResourceAttr(dataSourceName, "key", key),

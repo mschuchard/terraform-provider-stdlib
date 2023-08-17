@@ -13,7 +13,7 @@ func TestAccFlattenMapDataSource(test *testing.T) {
 		Steps: []resource.TestStep{
 			// test basic key removal from map
 			{
-				Config: providerConfig + `data "stdlib_flatten_map" "test" {
+				Config: `data "stdlib_flatten_map" "test" {
           param = [
             { "hello" = "world" },
             { "foo" = "bar" }

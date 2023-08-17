@@ -17,7 +17,7 @@ func TestAccLastCharDataSource(test *testing.T) {
 		Steps: []resource.TestStep{
 			// test basic string slice last char
 			{
-				Config: providerConfig + fmt.Sprintf(`data "stdlib_last_char" "test" { param = "%s" }`, param),
+				Config: fmt.Sprintf(`data "stdlib_last_char" "test" { param = "%s" }`, param),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// verify input param is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_last_char.test", "param", param),

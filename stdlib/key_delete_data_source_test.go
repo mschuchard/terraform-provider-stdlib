@@ -17,7 +17,7 @@ func TestAccKeyDeleteDataSource(test *testing.T) {
 		Steps: []resource.TestStep{
 			// test basic key removal from map
 			{
-				Config: providerConfig + fmt.Sprintf(`data "stdlib_key_delete" "test" {
+				Config: fmt.Sprintf(`data "stdlib_key_delete" "test" {
           map = { "hello" = "world", "foo" = "bar" }
           key = "%s"
         }`, key),

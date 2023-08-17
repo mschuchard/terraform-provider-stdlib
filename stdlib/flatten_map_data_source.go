@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
-	"golang.org/x/exp/maps"
+	"golang.org/x/exp/maps" // TODO: 1.21 migrate
 
 	"github.com/mschuchard/terraform-provider-stdlib/internal"
 )

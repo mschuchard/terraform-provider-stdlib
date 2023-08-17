@@ -27,7 +27,7 @@ func TestAccHasValueDataSource(test *testing.T) {
 			Steps: []resource.TestStep{
 				// test basic value existence in map
 				{
-					Config: providerConfig + fmt.Sprintf(resourceConfig, value, value),
+					Config: fmt.Sprintf(resourceConfig, value, value),
 					Check: resource.ComposeAggregateTestCheckFunc(
 						// verify input params are stored correctly
 						resource.TestCheckResourceAttr(dataSourceName, "value", value),
