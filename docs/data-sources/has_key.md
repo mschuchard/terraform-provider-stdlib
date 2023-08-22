@@ -44,5 +44,3 @@ data "stdlib_has_key" "bar" {
 
 - `id` (String) Aliased to string input parameter for efficiency.
 - `result` (Boolean) Function result storing whether the key exists in the map.
-
-

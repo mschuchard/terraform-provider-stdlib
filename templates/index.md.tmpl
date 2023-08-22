@@ -1,15 +1,22 @@
 ---
-page_title: "Provider: stdlib"
+page_title: "{{.ProviderShortName}} Provider"
+subcategory: ""
 description: |-
-  The stdlib provider provides additional functions for use within Terraform's HCL2 configuration language.
+{{ .Description | plainmarkdown | trimspace | prefixlines "  " }}
 ---
 
-# {{ .ProviderShortName | upper }} Provider
+# {{.ProviderShortName}} Provider
 
-PLACEHOLDER
+{{ .Description | trimspace }}
+
+The Terraform provider plugin "stdlib" provides additional functions for Terraform available as data sources. These data sources enable functionality not intrinsically available to Terraform, or streamlined within a single invocation. However, data sources are not as robustly invoked with inputs or returns as true intrinsic functions. Without true support for custom functions this becomes the next best available option.
 
 Use the navigation to the left to read about the available data sources which are each equivalent to Terraform functions.
 
+{{ if .HasExample -}}
 ## Example Usage
 
 {{ tffile "examples/provider/provider.tf" }}
+{{- end }}
+
+{{ .SchemaMarkdown | trimspace }}

@@ -33,5 +33,3 @@ data "stdlib_flatten_map" "foo" {
 
 - `id` (String) Aliased to string input parameter for efficiency.
 - `result` (Map of String) Function result storing the flattened map.
-
-

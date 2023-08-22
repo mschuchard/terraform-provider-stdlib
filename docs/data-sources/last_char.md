@@ -30,5 +30,3 @@ data "stdlib_last_char" "hello" {
 
 - `id` (String) Aliased to string input parameter for efficiency.
 - `result` (String) Function result storing the last character of the input string.
-
-

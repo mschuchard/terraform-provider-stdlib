@@ -40,7 +40,9 @@ func (_ *stdlibProvider) Metadata(_ context.Context, _ provider.MetadataRequest,
 
 // define the provider-level schema for configuration data
 func (_ *stdlibProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *provider.SchemaResponse) {
-	resp.Schema = schema.Schema{}
+	resp.Schema = schema.Schema{
+		Description: "The stdlib provider provides additional functions for use within Terraform's HCL2 configuration language.",
+	}
 }
 
 // prepare an API client for data sources and resources

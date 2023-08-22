@@ -35,5 +35,3 @@ data "stdlib_key_delete" "foo" {
 
 - `id` (String) Aliased to string input parameter for efficiency.
 - `result` (Map of String) Function result storing the map with the key removed.
-
-
