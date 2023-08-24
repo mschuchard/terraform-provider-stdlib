@@ -28,7 +28,7 @@ type keysDeleteDataSource struct{}
 // maps the data source schema data to the model
 type keysDeleteDataSourceModel struct {
 	ID     types.String `tfsdk:"id"`
-	Keys   types.Set    `tfsdk:"key"`
+	Keys   types.List   `tfsdk:"keys"`
 	Map    types.Map    `tfsdk:"map"`
 	Result types.Map    `tfsdk:"result"`
 }
@@ -43,7 +43,7 @@ func (_ *keysDeleteDataSource) Schema(_ context.Context, _ datasource.SchemaRequ
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
-			"keys": schema.SetAttribute{
+			"keys": schema.ListAttribute{
 				Description: "Names of the keys to delete from the map.",
 				Required:    true,
 				ElementType: types.StringType,
