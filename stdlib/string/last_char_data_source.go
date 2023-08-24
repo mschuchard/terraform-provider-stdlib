@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
@@ -28,9 +29,10 @@ type lastCharDataSource struct{}
 
 // maps the data source schema data to the model
 type lastCharDataSourceModel struct {
-	ID     types.String `tfsdk:"id"`
-	Param  types.String `tfsdk:"param"`
-	Result types.String `tfsdk:"result"`
+	ID       types.String `tfsdk:"id"`
+	Param    types.String `tfsdk:"param"`
+	NumChars types.Int64  `tfsdk:"num_chars"`
+	Result   types.String `tfsdk:"result"`
 }
 
 // data source metadata
@@ -50,12 +52,19 @@ func (_ *lastCharDataSource) Schema(_ context.Context, _ datasource.SchemaReques
 					stringvalidator.LengthAtLeast(1),
 				},
 			},
+			"num_chars": schema.Int64Attribute{
+				Description: "The number of terminating characters at the end of the string to return (default: 1).",
+				Optional:    true,
+				Validators: []validator.Int64{
+					int64validator.AtLeast(1),
+				},
+			},
 			"result": schema.StringAttribute{
 				Computed:    true,
 				Description: "Function result storing the last character of the input string.",
 			},
 		},
-		MarkdownDescription: "Return the last character of an input string parameter.",
+		MarkdownDescription: "Return the last character(s) of an input string parameter.",
 	}
 }
 
@@ -68,23 +77,31 @@ func (_ *lastCharDataSource) Read(ctx context.Context, req datasource.ReadReques
 		return
 	}
 
-	// initialize input string
+	// initialize input string and number of terminating chars
 	inputString := state.Param.ValueString()
+	numChars := 1
 
-	// re-validate input string
-	if len(inputString) == 0 {
-		resp.Diagnostics.AddAttributeError(
-			path.Root("param"),
-			"Empty Value",
-			"Expected param value to be non-empty",
-		)
-		return
+	// validate num_chars if input and re-assign from default value
+	if !state.NumChars.IsNull() {
+		// re-assign
+		numChars = int(state.NumChars.ValueInt64())
+
+		// number of terminating chars must be fewer than length of input string
+		if numChars >= len(inputString) {
+			resp.Diagnostics.AddAttributeError(
+				path.Root("num_chars"),
+				"Invalid Value",
+				"The number of terminating characters to return must be fewer than the length of the input string parameter.",
+			)
+			return
+		}
 	}
 	// determine last char of string
-	lastCharacter := inputString[len(inputString)-1:]
+	lastCharacter := inputString[len(inputString)-numChars:]
 
 	// provide debug logging
 	ctx = tflog.SetField(ctx, "stdlib_last_char_param", inputString)
+	ctx = tflog.SetField(ctx, "stdlib_last_char_num_chars", numChars)
 	ctx = tflog.SetField(ctx, "stdlib_last_char_result", lastCharacter)
 	tflog.Debug(ctx, fmt.Sprintf("Input string parameter \"%s\" last character is \"%s\"", inputString, lastCharacter))
 
