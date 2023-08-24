@@ -12,6 +12,7 @@ import (
 func TestAccLastCharDataSource(test *testing.T) {
 	// init input param
 	param := "hello"
+	numChars := 3
 
 	// invoke test
 	resource.ParallelTest(test, resource.TestCase{
@@ -25,6 +26,21 @@ func TestAccLastCharDataSource(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_last_char.test", "param", param),
 					// verify last character result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_last_char.test", "result", param[len(param)-1:]),
+					// verify id stored correctly
+					resource.TestCheckResourceAttr("data.stdlib_last_char.test", "id", param),
+				),
+			},
+			// test basic string slice last three characters
+			{
+				Config: fmt.Sprintf(`data "stdlib_last_char" "test" {
+					param = "%s"
+					num_chars = %d
+					}`, param, numChars),
+				Check: resource.ComposeAggregateTestCheckFunc(
+					// verify input param is stored correctly
+					resource.TestCheckResourceAttr("data.stdlib_last_char.test", "param", param),
+					// verify last character result is stored correctly
+					resource.TestCheckResourceAttr("data.stdlib_last_char.test", "result", param[len(param)-numChars:]),
 					// verify id stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_last_char.test", "id", param),
 				),
