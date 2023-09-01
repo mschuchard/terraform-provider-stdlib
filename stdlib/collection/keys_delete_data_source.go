@@ -4,10 +4,12 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/path"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 
@@ -47,6 +49,9 @@ func (_ *keysDeleteDataSource) Schema(_ context.Context, _ datasource.SchemaRequ
 				Description: "Names of the keys to delete from the map.",
 				Required:    true,
 				ElementType: types.StringType,
+				Validators: []validator.List{
+					listvalidator.SizeAtLeast(2),
+				},
 			},
 			"map": schema.MapAttribute{
 				Description: "Input map parameter from which to delete a key.",

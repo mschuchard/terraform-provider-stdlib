@@ -30,7 +30,7 @@ type hasValuesDataSource struct{}
 // maps the data source schema data to the model
 type hasValuesDataSourceModel struct {
 	ID     types.String `tfsdk:"id"`
-	Values types.List   `tfsdk:"value"`
+	Values types.List   `tfsdk:"values"`
 	Map    types.Map    `tfsdk:"map"`
 	Result types.Bool   `tfsdk:"result"`
 }

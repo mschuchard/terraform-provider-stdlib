@@ -4,9 +4,11 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"golang.org/x/exp/maps" // TODO: 1.21 migrate
@@ -49,6 +51,9 @@ func (_ *flattenMapDataSource) Schema(_ context.Context, _ datasource.SchemaRequ
 					ElemType: types.StringType,
 				},
 				Required: true,
+				Validators: []validator.List{
+					listvalidator.SizeAtLeast(1),
+				},
 			},
 			"result": schema.MapAttribute{
 				Computed:    true,

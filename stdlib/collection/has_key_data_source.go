@@ -84,8 +84,7 @@ func (_ *hasKeyDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 
 	// check key's existence
 	keyExists := false
-	_, ok := inputMap[keyCheck]
-	if ok {
+	if _, ok := inputMap[keyCheck]; ok {
 		keyExists = true
 	}
 

@@ -4,8 +4,10 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 
@@ -45,6 +47,9 @@ func (_ *hasKeysDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 				Description: "Names of the keys to check for existence in the map.",
 				Required:    true,
 				ElementType: types.StringType,
+				Validators: []validator.List{
+					listvalidator.SizeAtLeast(2),
+				},
 			},
 			"map": schema.MapAttribute{
 				Description: "Input map parameter from which to check a key's existence.",
@@ -57,7 +62,7 @@ func (_ *hasKeysDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 				Description: "Function result storing whether the key exists in the map.",
 			},
 		},
-		MarkdownDescription: "Return whether the input keys parameter are present in the input map parameter.",
+		MarkdownDescription: "Return whether any of the input keys parameter are present in the input map parameter.",
 	}
 }
 
@@ -86,14 +91,15 @@ func (_ *hasKeysDataSource) Read(ctx context.Context, req datasource.ReadRequest
 	keyExists := false
 
 	// provide debug logging
-	ctx = tflog.SetField(ctx, "stdlib_has_key_keys", keysCheck)
-	ctx = tflog.SetField(ctx, "stdlib_has_key_map", inputMap)
+	ctx = tflog.SetField(ctx, "stdlib_has_keys_keys", keysCheck)
+	ctx = tflog.SetField(ctx, "stdlib_has_keys_map", inputMap)
 
 	// iterate through keys to check
 	for _, keyCheck := range keysCheck {
 		// check key's existence
 		if _, ok := inputMap[keyCheck]; ok {
 			keyExists = true
+			break
 		}
 	}
 

@@ -8,6 +8,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
+	"golang.org/x/exp/maps"   // TODO: 1.21 migrate
+	"golang.org/x/exp/slices" // TODO: 1.21 migrate
 
 	"github.com/mschuchard/terraform-provider-stdlib/internal"
 )
@@ -80,18 +82,13 @@ func (_ *hasValueDataSource) Read(ctx context.Context, req datasource.ReadReques
 	ctx = tflog.SetField(ctx, "stdlib_has_value_value", valueCheck)
 	ctx = tflog.SetField(ctx, "stdlib_has_value_map", inputMap)
 
-	// check key's existence
-	valueExists := false
-	for _, value := range inputMap {
-		if value == valueCheck {
-			valueExists = true
-			break
-		}
-	}
+	// assign values of map and check input value's existence
+	mapValues := maps.Values(inputMap)
+	valueExists := slices.Contains(mapValues, valueCheck)
 
 	// provide more debug logging
 	ctx = tflog.SetField(ctx, "stdlib_has_value_result", valueExists)
-	tflog.Debug(ctx, fmt.Sprintf("Result of whether key '%s' is in map is: %t", valueCheck, valueExists))
+	tflog.Debug(ctx, fmt.Sprintf("Result of whether value '%s' is in map is: %t", valueCheck, valueExists))
 
 	// store resultant map in state
 	state.ID = types.StringValue(valueCheck)
