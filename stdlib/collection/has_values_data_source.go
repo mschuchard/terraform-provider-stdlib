@@ -63,7 +63,7 @@ func (_ *hasValuesDataSource) Schema(_ context.Context, _ datasource.SchemaReque
 				Description: "Function result storing whether the key exists in the map.",
 			},
 		},
-		MarkdownDescription: "Return whether the input key parameter is present in the input map parameter.",
+		MarkdownDescription: "Return whether the input key parameter is present in the input map parameter. The input map must be single-level.",
 	}
 }
 
