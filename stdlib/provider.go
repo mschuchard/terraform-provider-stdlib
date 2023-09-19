@@ -52,6 +52,7 @@ func (_ *stdlibProvider) Configure(ctx context.Context, req provider.ConfigureRe
 // define the data sources implemented in the provider
 func (_ *stdlibProvider) DataSources(_ context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
+		collection.NewEqualMapDataSource,
 		collection.NewFlattenMapDataSource,
 		collection.NewHasKeyDataSource,
 		collection.NewHasKeysDataSource,
