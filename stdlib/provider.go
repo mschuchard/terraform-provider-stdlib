@@ -46,7 +46,7 @@ func (_ *stdlibProvider) Schema(_ context.Context, _ provider.SchemaRequest, res
 }
 
 // prepare an API client for data sources and resources
-func (_ *stdlibProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
+func (_ *stdlibProvider) Configure(_ context.Context, _ provider.ConfigureRequest, _ *provider.ConfigureResponse) {
 }
 
 // define the data sources implemented in the provider
@@ -66,5 +66,5 @@ func (_ *stdlibProvider) DataSources(_ context.Context) []func() datasource.Data
 
 // define the resources implemented in the provider
 func (_ *stdlibProvider) Resources(_ context.Context) []func() resource.Resource {
-	return nil
+	return []func() resource.Resource{}
 }
