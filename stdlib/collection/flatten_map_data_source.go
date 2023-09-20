@@ -62,7 +62,7 @@ func (_ *flattenMapDataSource) Schema(_ context.Context, _ datasource.SchemaRequ
 				ElementType: types.StringType,
 			},
 		},
-		MarkdownDescription: "Return the flattened map of an input list of maps parameter.",
+		MarkdownDescription: "Return the flattened map of an input list of maps parameter. Note that if a key is repeated then the last entry will overwrite any previous entries in the result.",
 	}
 }
 

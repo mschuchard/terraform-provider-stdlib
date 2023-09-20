@@ -141,12 +141,11 @@ func (_ *keysDeleteDataSource) Read(ctx context.Context, req datasource.ReadRequ
 	// iterate through keys to delete
 	for _, deleteKey := range deleteKeys {
 		// verify key exists in map
-		_, ok := inputMap[deleteKey]
-
-		// delete key from map
-		if ok {
+		if _, ok := inputMap[deleteKey]; ok {
+			// delete key from map
 			delete(inputMap, deleteKey)
 		} else {
+			// key did not exist in map
 			resp.Diagnostics.AddAttributeError(
 				path.Root("key"),
 				"Improper Attribute Value",

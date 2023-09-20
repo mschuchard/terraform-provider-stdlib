@@ -121,11 +121,12 @@ func (_ *keyDeleteDataSource) Read(ctx context.Context, req datasource.ReadReque
 	ctx = tflog.SetField(ctx, "stdlib_key_delete_map", inputMap)
 	tflog.Debug(ctx, fmt.Sprintf("Input map parameter \"%v\" with key parameter \"%s\" removed", inputMap, deleteKey))
 
-	// delete key from map
-	_, ok := inputMap[deleteKey]
-	if ok {
+	// verify key exists in map
+	if _, ok := inputMap[deleteKey]; ok {
+		// delete key from map
 		delete(inputMap, deleteKey)
 	} else {
+		// key did not exist in map
 		resp.Diagnostics.AddAttributeError(
 			path.Root("key"),
 			"Improper Attribute Value",
