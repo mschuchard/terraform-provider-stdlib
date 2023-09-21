@@ -33,7 +33,7 @@ func TestAccFlattenMapDataSource(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_flatten_map.test", "result.hello", "world"),
 					resource.TestCheckResourceAttr("data.stdlib_flatten_map.test", "result.foo", "bar"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_flatten_map.test", "id", "hello"),
+					resource.TestCheckResourceAttr("data.stdlib_flatten_map.test", "id", "2"),
 				),
 			},
 		},

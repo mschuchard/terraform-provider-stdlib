@@ -97,12 +97,8 @@ func (_ *flattenMapDataSource) Read(ctx context.Context, req datasource.ReadRequ
 	ctx = tflog.SetField(ctx, "stdlib_flatten_map_result", outputMap)
 	tflog.Debug(ctx, fmt.Sprintf("Flattened map is \"%v\"", outputMap))
 
-	// store first key of output map in input list as id
-	if len(outputMap) > 0 {
-		state.ID = types.StringValue(maps.Keys(outputMap)[0])
-	} else {
-		state.ID = types.StringValue("empty")
-	}
+	// store number of entries of output map as id
+	state.ID = types.StringValue(fmt.Sprint(len(outputMap)))
 	// TODO: allow non-strings with interface or generics
 	var mapConvertDiags diag.Diagnostics
 	state.Result, mapConvertDiags = types.MapValueFrom(ctx, types.StringType, outputMap)
