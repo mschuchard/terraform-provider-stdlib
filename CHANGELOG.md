@@ -1,4 +1,4 @@
-### 1.1.0
+### 1.1.0 (Next)
 - Add `num_chars` parameter to `last_char`.
 - Add `equal_map`, `keys_delete`, `has_keys`, and `has_values` functions.
 - Miscellaneous fixes and improvements to collection functions.

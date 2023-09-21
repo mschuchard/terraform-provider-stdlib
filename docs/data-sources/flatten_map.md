@@ -3,17 +3,19 @@
 page_title: "stdlib_flatten_map Data Source - stdlib"
 subcategory: ""
 description: |-
-  Return the flattened map of an input list of maps parameter.
+  Return the flattened map of an input list of maps parameter. Note that if a key is repeated then the last entry will overwrite any previous entries in the result.
 ---
 
 # stdlib_flatten_map (Data Source)
 
-Return the flattened map of an input list of maps parameter.
+Return the flattened map of an input list of maps parameter. Note that if a key is repeated then the last entry will overwrite any previous entries in the result.
 
 ## Example Usage
 
 ```terraform
-# Flatten a list(map) into map: [{"hello" = "world"}, {"foo" = "bar"}] => {"hello" = "world", "foo = "bar}
+# Flatten a list(map) into map:
+# [{"hello" = "world"}, {"foo" = "bar"}]
+# => {"hello" = "world", "foo = "bar}
 data "stdlib_flatten_map" "foo" {
   param = [
     { "hello" = "world" },

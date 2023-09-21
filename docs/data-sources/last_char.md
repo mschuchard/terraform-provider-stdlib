@@ -3,19 +3,29 @@
 page_title: "stdlib_last_char Data Source - stdlib"
 subcategory: ""
 description: |-
-  Return the last character of an input string parameter.
+  Return the last character(s) of an input string parameter.
 ---
 
 # stdlib_last_char (Data Source)
 
-Return the last character of an input string parameter.
+Return the last character(s) of an input string parameter.
 
 ## Example Usage
 
 ```terraform
-# Return the last character of a string; "hello" => "o"
+# Return the last character of a string;
+# "hello"
+# => "o"
 data "stdlib_last_char" "hello" {
   param = "hello"
+}
+
+# Return the last three characters of a string:
+# "hello", 3
+# => "llo"
+data "stdlib_last_char" "llo" {
+  param     = "hello"
+  num_chars = 3
 }
 ```
 
@@ -25,6 +35,10 @@ data "stdlib_last_char" "hello" {
 ### Required
 
 - `param` (String) Input string parameter for determining the last character.
+
+### Optional
+
+- `num_chars` (Number) The number of terminating characters at the end of the string to return (default: 1).
 
 ### Read-Only
 

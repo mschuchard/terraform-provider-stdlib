@@ -3,17 +3,19 @@
 page_title: "stdlib_has_key Data Source - stdlib"
 subcategory: ""
 description: |-
-  Return whether the input key parameter is present in the input map parameter.
+  Return whether the input key parameter is present in the input map parameter. The input map must be single-level.
 ---
 
 # stdlib_has_key (Data Source)
 
-Return whether the input key parameter is present in the input map parameter.
+Return whether the input key parameter is present in the input map parameter. The input map must be single-level.
 
 ## Example Usage
 
 ```terraform
-# Check existence of "foo" key in map; {"hello" = "world", "foo" = "bar"}, "foo" => true
+# Check existence of "foo" key in map:
+# {"hello" = "world", "foo" = "bar"}, "foo"
+# => true
 data "stdlib_has_key" "foo" {
   map = {
     "hello" = "world",
@@ -22,7 +24,9 @@ data "stdlib_has_key" "foo" {
   key = "foo"
 }
 
-# Check existence of "bar" key in map; {"hello" = "world", "foo" = "bar"}, "bar" => false
+# Check existence of "bar" key in map:
+# {"hello" = "world", "foo" = "bar"}, "bar"
+# => false
 data "stdlib_has_key" "bar" {
   map = {
     "hello" = "world",
