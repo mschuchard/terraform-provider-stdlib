@@ -1,3 +1,6 @@
+### 1.1.1
+- Add `all` parameter to `has_keys` and `has_values`.
+
 ### 1.1.0
 - Add `num_chars` parameter to `last_char`.
 - Add `equal_map`, `keys_delete`, `has_keys`, and `has_values` functions.
