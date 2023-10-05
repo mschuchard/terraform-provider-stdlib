@@ -30,6 +30,7 @@ type hasValuesDataSource struct{}
 // maps the data source schema data to the model
 type hasValuesDataSourceModel struct {
 	ID     types.String `tfsdk:"id"`
+	All    types.Bool   `tfsdk:"all"`
 	Values types.List   `tfsdk:"values"`
 	Map    types.Map    `tfsdk:"map"`
 	Result types.Bool   `tfsdk:"result"`
@@ -45,6 +46,10 @@ func (_ *hasValuesDataSource) Schema(_ context.Context, _ datasource.SchemaReque
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
+			"all": schema.BoolAttribute{
+				Description: "Whether to check for all of the values instead of the default any of the values.",
+				Optional:    true,
+			},
 			"values": schema.ListAttribute{
 				Description: "Names of the values to check for existence in the map.",
 				Required:    true,
@@ -63,7 +68,7 @@ func (_ *hasValuesDataSource) Schema(_ context.Context, _ datasource.SchemaReque
 				Description: "Function result storing whether the key exists in the map.",
 			},
 		},
-		MarkdownDescription: "Return whether the input key parameter is present in the input map parameter. The input map must be single-level.",
+		MarkdownDescription: "Return whether any or all of the input value parameters are present in the input map parameter. The input map must be single-level.",
 	}
 }
 
@@ -89,20 +94,43 @@ func (_ *hasValuesDataSource) Read(ctx context.Context, req datasource.ReadReque
 		return
 	}
 
-	valueExists := false
+	// declare value existence and all vs. any, and then determine all value
+	var valueExists, all bool
+	if !state.All.IsNull() {
+		all = state.All.ValueBool()
+	}
 
 	// provide debug logging
 	ctx = tflog.SetField(ctx, "stdlib_has_values_values", valuesCheck)
-	ctx = tflog.SetField(ctx, "stdlib_has_value_map", inputMap)
+	ctx = tflog.SetField(ctx, "stdlib_has_values_map", inputMap)
+	ctx = tflog.SetField(ctx, "stdlib_has_values_all", all)
 
 	// assign values of map
 	mapValues := maps.Values(inputMap)
-	// iterate through values to check
-	for _, value := range valuesCheck {
-		// check input values' existence
-		if slices.Contains(mapValues, value) {
-			valueExists = true
-			break
+	// switch between any of the values or all of the values
+	if all {
+		// assume all of the values exist until single check proves otherwise
+		valueExists = true
+
+		// iterate through values to check
+		for _, value := range valuesCheck {
+			// check input values' existence
+			if !slices.Contains(mapValues, value) {
+				valueExists = false
+				break
+			}
+		}
+	} else {
+		// assume none of the values exist until single check proves otherwise
+		valueExists = false
+
+		// iterate through values to check
+		for _, value := range valuesCheck {
+			// check input values' existence
+			if slices.Contains(mapValues, value) {
+				valueExists = true
+				break
+			}
 		}
 	}
 
