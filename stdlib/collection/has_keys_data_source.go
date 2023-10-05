@@ -28,6 +28,7 @@ type hasKeysDataSource struct{}
 // maps the data source schema data to the model
 type hasKeysDataSourceModel struct {
 	ID     types.String `tfsdk:"id"`
+	All    types.Bool   `tfsdk:"all"`
 	Keys   types.List   `tfsdk:"keys"`
 	Map    types.Map    `tfsdk:"map"`
 	Result types.Bool   `tfsdk:"result"`
@@ -43,6 +44,10 @@ func (_ *hasKeysDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
+			"all": schema.BoolAttribute{
+				Description: "Whether to check for all of the keys instead of the default any of the keys.",
+				Optional:    true,
+			},
 			"keys": schema.ListAttribute{
 				Description: "Names of the keys to check for existence in the map.",
 				Required:    true,
@@ -62,7 +67,7 @@ func (_ *hasKeysDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 				Description: "Function result storing whether the key exists in the map.",
 			},
 		},
-		MarkdownDescription: "Return whether any of the input keys parameter are present in the input map parameter. The input map must be single-level.",
+		MarkdownDescription: "Return whether any or all of the input key parameters are present in the input map parameter. The input map must be single-level.",
 	}
 }
 
@@ -88,18 +93,41 @@ func (_ *hasKeysDataSource) Read(ctx context.Context, req datasource.ReadRequest
 		return
 	}
 
-	keyExists := false
+	// declare key existence and all vs. any, and then determine all value
+	var keyExists, all bool
+	if !state.All.IsNull() {
+		all = state.All.ValueBool()
+	}
 
 	// provide debug logging
 	ctx = tflog.SetField(ctx, "stdlib_has_keys_keys", keysCheck)
 	ctx = tflog.SetField(ctx, "stdlib_has_keys_map", inputMap)
+	ctx = tflog.SetField(ctx, "stdlib_has_keys_all", all)
 
-	// iterate through keys to check
-	for _, keyCheck := range keysCheck {
-		// check key's existence
-		if _, ok := inputMap[keyCheck]; ok {
-			keyExists = true
-			break
+	// switch between any of the keys or all of the keys
+	if all {
+		// assume all of the keys exist until single check proves otherwise
+		keyExists = true
+
+		// iterate through keys to check
+		for _, keyCheck := range keysCheck {
+			// check key's existence
+			if _, ok := inputMap[keyCheck]; !ok {
+				keyExists = false
+				break
+			}
+		}
+	} else {
+		// assume none of the keys exist until single check proves otherwise
+		keyExists = false
+
+		// iterate through keys to check
+		for _, keyCheck := range keysCheck {
+			// check key's existence
+			if _, ok := inputMap[keyCheck]; ok {
+				keyExists = true
+				break
+			}
 		}
 	}
 
