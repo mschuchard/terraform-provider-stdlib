@@ -1,6 +1,4 @@
 # Check existence of "foo" key in map:
-# {"hello" = "world", "foo" = "bar"}, "foo"
-# => true
 data "stdlib_has_key" "foo" {
   map = {
     "hello" = "world",
@@ -8,10 +6,9 @@ data "stdlib_has_key" "foo" {
   }
   key = "foo"
 }
+# => true
 
 # Check existence of "bar" key in map:
-# {"hello" = "world", "foo" = "bar"}, "bar"
-# => false
 data "stdlib_has_key" "bar" {
   map = {
     "hello" = "world",
@@ -19,3 +16,4 @@ data "stdlib_has_key" "bar" {
   }
   key = "bar"
 }
+# => false
