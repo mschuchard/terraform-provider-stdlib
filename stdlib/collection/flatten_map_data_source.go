@@ -92,10 +92,6 @@ func (_ *flattenMapDataSource) Read(ctx context.Context, req datasource.ReadRequ
 		nestedTFMap.ElementsAs(ctx, &nestedMap, false)
 		maps.Copy(outputMap, nestedMap)
 	}
-	// provide debug logging
-	ctx = tflog.SetField(ctx, "stdlib_flatten_map_param", state.Param)
-	ctx = tflog.SetField(ctx, "stdlib_flatten_map_result", outputMap)
-	tflog.Debug(ctx, fmt.Sprintf("Flattened map is \"%v\"", outputMap))
 
 	// store number of entries of output map as id
 	state.ID = types.StringValue(fmt.Sprint(len(outputMap)))

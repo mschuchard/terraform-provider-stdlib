@@ -116,11 +116,6 @@ func (_ *keyDeleteDataSource) Read(ctx context.Context, req datasource.ReadReque
 		return
 	}
 
-	// provide debug logging
-	ctx = tflog.SetField(ctx, "stdlib_key_delete_key", deleteKey)
-	ctx = tflog.SetField(ctx, "stdlib_key_delete_map", inputMap)
-	tflog.Debug(ctx, fmt.Sprintf("Input map parameter \"%v\" with key parameter \"%s\" removed", inputMap, deleteKey))
-
 	// verify key exists in map
 	if _, ok := inputMap[deleteKey]; ok {
 		// delete key from map

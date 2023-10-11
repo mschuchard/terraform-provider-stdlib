@@ -81,10 +81,6 @@ func (_ *equalMapDataSource) Read(ctx context.Context, req datasource.ReadReques
 	// assign id as concatentation of first key of each map
 	state.ID = types.StringValue(maps.Keys(mapOne)[0] + maps.Keys(mapTwo)[0])
 
-	// provide debug logging
-	ctx = tflog.SetField(ctx, "stdlib_equal_map_map_one", mapOne)
-	ctx = tflog.SetField(ctx, "stdlib_equal_map_map_two", mapTwo)
-
 	// provide more debug logging
 	ctx = tflog.SetField(ctx, "stdlib_equal_map_result", result)
 	tflog.Debug(ctx, fmt.Sprintf("Result of whether map '%v' equals map '%v' is: %t", mapOne, mapTwo, result))

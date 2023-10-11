@@ -78,10 +78,6 @@ func (_ *hasKeyDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 		return
 	}
 
-	// provide debug logging
-	ctx = tflog.SetField(ctx, "stdlib_has_key_key", keyCheck)
-	ctx = tflog.SetField(ctx, "stdlib_has_key_map", inputMap)
-
 	// check key's existence
 	keyExists := false
 	if _, ok := inputMap[keyCheck]; ok {

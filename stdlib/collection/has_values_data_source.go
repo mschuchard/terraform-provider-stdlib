@@ -100,11 +100,6 @@ func (_ *hasValuesDataSource) Read(ctx context.Context, req datasource.ReadReque
 		all = state.All.ValueBool()
 	}
 
-	// provide debug logging
-	ctx = tflog.SetField(ctx, "stdlib_has_values_values", valuesCheck)
-	ctx = tflog.SetField(ctx, "stdlib_has_values_map", inputMap)
-	ctx = tflog.SetField(ctx, "stdlib_has_values_all", all)
-
 	// assign values of map
 	mapValues := maps.Values(inputMap)
 	// switch between any of the values or all of the values

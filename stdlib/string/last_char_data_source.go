@@ -100,8 +100,6 @@ func (_ *lastCharDataSource) Read(ctx context.Context, req datasource.ReadReques
 	lastCharacter := inputString[len(inputString)-numChars:]
 
 	// provide debug logging
-	ctx = tflog.SetField(ctx, "stdlib_last_char_param", inputString)
-	ctx = tflog.SetField(ctx, "stdlib_last_char_num_chars", numChars)
 	ctx = tflog.SetField(ctx, "stdlib_last_char_result", lastCharacter)
 	tflog.Debug(ctx, fmt.Sprintf("Input string parameter \"%s\" last character is \"%s\"", inputString, lastCharacter))
 

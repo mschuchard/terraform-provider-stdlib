@@ -78,10 +78,6 @@ func (_ *hasValueDataSource) Read(ctx context.Context, req datasource.ReadReques
 		return
 	}
 
-	// provide debug logging
-	ctx = tflog.SetField(ctx, "stdlib_has_value_value", valueCheck)
-	ctx = tflog.SetField(ctx, "stdlib_has_value_map", inputMap)
-
 	// assign values of map and check input value's existence
 	mapValues := maps.Values(inputMap)
 	valueExists := slices.Contains(mapValues, valueCheck)

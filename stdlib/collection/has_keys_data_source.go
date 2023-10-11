@@ -99,11 +99,6 @@ func (_ *hasKeysDataSource) Read(ctx context.Context, req datasource.ReadRequest
 		all = state.All.ValueBool()
 	}
 
-	// provide debug logging
-	ctx = tflog.SetField(ctx, "stdlib_has_keys_keys", keysCheck)
-	ctx = tflog.SetField(ctx, "stdlib_has_keys_map", inputMap)
-	ctx = tflog.SetField(ctx, "stdlib_has_keys_all", all)
-
 	// switch between any of the keys or all of the keys
 	if all {
 		// assume all of the keys exist until single check proves otherwise
