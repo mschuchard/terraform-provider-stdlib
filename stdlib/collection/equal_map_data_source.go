@@ -9,6 +9,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"golang.org/x/exp/maps" // TODO: 1.21 migrate
+
+	"github.com/mschuchard/terraform-provider-stdlib/internal"
 )
 
 // ensure the implementation satisfies the expected interfaces
@@ -24,9 +26,10 @@ type equalMapDataSource struct{}
 
 // maps the data source schema data to the model
 type equalMapDataSourceModel struct {
-	MapOne types.Map  `tfsdk:"map_one"`
-	MapTwo types.Map  `tfsdk:"map_two"`
-	Result types.Bool `tfsdk:"result"`
+	ID     types.String `tfsdk:"id"`
+	MapOne types.Map    `tfsdk:"map_one"`
+	MapTwo types.Map    `tfsdk:"map_two"`
+	Result types.Bool   `tfsdk:"result"`
 }
 
 // data source metadata
@@ -38,6 +41,7 @@ func (_ *equalMapDataSource) Metadata(_ context.Context, req datasource.Metadata
 func (_ *equalMapDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
+			"id": util.IDStringAttribute(),
 			"map_one": schema.MapAttribute{
 				Description: "First input map parameter to check for equality with the second.",
 				ElementType: types.StringType,
@@ -74,6 +78,8 @@ func (_ *equalMapDataSource) Read(ctx context.Context, req datasource.ReadReques
 	// check equality of maps and assign to model field member
 	result := maps.Equal(mapOne, mapTwo)
 	state.Result = types.BoolValue(result)
+	// assign id as concatentation of first key of each map
+	state.ID = types.StringValue(maps.Keys(mapOne)[0] + maps.Keys(mapTwo)[0])
 
 	// provide debug logging
 	ctx = tflog.SetField(ctx, "stdlib_equal_map_map_one", mapOne)
