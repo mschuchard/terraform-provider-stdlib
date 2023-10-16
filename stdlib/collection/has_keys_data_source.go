@@ -97,32 +97,16 @@ func (_ *hasKeysDataSource) Read(ctx context.Context, req datasource.ReadRequest
 	var keyExists, all bool
 	if !state.All.IsNull() {
 		all = state.All.ValueBool()
+		// assume all or none of the keys exist until single check proves otherwise
+		keyExists = all
 	}
 
-	// switch between any of the keys or all of the keys
-	if all {
-		// assume all of the keys exist until single check proves otherwise
-		keyExists = true
-
-		// iterate through keys to check
-		for _, keyCheck := range keysCheck {
-			// check key's existence
-			if _, ok := inputMap[keyCheck]; !ok {
-				keyExists = false
-				break
-			}
-		}
-	} else {
-		// assume none of the keys exist until single check proves otherwise
-		keyExists = false
-
-		// iterate through keys to check
-		for _, keyCheck := range keysCheck {
-			// check key's existence
-			if _, ok := inputMap[keyCheck]; ok {
-				keyExists = true
-				break
-			}
+	// iterate through keys to check
+	for _, keyCheck := range keysCheck {
+		// check input key's existence
+		if _, ok := inputMap[keyCheck]; ok != all {
+			keyExists = !keyExists
+			break
 		}
 	}
 
