@@ -94,38 +94,22 @@ func (_ *hasValuesDataSource) Read(ctx context.Context, req datasource.ReadReque
 		return
 	}
 
-	// declare value existence and all vs. any, and then determine all value
+	// declare value existence and all vs. any, and then determine all value and expectation
 	var valueExists, all bool
 	if !state.All.IsNull() {
 		all = state.All.ValueBool()
+		// assume all or none of the values exist until single check proves otherwise
+		valueExists = all
 	}
 
 	// assign values of map
 	mapValues := maps.Values(inputMap)
-	// switch between any of the values or all of the values
-	if all {
-		// assume all of the values exist until single check proves otherwise
-		valueExists = true
-
-		// iterate through values to check
-		for _, value := range valuesCheck {
-			// check input values' existence
-			if !slices.Contains(mapValues, value) {
-				valueExists = false
-				break
-			}
-		}
-	} else {
-		// assume none of the values exist until single check proves otherwise
-		valueExists = false
-
-		// iterate through values to check
-		for _, value := range valuesCheck {
-			// check input values' existence
-			if slices.Contains(mapValues, value) {
-				valueExists = true
-				break
-			}
+	// iterate through values to check
+	for _, value := range valuesCheck {
+		// check input values' existence
+		if slices.Contains(mapValues, value) != all {
+			valueExists = !valueExists
+			break
 		}
 	}
 
