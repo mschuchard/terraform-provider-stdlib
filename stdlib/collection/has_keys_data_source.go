@@ -58,7 +58,6 @@ func (_ *hasKeysDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 			},
 			"map": schema.MapAttribute{
 				Description: "Input map parameter from which to check a key's existence.",
-				// TODO: allow non-strings with interface or generics
 				ElementType: types.StringType,
 				Required:    true,
 			},

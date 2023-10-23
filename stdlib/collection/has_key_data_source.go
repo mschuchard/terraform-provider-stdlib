@@ -47,7 +47,6 @@ func (_ *hasKeyDataSource) Schema(_ context.Context, _ datasource.SchemaRequest,
 			},
 			"map": schema.MapAttribute{
 				Description: "Input map parameter from which to check a key's existence.",
-				// TODO: allow non-strings with interface or generics
 				ElementType: types.StringType,
 				Required:    true,
 			},
@@ -71,7 +70,6 @@ func (_ *hasKeyDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 
 	// initialize map and key
 	keyCheck := state.Key.ValueString()
-	// TODO: allow non-strings with interface or generics
 	var inputMap map[string]string
 	resp.Diagnostics.Append(state.Map.ElementsAs(ctx, &inputMap, false)...)
 	if resp.Diagnostics.HasError() {

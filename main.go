@@ -12,7 +12,7 @@ import (
 // provider documentation generation.
 //go:generate tfplugindocs generate --provider-name stdlib
 
-const version string = "1.1.0"
+const version string = "1.1.1"
 
 func main() {
 	// start provider server

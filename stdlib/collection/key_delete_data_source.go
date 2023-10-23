@@ -49,14 +49,12 @@ func (_ *keyDeleteDataSource) Schema(_ context.Context, _ datasource.SchemaReque
 			},
 			"map": schema.MapAttribute{
 				Description: "Input map parameter from which to delete a key.",
-				// TODO: allow non-strings with interface or generics
 				ElementType: types.StringType,
 				Required:    true,
 			},
 			"result": schema.MapAttribute{
 				Computed:    true,
 				Description: "Function result storing the map with the key removed.",
-				// TODO: allow non-strings with interface or generics
 				ElementType: types.StringType,
 			},
 		},
@@ -80,7 +78,6 @@ func (_ *keyDeleteDataSource) ValidateConfig(ctx context.Context, req datasource
 
 	// initialize map and key
 	deleteKey := state.Key.ValueString()
-	// TODO: allow non-strings with interface or generics
 	var inputMap map[string]string
 	resp.Diagnostics.Append(state.Map.ElementsAs(ctx, &inputMap, false)...)
 	if resp.Diagnostics.HasError() {
@@ -109,7 +106,6 @@ func (_ *keyDeleteDataSource) Read(ctx context.Context, req datasource.ReadReque
 
 	// initialize map and key
 	deleteKey := state.Key.ValueString()
-	// TODO: allow non-strings with interface or generics
 	var inputMap map[string]string
 	resp.Diagnostics.Append(state.Map.ElementsAs(ctx, &inputMap, false)...)
 	if resp.Diagnostics.HasError() {
@@ -136,7 +132,6 @@ func (_ *keyDeleteDataSource) Read(ctx context.Context, req datasource.ReadReque
 
 	// store resultant map in state
 	state.ID = types.StringValue(deleteKey)
-	// TODO: allow non-strings with interface or generics
 	var mapConvertDiags diag.Diagnostics
 	state.Result, mapConvertDiags = types.MapValueFrom(ctx, types.StringType, inputMap)
 	resp.Diagnostics.Append(mapConvertDiags...)

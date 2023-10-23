@@ -1,4 +1,4 @@
-### 1.1.1
+### 1.1.1 (Next)
 - Add `all` parameter to `has_keys` and `has_values`.
 
 ### 1.1.0

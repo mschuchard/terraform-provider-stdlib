@@ -11,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
-	"golang.org/x/exp/maps" // TODO: 1.21 migrate
+	"golang.org/x/exp/maps"
 
 	"github.com/mschuchard/terraform-provider-stdlib/internal"
 )
@@ -44,7 +44,6 @@ func (_ *flattenMapDataSource) Schema(_ context.Context, _ datasource.SchemaRequ
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
-			// TODO: also support set
 			"param": schema.ListAttribute{
 				Description: "Input list of maps to flatten.",
 				ElementType: types.MapType{
@@ -58,7 +57,6 @@ func (_ *flattenMapDataSource) Schema(_ context.Context, _ datasource.SchemaRequ
 			"result": schema.MapAttribute{
 				Computed:    true,
 				Description: "Function result storing the flattened map.",
-				// TODO: allow non-strings with interface or generics
 				ElementType: types.StringType,
 			},
 		},
@@ -66,7 +64,6 @@ func (_ *flattenMapDataSource) Schema(_ context.Context, _ datasource.SchemaRequ
 	}
 }
 
-// TODO: need to revisit when plugin framework supports list(map) in the schema
 // read executes the actual function
 func (_ *flattenMapDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	// determine input values
@@ -76,7 +73,6 @@ func (_ *flattenMapDataSource) Read(ctx context.Context, req datasource.ReadRequ
 		return
 	}
 
-	// TODO: allow non-strings with interface or generics
 	// initialize input list of maps, nested maps, and output map
 	var inputList []types.Map
 	resp.Diagnostics.Append(state.Param.ElementsAs(ctx, &inputList, false)...)
@@ -95,7 +91,6 @@ func (_ *flattenMapDataSource) Read(ctx context.Context, req datasource.ReadRequ
 
 	// store number of entries of output map as id
 	state.ID = types.StringValue(fmt.Sprint(len(outputMap)))
-	// TODO: allow non-strings with interface or generics
 	var mapConvertDiags diag.Diagnostics
 	state.Result, mapConvertDiags = types.MapValueFrom(ctx, types.StringType, outputMap)
 	resp.Diagnostics.Append(mapConvertDiags...)
