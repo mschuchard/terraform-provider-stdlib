@@ -83,9 +83,13 @@ func (_ *flattenMapDataSource) Read(ctx context.Context, req datasource.ReadRequ
 	var nestedMap map[string]string
 	outputMap := map[string]string{}
 
-	// iterate through list of maps and merge the maps into new map
+	// iterate through list of maps, convert each map, and merge each map into new map
 	for _, nestedTFMap := range inputList {
-		nestedTFMap.ElementsAs(ctx, &nestedMap, false)
+		resp.Diagnostics.Append(nestedTFMap.ElementsAs(ctx, &nestedMap, false)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
+
 		maps.Copy(outputMap, nestedMap)
 	}
 
