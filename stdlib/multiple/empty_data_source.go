@@ -2,7 +2,6 @@ package multiple
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
@@ -100,28 +99,53 @@ func (_ *emptyDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 	if !state.ListParam.IsNull() {
 		// convert list param
 		var listParam []string
+		resp.Diagnostics.Append(state.ListParam.ElementsAs(ctx, &listParam, false)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
 
-		// check if list param is empty
+		// check if list param is empty and set state id
+		if len(listParam) == 0 {
+			result = true
+			state.ID = types.StringValue("zero")
+		} else {
+			state.ID = types.StringValue(listParam[0])
+		}
 	} else if !state.MapParam.IsNull() {
 		// convert map param
 		var mapParam map[string]string
+		resp.Diagnostics.Append(state.MapParam.ElementsAs(ctx, &mapParam, false)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
 
-		// check if map is empty
-
-		// set state id (TODO: "zero" if empty)
-		state.ID = types.StringValue(maps.Keys(mapParam)[0])
-
+		// check if map is empty and set state id
+		if len(mapParam) == 0 {
+			result = true
+			state.ID = types.StringValue("zero")
+		} else {
+			state.ID = types.StringValue(maps.Keys(mapParam)[0])
+		}
 	} else if !state.SetParam.IsNull() {
 		// convert set param
 		var setParam []string
+		resp.Diagnostics.Append(state.SetParam.ElementsAs(ctx, &setParam, false)...)
+		if resp.Diagnostics.HasError() {
+			return
+		}
 
-		// check if set param is empty
-
+		// check if set param is empty and set state id
+		if len(setParam) == 0 {
+			result = true
+			state.ID = types.StringValue("zero")
+		} else {
+			state.ID = types.StringValue(setParam[0])
+		}
 	} else if !state.StringParam.IsNull() && len(state.StringParam.ValueString()) == 0 {
 		// check if string param is empty
 		result = true
 		// set state id
-		state.ID = state.StringParam.ValueString()
+		state.ID = state.StringParam
 	}
 
 	// convert result of emptiness test and assign to model field member
