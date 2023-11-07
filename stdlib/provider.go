@@ -9,6 +9,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 
 	"github.com/mschuchard/terraform-provider-stdlib/stdlib/collection"
+	"github.com/mschuchard/terraform-provider-stdlib/stdlib/multiple"
 	"github.com/mschuchard/terraform-provider-stdlib/stdlib/string"
 )
 
@@ -60,6 +61,7 @@ func (_ *stdlibProvider) DataSources(_ context.Context) []func() datasource.Data
 		collection.NewHasValuesDataSource,
 		collection.NewKeyDeleteDataSource,
 		collection.NewKeysDeleteDataSource,
+		multiple.NewEmptyDataSource,
 		stringfunc.NewLastCharDataSource,
 	}
 }

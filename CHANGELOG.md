@@ -1,3 +1,6 @@
+### 1.2.0 (Next)
+- Add `empty` function.
+
 ### 1.1.1
 - Add `all` parameter to `has_keys` and `has_values`.
 
