@@ -27,8 +27,8 @@ type compareListDataSource struct{}
 // maps the data source schema data to the model
 type compareListDataSourceModel struct {
 	ID      types.String `tfsdk:"id"`
-	ListOne types.Map    `tfsdk:"list_one"`
-	ListTwo types.Map    `tfsdk:"list_two"`
+	ListOne types.List   `tfsdk:"list_one"`
+	ListTwo types.List   `tfsdk:"list_two"`
 	Result  types.Int64  `tfsdk:"result"`
 }
 
@@ -52,7 +52,7 @@ func (_ *compareListDataSource) Schema(_ context.Context, _ datasource.SchemaReq
 				ElementType: types.StringType,
 				Required:    true,
 			},
-			"result": schema.BoolAttribute{
+			"result": schema.Int64Attribute{
 				Computed:    true,
 				Description: "Function result storing whether the two maps are equal.",
 			},

@@ -53,6 +53,7 @@ func (_ *stdlibProvider) Configure(_ context.Context, _ provider.ConfigureReques
 // define the data sources implemented in the provider
 func (_ *stdlibProvider) DataSources(_ context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
+		collection.NewCompareListDataSource,
 		collection.NewEqualMapDataSource,
 		collection.NewFlattenMapDataSource,
 		collection.NewHasKeyDataSource,
