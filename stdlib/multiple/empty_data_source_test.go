@@ -8,7 +8,7 @@ import (
 	"github.com/mschuchard/terraform-provider-stdlib/stdlib"
 )
 
-func TestAccEmptyDataSource(test *testing.T) {
+func TestAccEmpty(test *testing.T) {
 	// test basic keys existence in map
 	resource.ParallelTest(test, resource.TestCase{
 		ProtoV6ProviderFactories: provider.TestAccProtoV6ProviderFactories,

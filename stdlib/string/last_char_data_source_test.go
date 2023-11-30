@@ -9,7 +9,7 @@ import (
 	"github.com/mschuchard/terraform-provider-stdlib/stdlib"
 )
 
-func TestAccLastCharDataSource(test *testing.T) {
+func TestAccLastChar(test *testing.T) {
 	// init input param
 	param := "hello"
 	numChars := 3

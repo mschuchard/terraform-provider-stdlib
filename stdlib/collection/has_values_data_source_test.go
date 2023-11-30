@@ -8,7 +8,7 @@ import (
 	"github.com/mschuchard/terraform-provider-stdlib/stdlib"
 )
 
-func TestAccHasValuesDataSource(test *testing.T) {
+func TestAccHasValues(test *testing.T) {
 	// test basic values existence in map
 	resource.ParallelTest(test, resource.TestCase{
 		ProtoV6ProviderFactories: provider.TestAccProtoV6ProviderFactories,

@@ -9,7 +9,7 @@ import (
 	"github.com/mschuchard/terraform-provider-stdlib/stdlib"
 )
 
-func TestAccKeysDeleteDataSource(test *testing.T) {
+func TestAccKeysDelete(test *testing.T) {
 	// invoke test
 	resource.ParallelTest(test, resource.TestCase{
 		ProtoV6ProviderFactories: provider.TestAccProtoV6ProviderFactories,

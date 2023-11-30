@@ -9,7 +9,7 @@ import (
 	"github.com/mschuchard/terraform-provider-stdlib/stdlib"
 )
 
-func TestAccKeyDeleteDataSource(test *testing.T) {
+func TestAccKeyDelete(test *testing.T) {
 	// init input params
 	key := "foo"
 

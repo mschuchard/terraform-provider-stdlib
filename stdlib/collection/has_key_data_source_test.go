@@ -10,7 +10,7 @@ import (
 	"github.com/mschuchard/terraform-provider-stdlib/stdlib"
 )
 
-func TestAccHasKeyDataSource(test *testing.T) {
+func TestAccHasKey(test *testing.T) {
 	// initialize test params
 	resourceConfig := `data "stdlib_has_key" "test_%s" {
     map = { "hello" = "world", "foo" = "bar" }

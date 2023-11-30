@@ -8,7 +8,7 @@ import (
 	"github.com/mschuchard/terraform-provider-stdlib/stdlib"
 )
 
-func TestAccCompareListDataSource(test *testing.T) {
+func TestAccCompareList(test *testing.T) {
 	// test basic keys existence in map
 	resource.ParallelTest(test, resource.TestCase{
 		ProtoV6ProviderFactories: provider.TestAccProtoV6ProviderFactories,

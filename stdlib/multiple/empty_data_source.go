@@ -51,7 +51,7 @@ func (_ *emptyDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, 
 				ElementType: types.StringType,
 				Optional:    true,
 				// validate that at least one, but no more than one input param is specified
-				// this attribute is implicitly included in path expressions slice
+				// this attribute is implicitly included in the following path expressions slice
 				Validators: []validator.List{
 					listvalidator.ExactlyOneOf(path.Expressions{
 						path.MatchRoot("map_param"),
@@ -92,7 +92,7 @@ func (_ *emptyDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 		return
 	}
 
-	// initialize result
+	// initialize default result
 	result := false
 
 	// conditionals for which type was input
