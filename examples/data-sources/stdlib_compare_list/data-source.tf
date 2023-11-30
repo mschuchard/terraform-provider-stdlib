@@ -14,6 +14,7 @@ data "stdlib_compare_list" "equals" {
 
 # Returns a comparison between two lists.
 data "stdlib_compare_list" "greater" {
-  set_param = ["no"]
+  list_one = ["super", "hyper", "turbo"]
+  list_two = ["pizza", "cake"]
 }
 # => 1
