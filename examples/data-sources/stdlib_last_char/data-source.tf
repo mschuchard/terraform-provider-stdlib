@@ -1,4 +1,4 @@
-# Return the last character of a string;
+# Return the last character of a string:
 data "stdlib_last_char" "hello" {
   param = "hello"
 }

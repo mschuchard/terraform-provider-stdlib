@@ -1,5 +1,5 @@
 ### 1.2.0 (Next)
-- Add `empty` and `compare_list` functions.
+- Add `empty`, `compare_list`, and `last_element` functions.
 
 ### 1.1.1
 - Add `all` parameter to `has_keys` and `has_values`.

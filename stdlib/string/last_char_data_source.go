@@ -70,7 +70,7 @@ func (_ *lastCharDataSource) Schema(_ context.Context, _ datasource.SchemaReques
 
 // read executes the actual function
 func (_ *lastCharDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	// determine input param string value
+	// determine input values
 	var state lastCharDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)
 	if resp.Diagnostics.HasError() {
