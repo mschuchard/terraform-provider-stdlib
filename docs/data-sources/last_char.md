@@ -13,7 +13,7 @@ Return the last character(s) of an input string parameter.
 ## Example Usage
 
 ```terraform
-# Return the last character of a string;
+# Return the last character of a string:
 data "stdlib_last_char" "hello" {
   param = "hello"
 }
