@@ -1,4 +1,4 @@
-### 1.2.0 (Next)
+### 1.2.0
 - Add `empty`, `compare_list`, and `last_element` functions.
 
 ### 1.1.1
