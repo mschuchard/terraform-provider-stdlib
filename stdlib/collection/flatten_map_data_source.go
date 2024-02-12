@@ -3,6 +3,7 @@ package collection
 import (
 	"context"
 	"fmt"
+	"golang.org/x/exp/maps"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
@@ -11,7 +12,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
-	"golang.org/x/exp/maps"
 
 	"github.com/mschuchard/terraform-provider-stdlib/internal"
 )

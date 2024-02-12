@@ -1,6 +1,6 @@
 module github.com/mschuchard/terraform-provider-stdlib
 
-go 1.20
+go 1.21
 
 require (
 	github.com/hashicorp/terraform-plugin-framework v1.5.0

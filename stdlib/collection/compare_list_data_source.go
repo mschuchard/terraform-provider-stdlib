@@ -3,12 +3,12 @@ package collection
 import (
 	"context"
 	"fmt"
+	"slices"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
-	"golang.org/x/exp/slices"
 
 	"github.com/mschuchard/terraform-provider-stdlib/internal"
 )

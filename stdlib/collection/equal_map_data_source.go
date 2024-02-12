@@ -3,12 +3,12 @@ package collection
 import (
 	"context"
 	"fmt"
+	"golang.org/x/exp/maps"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
-	"golang.org/x/exp/maps"
 
 	"github.com/mschuchard/terraform-provider-stdlib/internal"
 )
