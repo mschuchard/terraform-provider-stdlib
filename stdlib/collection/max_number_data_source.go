@@ -51,9 +51,8 @@ func (_ *maxNumberDataSource) Schema(_ context.Context, _ datasource.SchemaReque
 					listvalidator.SizeAtLeast(1),
 				},
 			},
-			"result": schema.ListAttribute{
+			"result": schema.Float64Attribute{
 				Computed:    true,
-				ElementType: types.Float64Type,
 				Description: "Function result storing the maximum number from the element(s) of the input list.",
 			},
 		},

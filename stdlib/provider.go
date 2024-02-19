@@ -63,6 +63,7 @@ func (_ *stdlibProvider) DataSources(_ context.Context) []func() datasource.Data
 		collection.NewKeyDeleteDataSource,
 		collection.NewKeysDeleteDataSource,
 		collection.NewLastElementDataSource,
+		collection.NewMaxNumberDataSource,
 		multiple.NewEmptyDataSource,
 		stringfunc.NewLastCharDataSource,
 	}
