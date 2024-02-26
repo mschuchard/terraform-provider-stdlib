@@ -1,4 +1,5 @@
 ### 1.3.0 (Next)
+- Add `max_number` and `max_string` functions.
 
 ### 1.2.0
 - Add `empty`, `compare_list`, and `last_element` functions.

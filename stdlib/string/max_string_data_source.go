@@ -53,10 +53,10 @@ func (_ *maxStringDataSource) Schema(_ context.Context, _ datasource.SchemaReque
 			},
 			"result": schema.StringAttribute{
 				Computed:    true,
-				Description: "Function result storing the maximum string from the element(s) of the input list.",
+				Description: "Function result storing the maximum string (last by lexical ordering) from the element(s) of the input list.",
 			},
 		},
-		MarkdownDescription: "Return the maximum string from the elements of an input list parameter.",
+		MarkdownDescription: "Return the maximum string (last by lexical ordering) from the elements of an input list parameter.",
 	}
 }
 

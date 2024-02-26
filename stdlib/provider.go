@@ -66,6 +66,7 @@ func (_ *stdlibProvider) DataSources(_ context.Context) []func() datasource.Data
 		collection.NewMaxNumberDataSource,
 		multiple.NewEmptyDataSource,
 		stringfunc.NewLastCharDataSource,
+		stringfunc.NewMaxStringDataSource,
 	}
 }
 
