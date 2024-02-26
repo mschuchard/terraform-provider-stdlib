@@ -69,7 +69,7 @@ func (_ *maxNumberDataSource) Read(ctx context.Context, req datasource.ReadReque
 		return
 	}
 
-	// convert tf list to go slice, and initialize number of terminating elems
+	// convert tf list to go slice
 	var inputList []float64
 	resp.Diagnostics.Append(state.Param.ElementsAs(ctx, &inputList, false)...)
 
