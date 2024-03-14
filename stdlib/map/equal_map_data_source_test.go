@@ -1,4 +1,4 @@
-package collection_test
+package mapfunc_test
 
 import (
 	"testing"

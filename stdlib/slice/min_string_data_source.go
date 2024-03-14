@@ -1,4 +1,4 @@
-package stringfunc
+package slicefunc
 
 import (
 	"context"
@@ -16,35 +16,35 @@ import (
 )
 
 // ensure the implementation satisfies the expected interfaces
-var _ datasource.DataSource = &maxStringDataSource{}
+var _ datasource.DataSource = &minStringDataSource{}
 
 // helper pseudo-constructor to simplify provider server and testing implementation
-func NewMaxStringDataSource() datasource.DataSource {
-	return &maxStringDataSource{}
+func NewMinStringDataSource() datasource.DataSource {
+	return &minStringDataSource{}
 }
 
 // data source implementation
-type maxStringDataSource struct{}
+type minStringDataSource struct{}
 
 // maps the data source schema data to the model
-type maxStringDataSourceModel struct {
+type minStringDataSourceModel struct {
 	ID     types.String `tfsdk:"id"`
 	Param  types.List   `tfsdk:"param"`
 	Result types.String `tfsdk:"result"`
 }
 
 // data source metadata
-func (_ *maxStringDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_max_string"
+func (_ *minStringDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_min_string"
 }
 
 // define the provider-level schema for configuration data
-func (_ *maxStringDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (_ *minStringDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
 			"param": schema.ListAttribute{
-				Description: "Input list parameter for determining the maximum string.",
+				Description: "Input list parameter for determining the minimum string.",
 				ElementType: types.StringType,
 				Required:    true,
 				Validators: []validator.List{
@@ -53,17 +53,17 @@ func (_ *maxStringDataSource) Schema(_ context.Context, _ datasource.SchemaReque
 			},
 			"result": schema.StringAttribute{
 				Computed:    true,
-				Description: "Function result storing the maximum string (last by lexical ordering) from the element(s) of the input list.",
+				Description: "Function result storing the minimum string (first by lexical ordering) from the element(s) of the input list.",
 			},
 		},
-		MarkdownDescription: "Return the maximum string (last by lexical ordering) from the elements of an input list parameter.",
+		MarkdownDescription: "Return the minimum string (first by lexical ordering) from the elements of an input list parameter.",
 	}
 }
 
 // read executes the actual function
-func (_ *maxStringDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (_ *minStringDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	// determine input values
-	var state maxStringDataSourceModel
+	var state minStringDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)
 	if resp.Diagnostics.HasError() {
 		return
@@ -73,21 +73,21 @@ func (_ *maxStringDataSource) Read(ctx context.Context, req datasource.ReadReque
 	var inputList []string
 	resp.Diagnostics.Append(state.Param.ElementsAs(ctx, &inputList, false)...)
 
-	// determine maximum string element of slice
-	maxString := slices.Max(inputList)
+	// determine minimum string element of slice
+	minString := slices.Min(inputList)
 
 	// provide debug logging
-	ctx = tflog.SetField(ctx, "stdlib_max_string_result", maxString)
-	tflog.Debug(ctx, fmt.Sprintf("Input list parameter \"%v\" max string is \"%s\"", inputList, maxString))
+	ctx = tflog.SetField(ctx, "stdlib_min_string_result", minString)
+	tflog.Debug(ctx, fmt.Sprintf("Input list parameter \"%v\" min string is \"%s\"", inputList, minString))
 
-	// store maxString from element(s) of list in state
+	// store minString from element(s) of list in state
 	state.ID = types.StringValue(inputList[0])
-	state.Result = types.StringValue(maxString)
+	state.Result = types.StringValue(minString)
 
 	// set state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &state)...)
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	tflog.Info(ctx, "Determined maximum string from element(s) of list", map[string]any{"success": true})
+	tflog.Info(ctx, "Determined minimum string from element(s) of list", map[string]any{"success": true})
 }

@@ -1,4 +1,4 @@
-package collection_test
+package mapfunc_test
 
 import (
 	"fmt"
@@ -10,36 +10,36 @@ import (
 	"github.com/mschuchard/terraform-provider-stdlib/stdlib"
 )
 
-func TestAccHasKey(test *testing.T) {
+func TestAccHasValue(test *testing.T) {
 	// initialize test params
-	resourceConfig := `data "stdlib_has_key" "test_%s" {
+	resourceConfig := `data "stdlib_has_value" "test_%s" {
     map = { "hello" = "world", "foo" = "bar" }
-    key = "%s"
+    value = "%s"
   }`
-	paramsResults := map[string]bool{"foo": true, "bar": false}
+	paramsResults := map[string]bool{"foo": false, "bar": true}
 
 	// iterate through tests
-	for key, result := range paramsResults {
+	for value, result := range paramsResults {
 		// init data source name for this iteration
-		dataSourceName := fmt.Sprintf("data.stdlib_has_key.test_%s", key)
+		dataSourceName := fmt.Sprintf("data.stdlib_has_value.test_%s", value)
 
 		// invoke test
 		resource.Test(test, resource.TestCase{
 			ProtoV6ProviderFactories: provider.TestAccProtoV6ProviderFactories,
 			Steps: []resource.TestStep{
-				// test basic key existence in map
+				// test basic value existence in map
 				{
-					Config: fmt.Sprintf(resourceConfig, key, key),
+					Config: fmt.Sprintf(resourceConfig, value, value),
 					Check: resource.ComposeAggregateTestCheckFunc(
 						// verify input params are stored correctly
-						resource.TestCheckResourceAttr(dataSourceName, "key", key),
+						resource.TestCheckResourceAttr(dataSourceName, "value", value),
 						resource.TestCheckResourceAttr(dataSourceName, "map.%", "2"),
 						resource.TestCheckResourceAttr(dataSourceName, "map.hello", "world"),
 						resource.TestCheckResourceAttr(dataSourceName, "map.foo", "bar"),
-						// verify key existence result is stored correctly
+						// verify value existence result is stored correctly
 						resource.TestCheckResourceAttr(dataSourceName, "result", strconv.FormatBool(result)),
 						// verify id stored correctly
-						resource.TestCheckResourceAttr(dataSourceName, "id", key),
+						resource.TestCheckResourceAttr(dataSourceName, "id", value),
 					),
 				},
 			},

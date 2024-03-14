@@ -1,4 +1,4 @@
-package stringfunc_test
+package slicefunc_test
 
 import (
 	"testing"

@@ -8,8 +8,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 
-	"github.com/mschuchard/terraform-provider-stdlib/stdlib/collection"
+	"github.com/mschuchard/terraform-provider-stdlib/stdlib/map"
 	"github.com/mschuchard/terraform-provider-stdlib/stdlib/multiple"
+	"github.com/mschuchard/terraform-provider-stdlib/stdlib/slice"
 	"github.com/mschuchard/terraform-provider-stdlib/stdlib/string"
 )
 
@@ -53,22 +54,22 @@ func (_ *stdlibProvider) Configure(_ context.Context, _ provider.ConfigureReques
 // define the data sources implemented in the provider
 func (_ *stdlibProvider) DataSources(_ context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
-		collection.NewCompareListDataSource,
-		collection.NewEqualMapDataSource,
-		collection.NewFlattenMapDataSource,
-		collection.NewHasKeyDataSource,
-		collection.NewHasKeysDataSource,
-		collection.NewHasValueDataSource,
-		collection.NewHasValuesDataSource,
-		collection.NewKeyDeleteDataSource,
-		collection.NewKeysDeleteDataSource,
-		collection.NewLastElementDataSource,
-		collection.NewMaxNumberDataSource,
-		collection.NewMinNumberDataSource,
+		slicefunc.NewCompareListDataSource,
+		mapfunc.NewEqualMapDataSource,
+		mapfunc.NewFlattenMapDataSource,
+		mapfunc.NewHasKeyDataSource,
+		mapfunc.NewHasKeysDataSource,
+		mapfunc.NewHasValueDataSource,
+		mapfunc.NewHasValuesDataSource,
+		mapfunc.NewKeyDeleteDataSource,
+		mapfunc.NewKeysDeleteDataSource,
+		slicefunc.NewLastElementDataSource,
+		slicefunc.NewMaxNumberDataSource,
+		slicefunc.NewMaxStringDataSource,
+		slicefunc.NewMinNumberDataSource,
+		slicefunc.NewMinStringDataSource,
 		multiple.NewEmptyDataSource,
 		stringfunc.NewLastCharDataSource,
-		stringfunc.NewMaxStringDataSource,
-		stringfunc.NewMinStringDataSource,
 	}
 }
 

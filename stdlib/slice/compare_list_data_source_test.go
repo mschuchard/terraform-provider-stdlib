@@ -1,4 +1,4 @@
-package collection_test
+package slicefunc_test
 
 import (
 	"testing"
