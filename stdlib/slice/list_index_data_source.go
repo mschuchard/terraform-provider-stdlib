@@ -56,9 +56,8 @@ func (_ *listIndexDataSource) Schema(_ context.Context, _ datasource.SchemaReque
 				Description: "Element in the list to determine its index.",
 				Required:    true,
 			},
-			"result": schema.ListAttribute{
+			"result": schema.Int64Attribute{
 				Computed:    true,
-				ElementType: types.StringType,
 				Description: "Function result storing the index of the element.",
 			},
 		},
