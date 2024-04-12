@@ -72,10 +72,9 @@ func (_ *insertDataSource) Schema(_ context.Context, _ datasource.SchemaRequest,
 				Computed:    true,
 				Description: "The resulting list with the inserted values.",
 				ElementType: types.StringType,
-				Required:    true,
 			},
 		},
-		MarkdownDescription: "Return the list where values are inserted into a list at a specific index. The elments at the index in the original list are shifted up to make room. This function errors if the specified index is out of range for the list.",
+		MarkdownDescription: "Return the list where values are inserted into a list at a specific index. The elments at the index in the original list are shifted up to make room. This function errors if the specified index is out of range for the list (length + 1).",
 	}
 }
 
@@ -95,11 +94,11 @@ func (_ *insertDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 	index := state.Index.ValueInt64()
 
 	// determine if index is out of bounds for slice
-	if int(index) >= len(listParam) {
+	if int(index) > len(listParam) {
 		resp.Diagnostics.AddAttributeError(
 			path.Root("index"),
 			"Invalid Value",
-			"The index at which to insert the values cannot be greater than or equal to the length of the list into which the values will be inserted as that would be out of range.",
+			"The index at which to insert the values cannot be greater than the length of the list into which the values will be inserted as that would be out of range.",
 		)
 		return
 	}

@@ -57,7 +57,7 @@ func (_ *equalMapDataSource) Schema(_ context.Context, _ datasource.SchemaReques
 				Description: "Function result storing whether the two maps are equal.",
 			},
 		},
-		MarkdownDescription: "Return whether the two input map parameters contain the same key-value pairs (equality check). The input maps must be single-level",
+		MarkdownDescription: "Return whether the two input map parameters contain the same key-value pairs (equality check). The input maps must be single-level.",
 	}
 }
 

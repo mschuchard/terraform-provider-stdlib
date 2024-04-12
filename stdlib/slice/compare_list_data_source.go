@@ -57,7 +57,7 @@ func (_ *compareListDataSource) Schema(_ context.Context, _ datasource.SchemaReq
 				Description: "Function result storing whether the two maps are equal.",
 			},
 		},
-		MarkdownDescription: "Returns a comparison between two lists. The elements are compared sequentially, starting at index 0, until one element is not equal to the other. The result of comparing the first non-matching elements is returned. If both lists are equal until one of them ends, then the shorter list is considered less than the longer one. The result is 0 if list_one == list_two, -1 if list_one < list_two, and +1 if list_one > list_two. The input lists must be single-level",
+		MarkdownDescription: "Returns a comparison between two lists. The elements are compared sequentially, starting at index 0, until one element is not equal to the other. The result of comparing the first non-matching elements is returned. If both lists are equal until one of them ends, then the shorter list is considered less than the longer one. The result is 0 if list_one == list_two, -1 if list_one < list_two, and +1 if list_one > list_two. The input lists must be single-level.",
 	}
 }
 
