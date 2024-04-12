@@ -9,6 +9,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/diag"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
@@ -29,11 +31,11 @@ type insertDataSource struct{}
 
 // maps the data source schema data to the model
 type insertDataSourceModel struct {
-	ID          types.String `tfsdk:"id"`
-	InsertParam types.List   `tfsdk:"insert_values"`
-	Index       types.Int64  `tfsdk:"index"`
-	ListParam   types.List   `tfsdk:"list_param"`
-	Result      types.List   `tfsdk:"result"`
+	ID           types.String `tfsdk:"id"`
+	Index        types.Int64  `tfsdk:"index"`
+	InsertValues types.List   `tfsdk:"insert_values"`
+	ListParam    types.List   `tfsdk:"list_param"`
+	Result       types.List   `tfsdk:"result"`
 }
 
 // data source metadata
@@ -85,4 +87,42 @@ func (_ *insertDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	// convert tf list to go slice and tf string to go string
+	var listParam, insertValues []string
+	resp.Diagnostics.Append(state.ListParam.ElementsAs(ctx, &listParam, false)...)
+	resp.Diagnostics.Append(state.InsertValues.ElementsAs(ctx, &insertValues, false)...)
+	index := state.Index.ValueInt64()
+
+	// determine if index is out of bounds for slice
+	if int(index) >= len(listParam) {
+		resp.Diagnostics.AddAttributeError(
+			path.Root("index"),
+			"Invalid Value",
+			"The index at which to insert the values cannot be greater than or equal to the length of the list into which the values will be inserted as that would be out of range.",
+		)
+		return
+	}
+
+	// insert values into list at index
+	result := slices.Insert(listParam, int(index), insertValues...)
+
+	// provide debug logging
+	ctx = tflog.SetField(ctx, "stdlib_insert_result", result)
+	tflog.Debug(ctx, fmt.Sprintf("Values \"%v\" inserted into \"%v\" at index \"%d\"", insertValues, listParam, index))
+	tflog.Debug(ctx, fmt.Sprintf("Resulting list is \"%s\"", result))
+
+	// store number of entries of output map as id
+	state.ID = types.StringValue(listParam[0])
+	// store list with values inserted at index in state
+	var listConvertDiags diag.Diagnostics
+	state.Result, listConvertDiags = types.ListValueFrom(ctx, types.StringType, result)
+	resp.Diagnostics.Append(listConvertDiags...)
+
+	// set state
+	resp.Diagnostics.Append(resp.State.Set(ctx, &state)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	tflog.Info(ctx, "Determined list with values inserted at index", map[string]any{"success": true})
 }
