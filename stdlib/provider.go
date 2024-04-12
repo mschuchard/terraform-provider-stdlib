@@ -63,6 +63,7 @@ func (_ *stdlibProvider) DataSources(_ context.Context) []func() datasource.Data
 		mapfunc.NewHasValuesDataSource,
 		mapfunc.NewKeyDeleteDataSource,
 		mapfunc.NewKeysDeleteDataSource,
+		slicefunc.NewInsertDataSource,
 		slicefunc.NewLastElementDataSource,
 		slicefunc.NewListIndexDataSource,
 		slicefunc.NewMaxNumberDataSource,
