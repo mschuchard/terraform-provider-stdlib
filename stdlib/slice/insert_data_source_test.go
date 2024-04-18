@@ -13,7 +13,7 @@ func TestAccInsert(test *testing.T) {
 	resource.ParallelTest(test, resource.TestCase{
 		ProtoV6ProviderFactories: provider.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
-			// test list element index
+			// test list values insert
 			{
 				Config: `data "stdlib_insert" "test" {
 				  list_param    = ["one", "two", "three"]

@@ -58,7 +58,7 @@ func (_ *sortListDataSource) Schema(_ context.Context, _ datasource.SchemaReques
 				ElementType: types.StringType,
 			},
 		},
-		MarkdownDescription: "Return the list where values are sorted in ascending order.",
+		MarkdownDescription: "Return the list where values are sorted in ascending order. Note that the Terraform 'types' has issues converting some numbers for comparisons such that e.g. 49 will be sorted before 5 due to 4 < 5, but 45 would be correctly sorted before 49.",
 	}
 }
 
