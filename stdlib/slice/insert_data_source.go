@@ -111,7 +111,7 @@ func (_ *insertDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 	tflog.Debug(ctx, fmt.Sprintf("Values \"%v\" inserted into \"%v\" at index \"%d\"", insertValues, listParam, index))
 	tflog.Debug(ctx, fmt.Sprintf("Resulting list is \"%s\"", result))
 
-	// store number of entries of output map as id
+	// store zeroth element of input as id
 	state.ID = types.StringValue(listParam[0])
 	// store list with values inserted at index in state
 	var listConvertDiags diag.Diagnostics
