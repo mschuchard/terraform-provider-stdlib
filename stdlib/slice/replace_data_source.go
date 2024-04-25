@@ -74,7 +74,7 @@ func (_ *replaceDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 				ElementType: types.StringType,
 			},
 		},
-		MarkdownDescription: "Return the list where values are replaced at a specific element index. This function errors if the specified index plus the length of the replace_values list is out of range for the list (greater than length of list_param).",
+		MarkdownDescription: "Return the list where values are replaced at a specific element index. This function errors if the specified index plus the length of the replace_values list is out of range for the list (length of list_param + 1).",
 	}
 }
 
@@ -87,9 +87,43 @@ func (_ *replaceDataSource) Read(ctx context.Context, req datasource.ReadRequest
 		return
 	}
 
-	// convert tf list to go slice and tf string to go string
+	// convert tf list to go slice, tf int64 to go int, and determine end index
 	var listParam, replaceValues []string
 	resp.Diagnostics.Append(state.ListParam.ElementsAs(ctx, &listParam, false)...)
 	resp.Diagnostics.Append(state.ReplaceValues.ElementsAs(ctx, &replaceValues, false)...)
-	index := state.Index.ValueInt64()
+	index := int(state.Index.ValueInt64())
+	// s[i:j] element ordering and not s[i] so subtract 1
+	endIndex := index + len(replaceValues) - 1
+
+	// determine if end index is out of bounds for slice
+	if endIndex > len(listParam) {
+		resp.Diagnostics.AddAttributeError(
+			path.Root("index"),
+			"Invalid Value",
+			"The index at which to replace the values added to the length of the replacement values cannot be greater than the length of the list where the values will be replaced as that would be out of range.",
+		)
+		return
+	}
+
+	// replace values into list at index
+	result := slices.Replace(listParam, index, endIndex, replaceValues...)
+
+	// provide debug logging
+	ctx = tflog.SetField(ctx, "stdlib_replace_result", result)
+	tflog.Debug(ctx, fmt.Sprintf("Values \"%v\" replaced with \"%v\" at index \"%d\" to \"%d\"", listParam, replaceValues, index, endIndex))
+	tflog.Debug(ctx, fmt.Sprintf("Resulting list is \"%s\"", result))
+
+	// store zeroth element of input as id
+	state.ID = types.StringValue(listParam[0])
+	// store list with values replaced at index in state
+	var listConvertDiags diag.Diagnostics
+	state.Result, listConvertDiags = types.ListValueFrom(ctx, types.StringType, result)
+	resp.Diagnostics.Append(listConvertDiags...)
+
+	// set state
+	resp.Diagnostics.Append(resp.State.Set(ctx, &state)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	tflog.Info(ctx, "Determined list with values replaced at index", map[string]any{"success": true})
 }

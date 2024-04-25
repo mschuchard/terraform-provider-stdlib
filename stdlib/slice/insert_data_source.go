@@ -74,7 +74,7 @@ func (_ *insertDataSource) Schema(_ context.Context, _ datasource.SchemaRequest,
 				ElementType: types.StringType,
 			},
 		},
-		MarkdownDescription: "Return the list where values are inserted into a list at a specific index. The elments at the index in the original list are shifted up to make room. This function errors if the specified index is out of range for the list (length + 1).",
+		MarkdownDescription: "Return the list where values are inserted into a list at a specific index. The elements at the index in the original list are shifted up to make room. This function errors if the specified index is out of range for the list (length + 1).",
 	}
 }
 
