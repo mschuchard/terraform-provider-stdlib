@@ -1,5 +1,5 @@
 ### 1.4.0 (Next)
-- Add `insert` and `sort_list` functions.
+- Add `insert`, `replace`, and `sort_list` functions.
 
 ### 1.3.0
 - Add `list_index`, `max_number`, `min_number`, `max_string`, and `min_string` functions.

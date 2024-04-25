@@ -1,0 +1,76 @@
+package slicefunc_test
+
+import (
+	"testing"
+
+	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
+
+	"github.com/mschuchard/terraform-provider-stdlib/stdlib"
+)
+
+func TestAccReplace(test *testing.T) {
+	// invoke test
+	resource.ParallelTest(test, resource.TestCase{
+		ProtoV6ProviderFactories: provider.TestAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			// test list values replace
+			{
+				Config: `data "stdlib_replace" "test" {
+				  list_param     = ["foo", "two", "three"]
+				  replace_values = ["zero", "one"]
+				  index          = 0
+				}`,
+				Check: resource.ComposeAggregateTestCheckFunc(
+					// verify input param is stored correctly
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "list_param.#", "3"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "replace_values.#", "2"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "index", "0"),
+					// verify replaced values list result is stored correctly
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.#", "4"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.0", "zero"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.3", "three"),
+					// verify id stored correctly
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "id", "foo"),
+				),
+			},
+			{
+				Config: `data "stdlib_replace" "test" {
+				  list_param     = ["zero", "foo", "bar", "four", "five"]
+				  replace_values = ["one", "two", "three"]
+				  index          = 1
+				}`,
+				Check: resource.ComposeAggregateTestCheckFunc(
+					// verify input param is stored correctly
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "list_param.#", "5"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "replace_values.#", "3"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "index", "1"),
+					// verify replaced values list result is stored correctly
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.#", "6"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.0", "zero"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.5", "five"),
+					// verify id stored correctly
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "id", "zero"),
+				),
+			},
+			{
+				Config: `data "stdlib_replace" "test" {
+				  list_param     = ["zero", "foo", "bar"]
+				  replace_values = ["one", "two", "three"]
+				  index          = length(["zero", "foo", "bar"]) - (length(["one", "two", "three"]) - 1)
+				}`,
+				Check: resource.ComposeAggregateTestCheckFunc(
+					// verify input param is stored correctly
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "list_param.#", "3"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "replace_values.#", "3"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "index", "1"),
+					// verify replaced values list result is stored correctly
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.#", "4"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.0", "zero"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.3", "three"),
+					// verify id stored correctly
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "id", "zero"),
+				),
+			},
+		},
+	})
+}

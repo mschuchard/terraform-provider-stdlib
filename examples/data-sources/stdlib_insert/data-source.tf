@@ -14,7 +14,6 @@ data "stdlib_insert" "insert" {
 }
 # => ["zero", "one", "two", "three", "four", "five"]
 
-
 # Return the list with value appended (similar to concat).
 data "stdlib_insert" "append" {
   list_param    = ["zero", "one", "two"]

@@ -74,7 +74,7 @@ func (_ *replaceDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 				ElementType: types.StringType,
 			},
 		},
-		MarkdownDescription: "Return the list where values are replaced at a specific element index. This function errors if the specified index plus the length of the replace_values list is out of range for the list (length of list_param + 1).",
+		MarkdownDescription: "Return the list where values are replaced at a specific element index. This function errors if the specified index plus the length of the replace_values list is out of range for the list (length of list_param + 1). Note also that the terminating index is determined by generic slice s[i:j] in Go, and so it may be helpful in Terraform to consider the terminating index as beginning at element 1, and that the length of the resulting list will therefore be one greater than the original.",
 	}
 }
 
