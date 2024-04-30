@@ -3,12 +3,12 @@
 page_title: "stdlib_equal_map Data Source - stdlib"
 subcategory: ""
 description: |-
-  Return whether the two input map parameters contain the same key-value pairs (equality check). The input maps must be single-level
+  Return whether the two input map parameters contain the same key-value pairs (equality check). The input maps must be single-level.
 ---
 
 # stdlib_equal_map (Data Source)
 
-Return whether the two input map parameters contain the same key-value pairs (equality check). The input maps must be single-level
+Return whether the two input map parameters contain the same key-value pairs (equality check). The input maps must be single-level.
 
 ## Example Usage
 
