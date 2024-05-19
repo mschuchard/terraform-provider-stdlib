@@ -1,4 +1,4 @@
-### 1.4.0 (Next)
+### 1.4.0
 - Add `insert`, `replace`, and `sort_list` functions.
 
 ### 1.3.0
