@@ -31,6 +31,23 @@ func TestAccListIndex(test *testing.T) {
 			},
 			{
 				Config: `data "stdlib_list_index" "test" {
+				  list_param = ["a", "b", "c", "d"]
+				  elem_param = "c"
+				  sorted     = true
+				}`,
+				Check: resource.ComposeAggregateTestCheckFunc(
+					// verify input param is stored correctly
+					resource.TestCheckResourceAttr("data.stdlib_list_index.test", "list_param.#", "4"),
+					resource.TestCheckResourceAttr("data.stdlib_list_index.test", "elem_param", "c"),
+					resource.TestCheckResourceAttr("data.stdlib_list_index.test", "sorted", "true"),
+					// verify list index result is stored correctly
+					resource.TestCheckResourceAttr("data.stdlib_list_index.test", "result", "2"),
+					// verify id stored correctly
+					resource.TestCheckResourceAttr("data.stdlib_list_index.test", "id", "a"),
+				),
+			},
+			{
+				Config: `data "stdlib_list_index" "test" {
 		  		list_param = ["zero", "one", "two", "three", "two", "one", "zero"]
 		  		elem_param = "two"
 				}`,

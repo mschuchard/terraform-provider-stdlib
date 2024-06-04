@@ -86,17 +86,17 @@ func (_ *listIndexDataSource) Read(ctx context.Context, req datasource.ReadReque
 
 	// determine element index within slice
 	var listIndex int
-	var found bool
 
+	// use efficient binary search algorithm
 	if state.Sorted.ValueBool() {
-		// use efficient binary search algorithm
+		var found bool
 		listIndex, found = slices.BinarySearch(listParam, elemParam)
+
 		// mimic slices.Index behavior for consistency
 		if !found {
-			listIndex= -1
+			listIndex = -1
 		}
-	} else {
-		// use standard search algorithm
+	} else { // use standard search algorithm
 		listIndex = slices.Index(listParam, elemParam)
 	}
 
