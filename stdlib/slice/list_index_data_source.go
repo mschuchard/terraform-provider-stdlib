@@ -31,6 +31,7 @@ type listIndexDataSourceModel struct {
 	ID        types.String `tfsdk:"id"`
 	ElemParam types.String `tfsdk:"elem_param"`
 	ListParam types.List   `tfsdk:"list_param"`
+	Sorted    types.Bool   `tfsdk:"sorted"`
 	Result    types.Int64  `tfsdk:"result"`
 }
 
@@ -56,6 +57,10 @@ func (_ *listIndexDataSource) Schema(_ context.Context, _ datasource.SchemaReque
 				Description: "Element in the list to determine its index.",
 				Required:    true,
 			},
+			"sorted": schema.BoolAttribute{
+				Description: "Whether the list is sorted in ascending order or not (note: see `stdlib_sort_list`). If the list is sorted then the efficient binary search algorithm will be utilized, but the combination of sorting and searching may be less efficient overall in some situations.",
+				Optional:    true,
+			},
 			"result": schema.Int64Attribute{
 				Computed:    true,
 				Description: "Function result storing the index of the element.",
@@ -80,7 +85,20 @@ func (_ *listIndexDataSource) Read(ctx context.Context, req datasource.ReadReque
 	elemParam := state.ElemParam.ValueString()
 
 	// determine element index within slice
-	listIndex := slices.Index(listParam, elemParam)
+	var listIndex int
+	var found bool
+
+	if state.Sorted.ValueBool() {
+		// use efficient binary search algorithm
+		listIndex, found = slices.BinarySearch(listParam, elemParam)
+		// mimic slices.Index behavior for consistency
+		if !found {
+			listIndex= -1
+		}
+	} else {
+		// use standard search algorithm
+		listIndex = slices.Index(listParam, elemParam)
+	}
 
 	// provide debug logging
 	ctx = tflog.SetField(ctx, "stdlib_list_index_result", listIndex)
