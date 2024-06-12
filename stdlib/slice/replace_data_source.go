@@ -32,6 +32,7 @@ type replaceDataSource struct{}
 // maps the data source schema data to the model
 type replaceDataSourceModel struct {
 	ID            types.String `tfsdk:"id"`
+	EndIndex      types.Int64  `tfsdk:"end_index"`
 	Index         types.Int64  `tfsdk:"index"`
 	ReplaceValues types.List   `tfsdk:"replace_values"`
 	ListParam     types.List   `tfsdk:"list_param"`
@@ -48,6 +49,13 @@ func (_ *replaceDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
+			"end_index": schema.Int64Attribute{
+				Description: "The index in the list at which to end replacing values. If the difference between this and the index is greater than or equal to the length of the list of the replace_values, then the additional elements will all be zeroed. In most circumstances it will be better to not input a value for this parameter, and to allow the function to automatically deduce the end_index.",
+				Optional:    true,
+				Validators: []validator.Int64{
+					int64validator.AtLeast(1),
+				},
+			},
 			"list_param": schema.ListAttribute{
 				Description: "Input list parameter for which the values will be replaced.",
 				ElementType: types.StringType,
@@ -74,7 +82,7 @@ func (_ *replaceDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 				ElementType: types.StringType,
 			},
 		},
-		MarkdownDescription: "Return the list where values are replaced at a specific element index. This function errors if the specified index plus the length of the replace_values list is out of range for the list (length of list_param + 1). Note also that the terminating index is determined by generic slice s[i:j] in Go, and so it may be helpful in Terraform to consider the terminating index as beginning at element 1, and that the length of the resulting list will therefore be one greater than the original.",
+		MarkdownDescription: "Return the list where values are replaced at a specific element index. This function errors if the specified index plus the length of the replace_values list is out of range for the list (length of list_param + 1). Note also that the terminating index is determined by generic slice s[i:j] in Go, and so it may be helpful in Terraform to consider the terminating index as beginning at element 1 (does not apply to the the end_index input value), and that the length of the resulting list will therefore be one greater than the original.",
 	}
 }
 
@@ -87,13 +95,20 @@ func (_ *replaceDataSource) Read(ctx context.Context, req datasource.ReadRequest
 		return
 	}
 
-	// convert tf list to go slice, tf int64 to go int, and determine end index
+	// convert tf list to go slice, tf int64 to go int
 	var listParam, replaceValues []string
 	resp.Diagnostics.Append(state.ListParam.ElementsAs(ctx, &listParam, false)...)
 	resp.Diagnostics.Append(state.ReplaceValues.ElementsAs(ctx, &replaceValues, false)...)
 	index := int(state.Index.ValueInt64())
-	// s[i:j] element ordering and not s[i] so subtract 1
-	endIndex := index + len(replaceValues) - 1
+
+	// determine end_index
+	var endIndex int
+	if state.EndIndex.IsNull() {
+		// s[i:j] element ordering and not s[i] so subtract 1
+		endIndex = index + len(replaceValues) - 1
+	} else {
+		endIndex = int(state.EndIndex.ValueInt64()) + 1
+	}
 
 	// determine if end index is out of bounds for slice
 	if endIndex > len(listParam) {
