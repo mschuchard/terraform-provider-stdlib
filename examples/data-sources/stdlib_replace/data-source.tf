@@ -14,6 +14,15 @@ data "stdlib_replace" "replace" {
 }
 # => ["zero", "one", "two", "three", "four", "five"]
 
+# Return the list with middle values replaced and zeroed.
+data "stdlib_replace" "zeroed" {
+  list_param     = ["zero", "foo", "bar", "four", "five"]
+  replace_values = ["one"]
+  index          = 1
+  end_index      = 2
+}
+# => ["zero", "one", "four", "five"]
+
 # Return the list with terminating values replaced.
 data "stdlib_replace" "append" {
   list_param     = ["zero", "foo", "bar"]

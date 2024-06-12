@@ -47,7 +47,31 @@ func TestAccReplace(test *testing.T) {
 					// verify replaced values list result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.#", "6"),
 					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.0", "zero"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.3", "three"),
 					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.5", "five"),
+					// verify id stored correctly
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "id", "zero"),
+				),
+			},
+			{
+				Config: `data "stdlib_replace" "test" {
+				  list_param     = ["zero", "foo", "bar", "four", "five"]
+				  replace_values = ["one"]
+				  index          = 1
+				  end_index      = 2
+				}`,
+				Check: resource.ComposeAggregateTestCheckFunc(
+					// verify input param is stored correctly
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "list_param.#", "5"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "replace_values.#", "1"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "index", "1"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "end_index", "2"),
+					// verify replaced values list result is stored correctly
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.#", "4"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.0", "zero"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.1", "one"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.2", "four"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.3", "five"),
 					// verify id stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_replace.test", "id", "zero"),
 				),

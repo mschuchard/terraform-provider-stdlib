@@ -1,5 +1,6 @@
 ### 1.4.1 (Next)
 - Add `sorted` parameter to `list_index` function.
+- Add `end_index` parameter to `replace` function.
 
 ### 1.4.0
 - Add `insert`, `replace`, and `sort_list` functions.

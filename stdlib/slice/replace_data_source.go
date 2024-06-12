@@ -50,7 +50,7 @@ func (_ *replaceDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
 			"end_index": schema.Int64Attribute{
-				Description: "The index in the list at which to end replacing values. If the difference between this and the index is greater than or equal to the length of the list of the replace_values, then the additional elements will all be zeroed. In most circumstances it will be better to not input a value for this parameter, and to allow the function to automatically deduce the end_index.",
+				Description: "The index in the list at which to end replacing values. If the difference between this and the index is greater than or equal to the length of the list of the replace_values, then the additional elements will all be zeroed (i.e. removed). This parameter input value is only necessary for that condition as otherwise it will be automatically deduced by the provider function.",
 				Optional:    true,
 				Validators: []validator.Int64{
 					int64validator.AtLeast(1),
@@ -82,7 +82,7 @@ func (_ *replaceDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 				ElementType: types.StringType,
 			},
 		},
-		MarkdownDescription: "Return the list where values are replaced at a specific element index. This function errors if the specified index plus the length of the replace_values list is out of range for the list (length of list_param + 1). Note also that the terminating index is determined by generic slice s[i:j] in Go, and so it may be helpful in Terraform to consider the terminating index as beginning at element 1 (does not apply to the the end_index input value), and that the length of the resulting list will therefore be one greater than the original.",
+		MarkdownDescription: "Return the list where values are replaced at a specific element index. This function errors if the specified index plus the length of the replace_values list, or the end_index, is out of range for the list (length of list_param + 1). Note also that the terminating index is determined by generic slice s[i:j] in Go, and so it may be helpful in Terraform to consider the terminating index as beginning at element 1 (does not apply to the the end_index input value), and that the length of the resulting list will therefore be one greater than the original unless end_index is specified.",
 	}
 }
 
