@@ -50,7 +50,8 @@ func (_ *replaceDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
 			"end_index": schema.Int64Attribute{
-				Description: "The index in the list at which to end replacing values. If the difference between this and the index is greater than or equal to the length of the list of the replace_values, then the additional elements will all be zeroed (i.e. removed). This parameter input value is only necessary for that condition as otherwise it will be automatically deduced by the provider function.",
+				Computed:    true,
+				Description: "The index in the list at which to end replacing values. If the difference between this and the index is greater than or equal to the length of the list of the replace_values, then the additional elements in the original list will all be zeroed (i.e. removed; see example stdlib_replace.zeroed). This parameter input value is only necessary for that situation as otherwise its value will be automatically deduced by the provider function.",
 				Optional:    true,
 				Validators: []validator.Int64{
 					int64validator.AtLeast(1),
@@ -82,7 +83,7 @@ func (_ *replaceDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 				ElementType: types.StringType,
 			},
 		},
-		MarkdownDescription: "Return the list where values are replaced at a specific element index. This function errors if the specified index plus the length of the replace_values list, or the end_index, is out of range for the list (length of list_param + 1). Note also that the terminating index is determined by generic slice s[i:j] in Go, and so it may be helpful in Terraform to consider the terminating index as beginning at element 1 (does not apply to the the end_index input value), and that the length of the resulting list will therefore be one greater than the original unless end_index is specified.",
+		MarkdownDescription: "Return the list where values are replaced at a specific element index. This function errors if the end_index, or the specified index plus the length of the replace_values list, is out of range for the original list (greater than or equal to the length of list_param).",
 	}
 }
 
@@ -104,16 +105,17 @@ func (_ *replaceDataSource) Read(ctx context.Context, req datasource.ReadRequest
 	// determine end_index
 	var endIndex int
 	if state.EndIndex.IsNull() {
-		// s[i:j] element ordering and not s[i] so subtract 1
-		endIndex = index + len(replaceValues) - 1
+		// s[i:j] element ordering
+		endIndex = index + len(replaceValues)
 	} else {
+		// ...so add one to the endIndex since TF list begins at 0 and not 1
 		endIndex = int(state.EndIndex.ValueInt64()) + 1
 	}
 
 	// determine if end index is out of bounds for slice
 	if endIndex > len(listParam) {
 		resp.Diagnostics.AddAttributeError(
-			path.Root("index"),
+			path.Root("endIndex"),
 			"Invalid Value",
 			"The index at which to replace the values added to the length of the replacement values cannot be greater than the length of the list where the values will be replaced as that would be out of range.",
 		)
@@ -130,6 +132,8 @@ func (_ *replaceDataSource) Read(ctx context.Context, req datasource.ReadRequest
 
 	// store zeroth element of input as id
 	state.ID = types.StringValue(listParam[0])
+	// store endIndex
+	state.EndIndex = types.Int64Value(int64(endIndex - 1))
 	// store list with values replaced at index in state
 	var listConvertDiags diag.Diagnostics
 	state.Result, listConvertDiags = types.ListValueFrom(ctx, types.StringType, result)
