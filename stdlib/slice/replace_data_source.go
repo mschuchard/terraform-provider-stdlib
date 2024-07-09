@@ -54,7 +54,7 @@ func (_ *replaceDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 				Description: "The index in the list at which to end replacing values. If the difference between this and the index is greater than or equal to the length of the list of the replace_values, then the additional elements in the original list will all be zeroed (i.e. removed; see example stdlib_replace.zeroed). This parameter input value is only necessary for that situation as otherwise its value will be automatically deduced by the provider function.",
 				Optional:    true,
 				Validators: []validator.Int64{
-					int64validator.AtLeast(1),
+					int64validator.AtLeast(0),
 				},
 			},
 			"list_param": schema.ListAttribute{
@@ -84,6 +84,46 @@ func (_ *replaceDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 			},
 		},
 		MarkdownDescription: "Return the list where values are replaced at a specific element index. This function errors if the end_index, or the specified index plus the length of the replace_values list, is out of range for the original list (greater than or equal to the length of list_param).",
+	}
+}
+
+// validate data source config
+func (_ *replaceDataSource) ValidateConfig(ctx context.Context, req datasource.ValidateConfigRequest, resp *datasource.ValidateConfigResponse) {
+	// determine input values
+	var state replaceDataSourceModel
+	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// return if endIndex or list is unknown
+	if state.EndIndex.IsUnknown() || state.ListParam.IsUnknown() {
+		return
+	}
+
+	// convert tf list to go slice, tf int64 to go int
+	var listParam, replaceValues []string
+	resp.Diagnostics.Append(state.ListParam.ElementsAs(ctx, &listParam, false)...)
+	resp.Diagnostics.Append(state.ReplaceValues.ElementsAs(ctx, &replaceValues, false)...)
+	index := int(state.Index.ValueInt64())
+
+	// determine end_index
+	var endIndex int
+	if state.EndIndex.IsNull() {
+		// s[i:j] element ordering
+		endIndex = index + len(replaceValues)
+	} else {
+		// ...so add one to the endIndex since TF list begins at 0 and not 1
+		endIndex = int(state.EndIndex.ValueInt64()) + 1
+	}
+
+	// determine if end index is out of bounds for slice
+	if endIndex > len(listParam) {
+		resp.Diagnostics.AddAttributeError(
+			path.Root("endIndex"),
+			"Invalid Value",
+			"The index at which to replace the values added to the length of the replacement values cannot be greater than the length of the list where the values will be replaced as that would be out of range.",
+		)
 	}
 }
 
