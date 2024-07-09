@@ -85,8 +85,7 @@ func (_ *keyDeleteDataSource) ValidateConfig(ctx context.Context, req datasource
 	}
 
 	// verify key exists in map
-	_, ok := inputMap[deleteKey]
-	if !ok {
+	if _, ok := inputMap[deleteKey]; !ok {
 		resp.Diagnostics.AddAttributeError(
 			path.Root("key"),
 			"Improper Attribute Value",

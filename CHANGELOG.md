@@ -2,6 +2,7 @@
 - Add `sorted` parameter to `list_index` function.
 - Add `end_index` parameter to `replace` function.
 - Fix `end_index` auto-deduction in `replace` function.
+- Add config validation to `insert` and `replace` functions.
 
 ### 1.4.0
 - Add `insert`, `replace`, and `sort_list` functions.
