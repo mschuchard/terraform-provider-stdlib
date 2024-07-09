@@ -78,6 +78,36 @@ func (_ *insertDataSource) Schema(_ context.Context, _ datasource.SchemaRequest,
 	}
 }
 
+// validate data source config
+func (_ *insertDataSource) ValidateConfig(ctx context.Context, req datasource.ValidateConfigRequest, resp *datasource.ValidateConfigResponse) {
+	// determine input values
+	var state insertDataSourceModel
+	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	// return if list or index is unknown
+	if state.ListParam.IsUnknown() || state.Index.IsUnknown() {
+		return
+	}
+
+	// initialize list and index
+	var listParam, insertValues []string
+	resp.Diagnostics.Append(state.ListParam.ElementsAs(ctx, &listParam, false)...)
+	resp.Diagnostics.Append(state.InsertValues.ElementsAs(ctx, &insertValues, false)...)
+	index := state.Index.ValueInt64()
+
+	// verify index is not out bounds for slice
+	if int(index) > len(listParam) {
+		resp.Diagnostics.AddAttributeError(
+			path.Root("index"),
+			"Invalid Value",
+			"The index at which to insert the values cannot be greater than the length of the list into which the values will be inserted as that would be out of range.",
+		)
+	}
+}
+
 // read executes the actual function
 func (_ *insertDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	// determine input values
