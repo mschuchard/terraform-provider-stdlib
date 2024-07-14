@@ -1,4 +1,4 @@
-### 1.4.1 (Next)
+### 1.4.1
 - Add `sorted` parameter to `list_index` function.
 - Add `end_index` parameter to `replace` function.
 - Fix `end_index` auto-deduction in `replace` function.

@@ -20,6 +20,14 @@ data "stdlib_list_index" "one" {
 }
 # => 1
 
+# Return the element's index within a sorted list:
+data "stdlib_list_index" "c" {
+  list_param = ["a", "b", "c", "d"]
+  elem_param = "c"
+  sorted     = true
+}
+# => 2
+
 # Return the element's first occurrence index within a list:
 data "stdlib_list_index" "two" {
   list_param = ["zero", "one", "two", "three", "two", "one", "zero"]
@@ -43,6 +51,10 @@ data "stdlib_list_index" "infinity" {
 
 - `elem_param` (String) Element in the list to determine its index.
 - `list_param` (List of String) Input list parameter for determining the element's index.
+
+### Optional
+
+- `sorted` (Boolean) Whether the list is sorted in ascending order or not (note: see `stdlib_sort_list`). If the list is sorted then the efficient binary search algorithm will be utilized, but the combination of sorting and searching may be less efficient overall in some situations.
 
 ### Read-Only
 

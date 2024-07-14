@@ -3,19 +3,19 @@
 page_title: "stdlib_replace Data Source - stdlib"
 subcategory: ""
 description: |-
-  Return the list where values are replaced at a specific element index. This function errors if the specified index plus the length of the replace_values list is out of range for the list (length of list_param + 1). Note also that the terminating index is determined by generic slice s[i:j] in Go, and so it may be helpful in Terraform to consider the terminating index as beginning at element 1, and that the length of the resulting list will therefore be one greater than the original.
+  Return the list where values are replaced at a specific element index. This function errors if the end_index, or the specified index plus the length of the replace_values list, is out of range for the original list (greater than or equal to the length of list_param).
 ---
 
 # stdlib_replace (Data Source)
 
-Return the list where values are replaced at a specific element index. This function errors if the specified index plus the length of the replace_values list is out of range for the list (length of list_param + 1). Note also that the terminating index is determined by generic slice s[i:j] in Go, and so it may be helpful in Terraform to consider the terminating index as beginning at element 1, and that the length of the resulting list will therefore be one greater than the original.
+Return the list where values are replaced at a specific element index. This function errors if the end_index, or the specified index plus the length of the replace_values list, is out of range for the original list (greater than or equal to the length of list_param).
 
 ## Example Usage
 
 ```terraform
 # Return the list with beginning value replaced.
 data "stdlib_replace" "begin" {
-  list_param     = ["foo", "two", "three"]
+  list_param     = ["foo", "bar", "two", "three"]
   replace_values = ["zero", "one"]
   index          = 0
 }
@@ -23,17 +23,26 @@ data "stdlib_replace" "begin" {
 
 # Return the list with middle values replaced.
 data "stdlib_replace" "replace" {
-  list_param     = ["zero", "foo", "bar", "four", "five"]
+  list_param     = ["zero", "foo", "bar", "baz", "four", "five"]
   replace_values = ["one", "two", "three"]
   index          = 1
 }
 # => ["zero", "one", "two", "three", "four", "five"]
 
+# Return the list with middle values replaced and zeroed.
+data "stdlib_replace" "zeroed" {
+  list_param     = ["zero", "foo", "bar", "four", "five"]
+  replace_values = ["one"]
+  index          = 1
+  end_index      = 2
+}
+# => ["zero", "one", "four", "five"]
+
 # Return the list with terminating values replaced.
 data "stdlib_replace" "append" {
-  list_param     = ["zero", "foo", "bar"]
+  list_param     = ["zero", "foo", "bar", "baz"]
   replace_values = ["one", "two", "three"]
-  index          = length(["zero", "foo", "bar"]) - (length(["one", "two", "three"]) - 1)
+  index          = length(["zero", "foo", "bar", "baz"]) - (length(["one", "two", "three"]))
 }
 # => ["zero", "one", "two", "three"]
 ```
@@ -46,6 +55,10 @@ data "stdlib_replace" "append" {
 - `index` (Number) Index in the list at which to begin replacing the values.
 - `list_param` (List of String) Input list parameter for which the values will be replaced.
 - `replace_values` (List of String) Input list of values which will replace values in the list_param.
+
+### Optional
+
+- `end_index` (Number) The index in the list at which to end replacing values. If the difference between this and the index is greater than or equal to the length of the list of the replace_values, then the additional elements in the original list will all be zeroed (i.e. removed; see example stdlib_replace.zeroed). This parameter input value is only necessary for that situation as otherwise its value will be automatically deduced by the provider function.
 
 ### Read-Only
 
