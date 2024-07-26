@@ -1,5 +1,5 @@
 # Check existence of either "foo" or "bar" values in map:
-data "stdlib_has_keys" "foo_bar" {
+data "stdlib_has_values" "foo_bar" {
   map = {
     "hello" = "world",
     "foo"   = "bar",
@@ -10,7 +10,7 @@ data "stdlib_has_keys" "foo_bar" {
 # => true
 
 # Check existence of either "foo" or "pizza" keys in map:
-data "stdlib_has_keys" "foo_pizza" {
+data "stdlib_has_values" "foo_pizza" {
   map = {
     "hello" = "world",
     "foo"   = "bar",
