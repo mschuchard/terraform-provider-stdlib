@@ -2,7 +2,6 @@ package mapfunc
 
 import (
 	"context"
-	"fmt"
 	"golang.org/x/exp/maps"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
@@ -29,9 +28,9 @@ type flattenMapDataSource struct{}
 
 // maps the data source schema data to the model
 type flattenMapDataSourceModel struct {
-	ID     types.String `tfsdk:"id"`
-	Param  types.List   `tfsdk:"param"`
-	Result types.Map    `tfsdk:"result"`
+	ID     types.Int64 `tfsdk:"id"`
+	Param  types.List  `tfsdk:"param"`
+	Result types.Map   `tfsdk:"result"`
 }
 
 // data source metadata
@@ -43,7 +42,7 @@ func (_ *flattenMapDataSource) Metadata(_ context.Context, req datasource.Metada
 func (_ *flattenMapDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
-			"id": util.IDStringAttribute(),
+			"id": util.IDInt64Attribute(),
 			"param": schema.ListAttribute{
 				Description: "Input list of maps to flatten.",
 				ElementType: types.MapType{
@@ -94,7 +93,7 @@ func (_ *flattenMapDataSource) Read(ctx context.Context, req datasource.ReadRequ
 	}
 
 	// store number of entries of output map as id
-	state.ID = types.StringValue(fmt.Sprint(len(outputMap)))
+	state.ID = types.Int64Value(int64(len(outputMap)))
 	// store flattened map in state
 	var mapConvertDiags diag.Diagnostics
 	state.Result, mapConvertDiags = types.MapValueFrom(ctx, types.StringType, outputMap)

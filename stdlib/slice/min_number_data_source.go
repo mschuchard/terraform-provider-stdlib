@@ -28,7 +28,7 @@ type minNumberDataSource struct{}
 
 // maps the data source schema data to the model
 type minNumberDataSourceModel struct {
-	ID     types.String  `tfsdk:"id"`
+	ID     types.Int64   `tfsdk:"id"`
 	Param  types.List    `tfsdk:"param"`
 	Result types.Float64 `tfsdk:"result"`
 }
@@ -42,7 +42,7 @@ func (_ *minNumberDataSource) Metadata(_ context.Context, req datasource.Metadat
 func (_ *minNumberDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
-			"id": util.IDStringAttribute(),
+			"id": util.IDInt64Attribute(),
 			"param": schema.ListAttribute{
 				Description: "Input list parameter for determining the minimum number.",
 				ElementType: types.Float64Type,
@@ -81,7 +81,7 @@ func (_ *minNumberDataSource) Read(ctx context.Context, req datasource.ReadReque
 	tflog.Debug(ctx, fmt.Sprintf("Input list parameter \"%v\" min number is \"%f\"", inputList, minNumber))
 
 	// store minNumber from element(s) of list in state
-	state.ID = types.StringValue(fmt.Sprintf("%f", inputList[0]))
+	state.ID = types.Int64Value(int64(inputList[0]))
 	state.Result = types.Float64Value(minNumber)
 
 	// set state

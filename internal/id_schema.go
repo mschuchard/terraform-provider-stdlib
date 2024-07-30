@@ -17,7 +17,7 @@ func IDStringAttribute() schema.StringAttribute {
 	}
 }
 
-func IDIntAttribute() schema.Int64Attribute {
+func IDInt64Attribute() schema.Int64Attribute {
 	return schema.Int64Attribute{
 		Computed:    true,
 		Description: "Aliased to number input parameter(s) for efficiency and proper plan diff detection.",

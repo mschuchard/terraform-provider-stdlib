@@ -22,7 +22,7 @@ func TestAccMaxNumber(test *testing.T) {
 					// verify maximum number result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_max_number.test", "result", "13"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_max_number.test", "id", "0.000000"),
+					resource.TestCheckResourceAttr("data.stdlib_max_number.test", "id", "0"),
 				),
 			},
 		},

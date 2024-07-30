@@ -22,7 +22,7 @@ func TestAccMinNumber(test *testing.T) {
 					// verify minimum number result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_min_number.test", "result", "0"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_min_number.test", "id", "0.000000"),
+					resource.TestCheckResourceAttr("data.stdlib_min_number.test", "id", "0"),
 				),
 			},
 		},
