@@ -10,6 +10,7 @@ import (
 
 	"github.com/mschuchard/terraform-provider-stdlib/stdlib/map"
 	"github.com/mschuchard/terraform-provider-stdlib/stdlib/multiple"
+	"github.com/mschuchard/terraform-provider-stdlib/stdlib/number"
 	"github.com/mschuchard/terraform-provider-stdlib/stdlib/slice"
 	"github.com/mschuchard/terraform-provider-stdlib/stdlib/string"
 )
@@ -54,7 +55,6 @@ func (_ *stdlibProvider) Configure(_ context.Context, _ provider.ConfigureReques
 // define the data sources implemented in the provider
 func (_ *stdlibProvider) DataSources(_ context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
-		slicefunc.NewCompareListDataSource,
 		mapfunc.NewEqualMapDataSource,
 		mapfunc.NewFlattenMapDataSource,
 		mapfunc.NewHasKeyDataSource,
@@ -63,6 +63,9 @@ func (_ *stdlibProvider) DataSources(_ context.Context) []func() datasource.Data
 		mapfunc.NewHasValuesDataSource,
 		mapfunc.NewKeyDeleteDataSource,
 		mapfunc.NewKeysDeleteDataSource,
+		multiple.NewEmptyDataSource,
+		numberfunc.NewExpDataSource,
+		slicefunc.NewCompareListDataSource,
 		slicefunc.NewInsertDataSource,
 		slicefunc.NewLastElementDataSource,
 		slicefunc.NewListIndexDataSource,
@@ -72,7 +75,6 @@ func (_ *stdlibProvider) DataSources(_ context.Context) []func() datasource.Data
 		slicefunc.NewMinStringDataSource,
 		slicefunc.NewReplaceDataSource,
 		slicefunc.NewSortListDataSource,
-		multiple.NewEmptyDataSource,
 		stringfunc.NewLastCharDataSource,
 	}
 }

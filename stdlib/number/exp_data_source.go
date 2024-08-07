@@ -41,11 +41,11 @@ func (_ *expDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, re
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDFloat64Attribute(),
-			"param": schema.Int64Attribute{
+			"param": schema.Float64Attribute{
 				Description: "Input number parameter for determining the base-e exponential.",
 				Required:    true,
 			},
-			"result": schema.Int64Attribute{
+			"result": schema.Float64Attribute{
 				Computed:    true,
 				Description: "Function result storing the base-e exponential of the input parameter.",
 			},
