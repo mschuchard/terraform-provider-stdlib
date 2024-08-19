@@ -9,7 +9,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
-
 	"github.com/mschuchard/terraform-provider-stdlib/internal"
 )
 
@@ -50,7 +49,7 @@ func (_ *expDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, re
 				Description: "Function result storing the base-e exponential of the input parameter.",
 			},
 		},
-		MarkdownDescription: "Return the base-e exponential of an inpurt parameter.",
+		MarkdownDescription: "Return the base-e exponential of an input parameter.",
 	}
 }
 

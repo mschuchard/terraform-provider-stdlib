@@ -65,6 +65,7 @@ func (_ *stdlibProvider) DataSources(_ context.Context) []func() datasource.Data
 		mapfunc.NewKeysDeleteDataSource,
 		multiple.NewEmptyDataSource,
 		numberfunc.NewExpDataSource,
+		numberfunc.NewModDataSource,
 		slicefunc.NewCompareListDataSource,
 		slicefunc.NewInsertDataSource,
 		slicefunc.NewLastElementDataSource,
