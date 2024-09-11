@@ -1,6 +1,6 @@
 ### 1.5.0 (Next)
 - Do not coerce `number` type ID to `string` type ID (may cause superficial plan changes to existing states).
-- Add `exp` and `mod` functions.
+- Add `exp`, `mod`, and `round` functions.
 
 ### 1.4.1
 - Add `sorted` parameter to `list_index` function.
