@@ -5,7 +5,7 @@ builds:
   flags:
   - -trimpath
   ldflags:
-  - '-s -w -X main.version={{.Version}} -X main.commit={{.Commit}}'
+  - '-s -w'
   goos:
   - windows
   - linux
@@ -47,5 +47,3 @@ release:
   extra_files:
   - glob: 'terraform-registry-manifest.json'
     name_template: '{{ .ProjectName }}_{{ .Version }}_manifest.json'
-changelog:
-  skip: true
