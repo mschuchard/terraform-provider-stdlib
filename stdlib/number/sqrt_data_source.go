@@ -7,6 +7,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/mschuchard/terraform-provider-stdlib/internal"
@@ -65,8 +66,16 @@ func (_ *sqrtDataSource) Read(ctx context.Context, req datasource.ReadRequest, r
 	// initialize input number
 	inputNum := state.Param.ValueFloat64()
 
-	// determine the sqrted integer
+	// determine the square root
 	sqrt := math.Sqrt(inputNum)
+	if math.IsNaN(sqrt) {
+		resp.Diagnostics.AddAttributeError(
+			path.Root("param"),
+			"Invalid Value",
+			"The square root of the input parameter must return a valid number, but instead returned 'NaN'.",
+		)
+		return
+	}
 
 	// provide debug logging
 	ctx = tflog.SetField(ctx, "stdlib_sqrt_result", sqrt)
