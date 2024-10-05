@@ -29,5 +29,5 @@ data "stdlib_max_number" "fibonacci" {
 
 ### Read-Only
 
-- `id` (String) Aliased to string input parameter(s) for efficiency and proper plan diff detection.
+- `id` (Number) Aliased to number input parameter(s) for efficiency and proper plan diff detection.
 - `result` (Number) Function result storing the maximum number from the element(s) of the input list.

@@ -32,5 +32,5 @@ data "stdlib_flatten_map" "foo" {
 
 ### Read-Only
 
-- `id` (String) Aliased to string input parameter(s) for efficiency and proper plan diff detection.
+- `id` (Number) Aliased to number input parameter(s) for efficiency and proper plan diff detection.
 - `result` (Map of String) Function result storing the flattened map.

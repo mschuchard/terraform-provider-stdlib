@@ -1,4 +1,4 @@
-### 1.5.0 (Next)
+### 1.5.0
 - Do not coerce `number` type ID to `string` type ID (may cause superficial plan changes to existing states).
 - Add `exp`, `mod`, `round`, and `sqrt` functions.
 

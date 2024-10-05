@@ -3,12 +3,12 @@
 page_title: "stdlib_sort_list Data Source - stdlib"
 subcategory: ""
 description: |-
-  Return the list where values are sorted in ascending order. Note that the Terraform 'types' has issues converting some numbers for comparisons such that e.g. 49 will be sorted before 5 due to 4 < 5, but 45 would be correctly sorted before 49.
+  Return the list where values are sorted in ascending order. Note that the Terraform 'types' package has issues converting some numbers for comparisons such that e.g. 49 will be sorted before 5 due to 4 < 5, but 45 would be correctly sorted before 49.
 ---
 
 # stdlib_sort_list (Data Source)
 
-Return the list where values are sorted in ascending order. Note that the Terraform 'types' has issues converting some numbers for comparisons such that e.g. 49 will be sorted before 5 due to 4 < 5, but 45 would be correctly sorted before 49.
+Return the list where values are sorted in ascending order. Note that the Terraform 'types' package has issues converting some numbers for comparisons such that e.g. 49 will be sorted before 5 due to 4 < 5, but 45 would be correctly sorted before 49.
 
 ## Example Usage
 
