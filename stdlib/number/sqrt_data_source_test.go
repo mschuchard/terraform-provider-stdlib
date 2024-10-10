@@ -1,6 +1,7 @@
 package numberfunc_test
 
 import (
+	"regexp"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
@@ -13,6 +14,11 @@ func TestAccSqrt(test *testing.T) {
 	resource.ParallelTest(test, resource.TestCase{
 		ProtoV6ProviderFactories: provider.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
+			// test error on NaN
+			{
+				Config:      `data "stdlib_sqrt" "test" { param = -1 }`,
+				ExpectError: regexp.MustCompile("The square root of the input parameter must return a valid number"),
+			},
 			// test square root of four
 			{
 				Config: `data "stdlib_sqrt" "test" { param = 4 }`,

@@ -2,6 +2,7 @@ package stringfunc_test
 
 import (
 	"fmt"
+	"regexp"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
@@ -18,6 +19,14 @@ func TestAccLastChar(test *testing.T) {
 	resource.ParallelTest(test, resource.TestCase{
 		ProtoV6ProviderFactories: provider.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
+			// test error on invalid number of terminating chars
+			{
+				Config: fmt.Sprintf(`data "stdlib_last_char" "test" {
+					param = "%s"
+					num_chars = 10
+				}`, param),
+				ExpectError: regexp.MustCompile("The number of terminating characters to return must be fewer than the length"),
+			},
 			// test basic string slice last char
 			{
 				Config: fmt.Sprintf(`data "stdlib_last_char" "test" { param = "%s" }`, param),
@@ -35,7 +44,7 @@ func TestAccLastChar(test *testing.T) {
 				Config: fmt.Sprintf(`data "stdlib_last_char" "test" {
 					param = "%s"
 					num_chars = %d
-					}`, param, numChars),
+				}`, param, numChars),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// verify input param is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_last_char.test", "param", param),

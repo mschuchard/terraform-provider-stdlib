@@ -72,7 +72,7 @@ func (_ *sqrtDataSource) Read(ctx context.Context, req datasource.ReadRequest, r
 		resp.Diagnostics.AddAttributeError(
 			path.Root("param"),
 			"Invalid Value",
-			"The square root of the input parameter must return a valid number, but instead returned 'NaN'.",
+			"The square root of the input parameter must return a valid number, but instead returned 'NaN'",
 		)
 		return
 	}

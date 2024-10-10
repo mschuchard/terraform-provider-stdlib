@@ -91,7 +91,7 @@ func (_ *lastCharDataSource) Read(ctx context.Context, req datasource.ReadReques
 			resp.Diagnostics.AddAttributeError(
 				path.Root("num_chars"),
 				"Invalid Value",
-				"The number of terminating characters to return must be fewer than the length of the input string parameter.",
+				"The number of terminating characters to return must be fewer than the length of the input string parameter",
 			)
 			return
 		}
