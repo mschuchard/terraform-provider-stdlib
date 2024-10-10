@@ -1,6 +1,7 @@
 package slicefunc_test
 
 import (
+	"regexp"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
@@ -13,6 +14,15 @@ func TestAccInsert(test *testing.T) {
 	resource.ParallelTest(test, resource.TestCase{
 		ProtoV6ProviderFactories: provider.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
+			// test error for out of range index
+			{
+				Config: `data "stdlib_insert" "test" {
+				  list_param    = ["one", "two", "three"]
+				  insert_values = ["zero"]
+				  index         = 5
+				}`,
+				ExpectError: regexp.MustCompile("The index at which to insert the values cannot be greater than"),
+			},
 			// test list values insert
 			{
 				Config: `data "stdlib_insert" "test" {

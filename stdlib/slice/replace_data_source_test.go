@@ -1,6 +1,7 @@
 package slicefunc_test
 
 import (
+	"regexp"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
@@ -13,6 +14,15 @@ func TestAccReplace(test *testing.T) {
 	resource.ParallelTest(test, resource.TestCase{
 		ProtoV6ProviderFactories: provider.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
+			// test error on out of range index
+			{
+				Config: `data "stdlib_replace" "test" {
+				  list_param     = ["foo", "bar", "two", "three"]
+				  replace_values = ["zero", "one"]
+				  index          = 3
+				}`,
+				ExpectError: regexp.MustCompile("The index at which to replace the values added to the length"),
+			},
 			// test list values replace
 			{
 				Config: `data "stdlib_replace" "test" {

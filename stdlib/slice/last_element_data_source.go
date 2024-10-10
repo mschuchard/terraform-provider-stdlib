@@ -95,7 +95,7 @@ func (_ *lastElementDataSource) Read(ctx context.Context, req datasource.ReadReq
 			resp.Diagnostics.AddAttributeError(
 				path.Root("num_elements"),
 				"Invalid Value",
-				"The number of terminating characters to return must be fewer than the length of the input string parameter.",
+				"The number of terminating elements to return must be fewer than the length of the input list parameter.",
 			)
 			return
 		}

@@ -1,6 +1,7 @@
 package slicefunc_test
 
 import (
+	"regexp"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
@@ -13,6 +14,14 @@ func TestAccLastElement(test *testing.T) {
 	resource.ParallelTest(test, resource.TestCase{
 		ProtoV6ProviderFactories: provider.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
+			// test error on invalid number of terminating elements
+			{
+				Config: `data "stdlib_last_element" "test" {
+					param = ["h", "e", "l", "l", "o"]
+					num_elements = 10
+				}`,
+				ExpectError: regexp.MustCompile("The number of terminating elements to return must be fewer than"),
+			},
 			// test basic list slice last element
 			{
 				Config: `data "stdlib_last_element" "test" { param = ["h", "e", "l", "l", "o"] }`,
@@ -31,7 +40,7 @@ func TestAccLastElement(test *testing.T) {
 				Config: `data "stdlib_last_element" "test" {
 					param = ["h", "e", "l", "l", "o"]
 					num_elements = 3
-					}`,
+				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// verify input param is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_last_element.test", "param.#", "5"),

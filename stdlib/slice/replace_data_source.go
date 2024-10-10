@@ -122,7 +122,7 @@ func (_ *replaceDataSource) ValidateConfig(ctx context.Context, req datasource.V
 		resp.Diagnostics.AddAttributeError(
 			path.Root("endIndex"),
 			"Invalid Value",
-			"The index at which to replace the values added to the length of the replacement values cannot be greater than the length of the list where the values will be replaced as that would be out of range.",
+			"The index at which to replace the values added to the length of the replacement values (i.e. 'endIndex') cannot be greater than the length of the list where the values will be replaced as that would be out of range.",
 		)
 	}
 }
