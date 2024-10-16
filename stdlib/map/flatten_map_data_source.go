@@ -2,7 +2,7 @@ package mapfunc
 
 import (
 	"context"
-	"golang.org/x/exp/maps"
+	"maps"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"

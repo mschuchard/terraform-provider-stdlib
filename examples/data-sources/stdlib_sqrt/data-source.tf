@@ -1,17 +1,17 @@
-# Return the rounding of of 1.2
-data "stdlib_round" "down" {
-  param = 1.2
-}
-# => 1
-
-# Return the rounding of 1.8
-data "stdlib_round" "up" {
-  param = 1.8
+# Return the square root of 4
+data "stdlib_sqrt" "four" {
+  param = 4
 }
 # => 2
 
-# Return the rounding of 1.5
-data "stdlib_round" "half" {
-  param = 1.5
+# Return the square root of 0
+data "stdlib_sqrt" "zero" {
+  param = 0
 }
-# => 2
+# => 0
+
+# Return the square root of 2
+data "stdlib_sqrt" "two" {
+  param = 2
+}
+# => 1.4142135623730951
