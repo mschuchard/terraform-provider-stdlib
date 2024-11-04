@@ -1,5 +1,6 @@
 ### 1.5.1 (Next)
 - Refine attribute error messages.
+- Coerce result of `round` function to integer.
 
 ### 1.5.0
 - Do not coerce `number` type ID to `string` type ID (may cause superficial plan changes to existing states).

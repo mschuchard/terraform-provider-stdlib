@@ -27,7 +27,7 @@ type roundDataSource struct{}
 type roundDataSourceModel struct {
 	ID     types.Float64 `tfsdk:"id"`
 	Param  types.Float64 `tfsdk:"param"`
-	Result types.Float64 `tfsdk:"result"`
+	Result types.Int64   `tfsdk:"result"`
 }
 
 // data source metadata
@@ -44,7 +44,7 @@ func (_ *roundDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, 
 				Description: "Input number parameter for determining the rounding.",
 				Required:    true,
 			},
-			"result": schema.Float64Attribute{
+			"result": schema.Int64Attribute{
 				Computed:    true,
 				Description: "Function result storing the rounding of the input parameter.",
 			},
@@ -66,15 +66,15 @@ func (_ *roundDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 	inputNum := state.Param.ValueFloat64()
 
 	// determine the rounded integer
-	round := math.Round(inputNum)
+	round := int64(math.Round(inputNum))
 
 	// provide debug logging
 	ctx = tflog.SetField(ctx, "stdlib_round_result", round)
-	tflog.Debug(ctx, fmt.Sprintf("Input number parameter \"%f\" rounded is \"%f\"", inputNum, round))
+	tflog.Debug(ctx, fmt.Sprintf("Input number parameter \"%f\" rounded is \"%d\"", inputNum, round))
 
 	// store rounded result in state
 	state.ID = types.Float64Value(inputNum)
-	state.Result = types.Float64Value(round)
+	state.Result = types.Int64Value(round)
 
 	// set state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &state)...)
