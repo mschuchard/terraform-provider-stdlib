@@ -28,7 +28,7 @@ type maxNumberDataSource struct{}
 
 // maps the data source schema data to the model
 type maxNumberDataSourceModel struct {
-	ID     types.Int64   `tfsdk:"id"`
+	ID     types.Float64 `tfsdk:"id"`
 	Param  types.List    `tfsdk:"param"`
 	Result types.Float64 `tfsdk:"result"`
 }
@@ -42,7 +42,7 @@ func (_ *maxNumberDataSource) Metadata(_ context.Context, req datasource.Metadat
 func (_ *maxNumberDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
-			"id": util.IDInt64Attribute(),
+			"id": util.IDFloat64Attribute(),
 			"param": schema.ListAttribute{
 				Description: "Input list parameter for determining the maximum number.",
 				ElementType: types.Float64Type,
@@ -78,10 +78,10 @@ func (_ *maxNumberDataSource) Read(ctx context.Context, req datasource.ReadReque
 
 	// provide debug logging
 	ctx = tflog.SetField(ctx, "stdlib_max_number_result", maxNumber)
-	tflog.Debug(ctx, fmt.Sprintf("Input list parameter \"%v\" max number is \"%f\"", inputList, maxNumber))
+	tflog.Debug(ctx, fmt.Sprintf("Input list parameter \"%f\" max number is \"%f\"", inputList, maxNumber))
 
 	// store maxNumber from element(s) of list in state
-	state.ID = types.Int64Value(int64(inputList[0]))
+	state.ID = types.Float64Value(inputList[0])
 	state.Result = types.Float64Value(maxNumber)
 
 	// set state
