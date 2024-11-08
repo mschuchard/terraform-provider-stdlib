@@ -8,11 +8,11 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 
-	"github.com/mschuchard/terraform-provider-stdlib/stdlib/map"
+	mapfunc "github.com/mschuchard/terraform-provider-stdlib/stdlib/map"
 	"github.com/mschuchard/terraform-provider-stdlib/stdlib/multiple"
-	"github.com/mschuchard/terraform-provider-stdlib/stdlib/number"
-	"github.com/mschuchard/terraform-provider-stdlib/stdlib/slice"
-	"github.com/mschuchard/terraform-provider-stdlib/stdlib/string"
+	numberfunc "github.com/mschuchard/terraform-provider-stdlib/stdlib/number"
+	slicefunc "github.com/mschuchard/terraform-provider-stdlib/stdlib/slice"
+	stringfunc "github.com/mschuchard/terraform-provider-stdlib/stdlib/string"
 )
 
 // ensure the implementation satisfies the expected interfaces

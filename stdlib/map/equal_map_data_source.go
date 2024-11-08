@@ -3,6 +3,7 @@ package mapfunc
 import (
 	"context"
 	"fmt"
+
 	"golang.org/x/exp/maps"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
@@ -10,7 +11,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 
-	"github.com/mschuchard/terraform-provider-stdlib/internal"
+	util "github.com/mschuchard/terraform-provider-stdlib/internal"
 )
 
 // ensure the implementation satisfies the expected interfaces

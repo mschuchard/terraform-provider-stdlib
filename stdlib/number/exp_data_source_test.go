@@ -5,7 +5,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 
-	"github.com/mschuchard/terraform-provider-stdlib/stdlib"
+	provider "github.com/mschuchard/terraform-provider-stdlib/stdlib"
 )
 
 func TestAccExp(test *testing.T) {
