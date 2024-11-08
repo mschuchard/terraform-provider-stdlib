@@ -31,12 +31,12 @@ type expDataSourceModel struct {
 }
 
 // data source metadata
-func (_ *expDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (*expDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_exp"
 }
 
 // define the provider-level schema for configuration data
-func (_ *expDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (*expDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDFloat64Attribute(),
@@ -54,7 +54,7 @@ func (_ *expDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, re
 }
 
 // read executes the actual function
-func (_ *expDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (*expDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	// determine input values
 	var state expDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)

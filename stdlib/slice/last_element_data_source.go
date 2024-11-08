@@ -36,12 +36,12 @@ type lastElementDataSourceModel struct {
 }
 
 // data source metadata
-func (_ *lastElementDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (*lastElementDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_last_element"
 }
 
 // define the provider-level schema for configuration data
-func (_ *lastElementDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (*lastElementDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
@@ -71,7 +71,7 @@ func (_ *lastElementDataSource) Schema(_ context.Context, _ datasource.SchemaReq
 }
 
 // read executes the actual function
-func (_ *lastElementDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (*lastElementDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	// determine input values
 	var state lastElementDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)

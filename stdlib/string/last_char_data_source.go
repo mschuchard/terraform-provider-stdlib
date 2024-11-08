@@ -36,12 +36,12 @@ type lastCharDataSourceModel struct {
 }
 
 // data source metadata
-func (_ *lastCharDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (*lastCharDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_last_char"
 }
 
 // define the provider-level schema for configuration data
-func (_ *lastCharDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (*lastCharDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
@@ -69,7 +69,7 @@ func (_ *lastCharDataSource) Schema(_ context.Context, _ datasource.SchemaReques
 }
 
 // read executes the actual function
-func (_ *lastCharDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (*lastCharDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	// determine input values
 	var state lastCharDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)

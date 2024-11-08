@@ -32,12 +32,12 @@ type sqrtDataSourceModel struct {
 }
 
 // data source metadata
-func (_ *sqrtDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (*sqrtDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_sqrt"
 }
 
 // define the provider-level schema for configuration data
-func (_ *sqrtDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (*sqrtDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDFloat64Attribute(),
@@ -55,7 +55,7 @@ func (_ *sqrtDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, r
 }
 
 // read executes the actual function
-func (_ *sqrtDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (*sqrtDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	// determine input values
 	var state sqrtDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)

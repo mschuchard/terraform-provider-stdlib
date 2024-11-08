@@ -37,23 +37,23 @@ type stdlibProvider struct {
 }
 
 // provider metadata
-func (_ *stdlibProvider) Metadata(_ context.Context, _ provider.MetadataRequest, resp *provider.MetadataResponse) {
+func (*stdlibProvider) Metadata(_ context.Context, _ provider.MetadataRequest, resp *provider.MetadataResponse) {
 	resp.TypeName = "stdlib"
 }
 
 // define the provider-level schema for configuration data
-func (_ *stdlibProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *provider.SchemaResponse) {
+func (*stdlibProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Description: "The stdlib provider provides additional functions for use within Terraform's HCL2 configuration language.",
 	}
 }
 
 // prepare an API client for data sources and resources
-func (_ *stdlibProvider) Configure(_ context.Context, _ provider.ConfigureRequest, _ *provider.ConfigureResponse) {
+func (*stdlibProvider) Configure(_ context.Context, _ provider.ConfigureRequest, _ *provider.ConfigureResponse) {
 }
 
 // define the data sources implemented in the provider
-func (_ *stdlibProvider) DataSources(_ context.Context) []func() datasource.DataSource {
+func (*stdlibProvider) DataSources(_ context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
 		mapfunc.NewEqualMapDataSource,
 		mapfunc.NewFlattenMapDataSource,
@@ -83,6 +83,6 @@ func (_ *stdlibProvider) DataSources(_ context.Context) []func() datasource.Data
 }
 
 // define the resources implemented in the provider
-func (_ *stdlibProvider) Resources(_ context.Context) []func() resource.Resource {
+func (*stdlibProvider) Resources(_ context.Context) []func() resource.Resource {
 	return []func() resource.Resource{}
 }

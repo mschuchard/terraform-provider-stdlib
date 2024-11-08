@@ -38,12 +38,12 @@ type emptyDataSourceModel struct {
 }
 
 // data source metadata
-func (_ *emptyDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (*emptyDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_empty"
 }
 
 // define the provider-level schema for configuration data
-func (_ *emptyDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (*emptyDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
@@ -85,7 +85,7 @@ func (_ *emptyDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, 
 }
 
 // read executes the actual function
-func (_ *emptyDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (*emptyDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	// determine input values
 	var state emptyDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)

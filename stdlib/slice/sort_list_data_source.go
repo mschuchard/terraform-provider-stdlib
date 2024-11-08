@@ -35,12 +35,12 @@ type sortListDataSourceModel struct {
 }
 
 // data source metadata
-func (_ *sortListDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (*sortListDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_sort_list"
 }
 
 // define the provider-level schema for configuration data
-func (_ *sortListDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (*sortListDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
@@ -63,7 +63,7 @@ func (_ *sortListDataSource) Schema(_ context.Context, _ datasource.SchemaReques
 }
 
 // read executes the actual function
-func (_ *sortListDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (*sortListDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	// determine input values
 	var state sortListDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)

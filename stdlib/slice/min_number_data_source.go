@@ -34,12 +34,12 @@ type minNumberDataSourceModel struct {
 }
 
 // data source metadata
-func (_ *minNumberDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (*minNumberDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_min_number"
 }
 
 // define the provider-level schema for configuration data
-func (_ *minNumberDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (*minNumberDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDFloat64Attribute(),
@@ -61,7 +61,7 @@ func (_ *minNumberDataSource) Schema(_ context.Context, _ datasource.SchemaReque
 }
 
 // read executes the actual function
-func (_ *minNumberDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (*minNumberDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	// determine input values
 	var state minNumberDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)

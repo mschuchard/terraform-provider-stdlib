@@ -38,12 +38,12 @@ type insertDataSourceModel struct {
 }
 
 // data source metadata
-func (_ *insertDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (*insertDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_insert"
 }
 
 // define the provider-level schema for configuration data
-func (_ *insertDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (*insertDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
@@ -78,7 +78,7 @@ func (_ *insertDataSource) Schema(_ context.Context, _ datasource.SchemaRequest,
 }
 
 // validate data source config
-func (_ *insertDataSource) ValidateConfig(ctx context.Context, req datasource.ValidateConfigRequest, resp *datasource.ValidateConfigResponse) {
+func (*insertDataSource) ValidateConfig(ctx context.Context, req datasource.ValidateConfigRequest, resp *datasource.ValidateConfigResponse) {
 	// determine input values
 	var state insertDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)
@@ -108,7 +108,7 @@ func (_ *insertDataSource) ValidateConfig(ctx context.Context, req datasource.Va
 }
 
 // read executes the actual function
-func (_ *insertDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (*insertDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	// determine input values
 	var state insertDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)

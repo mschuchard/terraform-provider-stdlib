@@ -37,12 +37,12 @@ type hasValuesDataSourceModel struct {
 }
 
 // data source metadata
-func (_ *hasValuesDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (*hasValuesDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_has_values"
 }
 
 // define the provider-level schema for configuration data
-func (_ *hasValuesDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (*hasValuesDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
@@ -73,7 +73,7 @@ func (_ *hasValuesDataSource) Schema(_ context.Context, _ datasource.SchemaReque
 }
 
 // read executes the actual function
-func (_ *hasValuesDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (*hasValuesDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	// determine input values
 	var state hasValuesDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)

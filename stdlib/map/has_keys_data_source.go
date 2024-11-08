@@ -34,12 +34,12 @@ type hasKeysDataSourceModel struct {
 }
 
 // data source metadata
-func (_ *hasKeysDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (*hasKeysDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_has_keys"
 }
 
 // define the provider-level schema for configuration data
-func (_ *hasKeysDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (*hasKeysDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
@@ -70,7 +70,7 @@ func (_ *hasKeysDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 }
 
 // read executes the actual function
-func (_ *hasKeysDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (*hasKeysDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	// determine input values
 	var state hasKeysDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)

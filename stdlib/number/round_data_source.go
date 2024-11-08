@@ -31,12 +31,12 @@ type roundDataSourceModel struct {
 }
 
 // data source metadata
-func (_ *roundDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (*roundDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_round"
 }
 
 // define the provider-level schema for configuration data
-func (_ *roundDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (*roundDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDFloat64Attribute(),
@@ -54,7 +54,7 @@ func (_ *roundDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, 
 }
 
 // read executes the actual function
-func (_ *roundDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (*roundDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	// determine input values
 	var state roundDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)

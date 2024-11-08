@@ -39,12 +39,12 @@ type replaceDataSourceModel struct {
 }
 
 // data source metadata
-func (_ *replaceDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (*replaceDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_replace"
 }
 
 // define the provider-level schema for configuration data
-func (_ *replaceDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (*replaceDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
@@ -87,7 +87,7 @@ func (_ *replaceDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 }
 
 // validate data source config
-func (_ *replaceDataSource) ValidateConfig(ctx context.Context, req datasource.ValidateConfigRequest, resp *datasource.ValidateConfigResponse) {
+func (*replaceDataSource) ValidateConfig(ctx context.Context, req datasource.ValidateConfigRequest, resp *datasource.ValidateConfigResponse) {
 	// determine input values
 	var state replaceDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)
@@ -127,7 +127,7 @@ func (_ *replaceDataSource) ValidateConfig(ctx context.Context, req datasource.V
 }
 
 // read executes the actual function
-func (_ *replaceDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (*replaceDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	// determine input values
 	var state replaceDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)

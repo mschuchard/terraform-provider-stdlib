@@ -32,12 +32,12 @@ type compareListDataSourceModel struct {
 }
 
 // data source metadata
-func (_ *compareListDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (*compareListDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_compare_list"
 }
 
 // define the provider-level schema for configuration data
-func (_ *compareListDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (*compareListDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
@@ -61,7 +61,7 @@ func (_ *compareListDataSource) Schema(_ context.Context, _ datasource.SchemaReq
 }
 
 // read executes the actual function
-func (_ *compareListDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (*compareListDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	// determine input values
 	var state compareListDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)

@@ -33,12 +33,12 @@ type maxStringDataSourceModel struct {
 }
 
 // data source metadata
-func (_ *maxStringDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (*maxStringDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_max_string"
 }
 
 // define the provider-level schema for configuration data
-func (_ *maxStringDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (*maxStringDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
@@ -60,7 +60,7 @@ func (_ *maxStringDataSource) Schema(_ context.Context, _ datasource.SchemaReque
 }
 
 // read executes the actual function
-func (_ *maxStringDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (*maxStringDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	// determine input values
 	var state maxStringDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)

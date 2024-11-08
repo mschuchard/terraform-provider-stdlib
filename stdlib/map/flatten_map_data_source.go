@@ -34,12 +34,12 @@ type flattenMapDataSourceModel struct {
 }
 
 // data source metadata
-func (_ *flattenMapDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (*flattenMapDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_flatten_map"
 }
 
 // define the provider-level schema for configuration data
-func (_ *flattenMapDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (*flattenMapDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDInt64Attribute(),
@@ -64,7 +64,7 @@ func (_ *flattenMapDataSource) Schema(_ context.Context, _ datasource.SchemaRequ
 }
 
 // read executes the actual function
-func (_ *flattenMapDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (*flattenMapDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	// determine input values
 	var state flattenMapDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)

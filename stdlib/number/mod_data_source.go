@@ -32,12 +32,12 @@ type modDataSourceModel struct {
 }
 
 // data source metadata
-func (_ *modDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+func (*modDataSource) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_mod"
 }
 
 // define the provider-level schema for configuration data
-func (_ *modDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (*modDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDFloat64Attribute(),
@@ -59,7 +59,7 @@ func (_ *modDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, re
 }
 
 // read executes the actual function
-func (_ *modDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+func (*modDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
 	// determine input values
 	var state modDataSourceModel
 	resp.Diagnostics.Append(req.Config.Get(ctx, &state)...)
