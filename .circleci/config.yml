@@ -16,6 +16,9 @@ jobs:
         name: build
         command: make build
     - run:
+        name: lint
+        command: make lint
+    - run:
         name: acceptance test
         command: make accept
 

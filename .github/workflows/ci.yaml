@@ -22,5 +22,7 @@ jobs:
       run: apk add --no-cache --update build-base
     - name: build
       run: make build
+    - name: lint
+      run: make lint
     - name: acceptance test
-      run: make accept || true
+      run: make accept
