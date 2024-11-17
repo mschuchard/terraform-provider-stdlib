@@ -1,4 +1,4 @@
-### 1.5.1 (Next)
+### 1.5.1
 - Refine attribute error messages.
 - Coerce result of `round` function to integer.
 - Do not coerce `id` of `min` and `max` functions to integer.

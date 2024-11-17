@@ -17,7 +17,7 @@ install-tfproviderlint:
 	@go install github.com/bflad/tfproviderlint/cmd/tfproviderlint@latest
 
 lint: install-tfproviderlint
-	@~/go/bin/tfproviderlint -AT003=false -AT008=false ./...
+	@tfproviderlint -AT003=false -AT008=false ./...
 
 build: tidy
 	@go build -o terraform-provider-stdlib
