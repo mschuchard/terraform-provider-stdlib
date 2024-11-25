@@ -1,3 +1,5 @@
+### 1.6.0 (Next)
+
 ### 1.5.1
 - Refine attribute error messages.
 - Coerce result of `round` function to integer.

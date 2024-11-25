@@ -11,7 +11,7 @@ jobs:
     - checkout
     - run:
         name: install prereqs
-        command: apk add --no-cache --update build-base
+        command: apk add --no-cache --update make
     - run:
         name: build
         command: make build
