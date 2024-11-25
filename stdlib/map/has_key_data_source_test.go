@@ -12,9 +12,9 @@ import (
 func TestAccHasKey(test *testing.T) {
 	// initialize test params
 	resourceConfig := `data "stdlib_has_key" "test_%s" {
-    map = { "hello" = "world", "foo" = "bar" }
-    key = "%s"
-  }`
+      map = { "hello" = "world", "foo" = "bar" }
+      key = "%s"
+    }`
 	paramsResults := map[string]bool{"foo": true, "bar": false}
 
 	// iterate through tests

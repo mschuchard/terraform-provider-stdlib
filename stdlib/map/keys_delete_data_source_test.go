@@ -17,17 +17,17 @@ func TestAccKeysDelete(test *testing.T) {
 			// test error when key does not exist
 			{
 				Config: `data "stdlib_keys_delete" "test" {
-				map = { "hello" = "world", "foo" = "bar", "baz" = "bat" }
-				keys = ["foo", "bar"]
-        }`,
+				  map = { "hello" = "world", "foo" = "bar", "baz" = "bat" }
+				  keys = ["foo", "bar"]
+                }`,
 				ExpectError: regexp.MustCompile("The key to be deleted 'bar' does not exist in the input map"),
 			},
 			// test basic keys removal from map
 			{
 				Config: `data "stdlib_keys_delete" "test" {
-          map = { "hello" = "world", "foo" = "bar", "baz" = "bat" }
-          keys = ["foo", "baz"]
-        }`,
+                  map = { "hello" = "world", "foo" = "bar", "baz" = "bat" }
+                  keys = ["foo", "baz"]
+                }`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// verify input params are stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_keys_delete.test", "keys.#", "2"),

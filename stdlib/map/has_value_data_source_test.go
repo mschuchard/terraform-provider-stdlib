@@ -12,9 +12,9 @@ import (
 func TestAccHasValue(test *testing.T) {
 	// initialize test params
 	resourceConfig := `data "stdlib_has_value" "test_%s" {
-    map = { "hello" = "world", "foo" = "bar" }
-    value = "%s"
-  }`
+      map = { "hello" = "world", "foo" = "bar" }
+      value = "%s"
+    }`
 	paramsResults := map[string]bool{"foo": false, "bar": true}
 
 	// iterate through tests

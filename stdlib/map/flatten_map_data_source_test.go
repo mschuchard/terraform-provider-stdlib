@@ -15,11 +15,11 @@ func TestAccFlattenMap(test *testing.T) {
 			// test basic key removal from map
 			{
 				Config: `data "stdlib_flatten_map" "test" {
-          param = [
-            { "hello" = "world" },
-            { "foo" = "bar" }
-          ]
-        }`,
+				  param = [
+				    { "hello" = "world" },
+				    { "foo" = "bar" }
+				  ]
+				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// verify input params are stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_flatten_map.test", "param.#", "2"),

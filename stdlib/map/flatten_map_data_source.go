@@ -92,8 +92,8 @@ func (*flattenMapDataSource) Read(ctx context.Context, req datasource.ReadReques
 		maps.Copy(outputMap, nestedMap)
 	}
 
-	// store number of entries of output map as id
-	state.ID = types.Int64Value(int64(len(outputMap)))
+	// store number of entries of input list as id
+	state.ID = types.Int64Value(int64(len(inputList)))
 	// store flattened map in state
 	var mapConvertDiags diag.Diagnostics
 	state.Result, mapConvertDiags = types.MapValueFrom(ctx, types.StringType, outputMap)

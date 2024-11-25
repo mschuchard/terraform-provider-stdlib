@@ -14,8 +14,8 @@ func TestAccHasValues(test *testing.T) {
 		Steps: []resource.TestStep{
 			{
 				Config: `data "stdlib_has_values" "test" {
-					map    = { "hello" = "world", "foo" = "bar", "baz" = "bat" }
-					values = ["foo", "bar"]
+				  map    = { "hello" = "world", "foo" = "bar", "baz" = "bat" }
+				  values = ["foo", "bar"]
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// verify input params are stored correctly

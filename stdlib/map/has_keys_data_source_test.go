@@ -14,8 +14,8 @@ func TestAccHasKeys(test *testing.T) {
 		Steps: []resource.TestStep{
 			{
 				Config: `data "stdlib_has_keys" "test" {
-					map = { "hello" = "world", "foo" = "bar", "baz" = "bat" }
-					keys = ["bar", "foo"]
+				  map = { "hello" = "world", "foo" = "bar", "baz" = "bat" }
+				  keys = ["bar", "foo"]
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// verify input params are stored correctly
