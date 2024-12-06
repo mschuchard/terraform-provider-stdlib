@@ -22,8 +22,8 @@ func TestAccLastChar(test *testing.T) {
 			// test error on invalid number of terminating chars
 			{
 				Config: fmt.Sprintf(`data "stdlib_last_char" "test" {
-					param = "%s"
-					num_chars = 10
+				  param = "%s"
+				  num_chars = 10
 				}`, param),
 				ExpectError: regexp.MustCompile("The number of terminating characters to return must be fewer than the length"),
 			},
@@ -42,8 +42,8 @@ func TestAccLastChar(test *testing.T) {
 			// test basic string slice last three characters
 			{
 				Config: fmt.Sprintf(`data "stdlib_last_char" "test" {
-					param = "%s"
-					num_chars = %d
+				  param = "%s"
+				  num_chars = %d
 				}`, param, numChars),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// verify input param is stored correctly

@@ -47,8 +47,8 @@ func TestAccListIndex(test *testing.T) {
 			},
 			{
 				Config: `data "stdlib_list_index" "test" {
-		  		list_param = ["zero", "one", "two", "three", "two", "one", "zero"]
-		  		elem_param = "two"
+		  		  list_param = ["zero", "one", "two", "three", "two", "one", "zero"]
+		  		  elem_param = "two"
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// verify input param is stored correctly
@@ -62,8 +62,8 @@ func TestAccListIndex(test *testing.T) {
 			},
 			{
 				Config: `data "stdlib_list_index" "test" {
-		  		list_param = ["hundred", "thousand", "million", "billion"]
-	  			elem_param = "infinity"
+		  		  list_param = ["hundred", "thousand", "million", "billion"]
+	  			  elem_param = "infinity"
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// verify input param is stored correctly

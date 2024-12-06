@@ -79,7 +79,7 @@ func (*modDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp
 	tflog.Debug(ctx, fmt.Sprintf("Input number dividend \"%f\" divided by input number divisor \"%f\" remainder is \"%f\"", dividend, divisor, remainder))
 
 	// store remainder result in state
-	state.ID = types.Float64Value(divisor)
+	state.ID = types.Float64Value(dividend)
 	state.Result = types.Float64Value(remainder)
 
 	// set state

@@ -16,8 +16,8 @@ func TestAccLastElement(test *testing.T) {
 			// test error on invalid number of terminating elements
 			{
 				Config: `data "stdlib_last_element" "test" {
-					param = ["h", "e", "l", "l", "o"]
-					num_elements = 10
+				  param = ["h", "e", "l", "l", "o"]
+				  num_elements = 10
 				}`,
 				ExpectError: regexp.MustCompile("The number of terminating elements to return must be fewer than"),
 			},
@@ -37,8 +37,8 @@ func TestAccLastElement(test *testing.T) {
 			// test basic reverse list slice last three elements
 			{
 				Config: `data "stdlib_last_element" "test" {
-					param = ["h", "e", "l", "l", "o"]
-					num_elements = 3
+				  param = ["h", "e", "l", "l", "o"]
+				  num_elements = 3
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// verify input param is stored correctly
