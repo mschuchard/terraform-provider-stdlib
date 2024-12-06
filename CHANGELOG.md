@@ -1,4 +1,5 @@
 ### 1.6.0 (Next)
+- Optimize data source `id` where possible (may cause superficial plan changes to existing states).
 
 ### 1.5.1
 - Refine attribute error messages.
