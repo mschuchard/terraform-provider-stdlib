@@ -27,9 +27,9 @@ type productDataSource struct{}
 
 // maps the data source schema data to the model
 type productDataSourceModel struct {
-	ID       types.Float64 `tfsdk:"id"`
-	SetParam types.Set     `tfsdk:"set_param"`
-	Result   types.Float64 `tfsdk:"result"`
+	ID     types.Float64 `tfsdk:"id"`
+	Param  types.Set     `tfsdk:"param"`
+	Result types.Float64 `tfsdk:"result"`
 }
 
 // data source metadata
@@ -42,7 +42,7 @@ func (*productDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, 
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDFloat64Attribute(),
-			"set_param": schema.SetAttribute{
+			"param": schema.SetAttribute{
 				Description: "Input set parameter for determining the product. The set must contain at least one element.",
 				ElementType: types.Float64Type,
 				Required:    true,
@@ -69,21 +69,21 @@ func (*productDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 	}
 
 	// convert tf set to go slice
-	var setParam []float64
-	resp.Diagnostics.Append(state.SetParam.ElementsAs(ctx, &setParam, false)...)
+	var param []float64
+	resp.Diagnostics.Append(state.Param.ElementsAs(ctx, &param, false)...)
 
 	// determine the product
 	result := 1.0
-	for _, elem := range setParam {
+	for _, elem := range param {
 		result *= elem
 	}
 
 	// provide debug logging
 	ctx = tflog.SetField(ctx, "stdlib_product_result", result)
-	tflog.Debug(ctx, fmt.Sprintf("Input set \"%f\" product is \"%f\"", setParam, result))
+	tflog.Debug(ctx, fmt.Sprintf("Input set \"%f\" product is \"%f\"", param, result))
 
 	// store product of set in state
-	state.ID = types.Float64Value(setParam[0])
+	state.ID = types.Float64Value(param[0])
 	state.Result = types.Float64Value(result)
 
 	// set state

@@ -76,6 +76,7 @@ func (*stdlibProvider) DataSources(_ context.Context) []func() datasource.DataSo
 		slicefunc.NewMaxStringDataSource,
 		slicefunc.NewMinNumberDataSource,
 		slicefunc.NewMinStringDataSource,
+		slicefunc.NewProductDataSource,
 		slicefunc.NewReplaceDataSource,
 		slicefunc.NewSortListDataSource,
 		stringfunc.NewLastCharDataSource,
