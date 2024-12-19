@@ -79,6 +79,7 @@ func (*stdlibProvider) DataSources(_ context.Context) []func() datasource.DataSo
 		slicefunc.NewProductDataSource,
 		slicefunc.NewReplaceDataSource,
 		slicefunc.NewSortListDataSource,
+		stringfunc.NewCutDataSource,
 		stringfunc.NewLastCharDataSource,
 	}
 }
