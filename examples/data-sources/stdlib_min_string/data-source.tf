@@ -2,9 +2,9 @@
 data "stdlib_min_string" "count" {
   param = ["zero", "one", "two", "three", "four", "five", "six", "seven"]
 }
-# => five
+# result => five
 
 data "stdlib_min_string" "alphabet" {
   param = ["alpha", "beta", "gamma", "delta", "epsilon"]
 }
-# => alpha
+# result => alpha

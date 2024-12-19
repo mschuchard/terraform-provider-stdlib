@@ -2,9 +2,9 @@
 data "stdlib_max_string" "count" {
   param = ["zero", "one", "two", "three", "four", "five", "six", "seven"]
 }
-# => zero
+# result => zero
 
 data "stdlib_max_string" "alphabet" {
   param = ["alpha", "beta", "gamma", "delta", "epsilon"]
 }
-# => gamma
+# result => gamma

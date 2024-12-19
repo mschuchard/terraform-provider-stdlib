@@ -2,11 +2,11 @@
 data "stdlib_last_char" "hello" {
   param = "hello"
 }
-# => "o"
+# result => "o"
 
 # Return the last three characters of a string:
 data "stdlib_last_char" "llo" {
   param     = "hello"
   num_chars = 3
 }
-# => "llo"
+# result => "llo"

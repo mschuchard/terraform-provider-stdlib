@@ -6,7 +6,7 @@ data "stdlib_has_value" "foo" {
   }
   value = "foo"
 }
-# => false
+# result => false
 
 # Check existence of "bar" value in map:
 data "stdlib_has_value" "bar" {
@@ -16,4 +16,4 @@ data "stdlib_has_value" "bar" {
   }
   value = "bar"
 }
-# => true
+# result => true

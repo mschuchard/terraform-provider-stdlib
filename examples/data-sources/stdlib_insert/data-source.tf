@@ -4,7 +4,7 @@ data "stdlib_insert" "prepend" {
   insert_values = ["zero"]
   index         = 0
 }
-# => ["zero", "one", "two", "three"]
+# result => ["zero", "one", "two", "three"]
 
 # Return the list with values inserted in middle.
 data "stdlib_insert" "insert" {
@@ -12,7 +12,7 @@ data "stdlib_insert" "insert" {
   insert_values = ["two", "three"]
   index         = 2
 }
-# => ["zero", "one", "two", "three", "four", "five"]
+# result => ["zero", "one", "two", "three", "four", "five"]
 
 # Return the list with value appended (similar to concat).
 data "stdlib_insert" "append" {
@@ -20,4 +20,4 @@ data "stdlib_insert" "append" {
   insert_values = ["three"]
   index         = length(["zero", "one", "two"])
 }
-# => ["zero", "one", "two", "three"]
+# result => ["zero", "one", "two", "three"]

@@ -5,4 +5,4 @@ data "stdlib_flatten_map" "foo" {
     { "foo" = "bar" }
   ]
 }
-# => {"hello" = "world", "foo = "bar}
+# result => {"hello" = "world", "foo = "bar}

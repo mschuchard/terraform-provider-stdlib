@@ -6,7 +6,7 @@ data "stdlib_has_key" "foo" {
   }
   key = "foo"
 }
-# => true
+# result => true
 
 # Check existence of "bar" key in map:
 data "stdlib_has_key" "bar" {
@@ -16,4 +16,4 @@ data "stdlib_has_key" "bar" {
   }
   key = "bar"
 }
-# => false
+# result => false

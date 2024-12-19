@@ -7,4 +7,4 @@ data "stdlib_keys_delete" "foo" {
   }
   keys = ["foo", "baz"]
 }
-# => {"hello" = "world"}
+# result => {"hello" = "world"}

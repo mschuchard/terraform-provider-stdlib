@@ -6,4 +6,4 @@ data "stdlib_key_delete" "foo" {
   }
   key = "foo"
 }
-# => {"hello" = "world"}
+# result => {"hello" = "world"}

@@ -2,14 +2,14 @@
 data "stdlib_product" "zero" {
   param = [0, 1, 2]
 }
-# => 0
+# result => 0
 
 data "stdlib_product" "single" {
   params = [5]
 }
-# => 5
+# result => 5
 
 data "stdlib_product" "normal" {
   params = [1, 2, 3, 4, 5]
 }
-# => 120
+# result => 120

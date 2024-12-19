@@ -7,7 +7,7 @@ data "stdlib_has_keys" "bar_foo" {
   }
   keys = ["bar", "foo"]
 }
-# => true
+# result => true
 
 # Check existence of either "bar" or "pizza" keys in map:
 data "stdlib_has_keys" "bar_pizza" {
@@ -18,7 +18,7 @@ data "stdlib_has_keys" "bar_pizza" {
   }
   keys = ["bar", "pizza"]
 }
-# => false
+# result => false
 
 # Check existence of "bar" and "foo" keys in map:
 data "stdlib_has_keys" "bar_foo_all" {
@@ -26,7 +26,7 @@ data "stdlib_has_keys" "bar_foo_all" {
   keys = ["bar", "foo"]
   all  = true
 }
-# => false
+# result => false
 
 # Check existence of "hello", "foo", and "baz" keys in map:
 data "stdlib_has_keys" "three_keys_all" {
@@ -34,4 +34,4 @@ data "stdlib_has_keys" "three_keys_all" {
   keys = ["hello", "foo", "baz"]
   all  = true
 }
-# => true
+# result => true
