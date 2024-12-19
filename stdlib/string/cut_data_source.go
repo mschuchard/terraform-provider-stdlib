@@ -2,12 +2,15 @@ package stringfunc
 
 import (
 	"context"
+	"fmt"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 
 	util "github.com/mschuchard/terraform-provider-stdlib/internal"
 )
@@ -52,7 +55,7 @@ func (*cutDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp
 			},
 			"separator": schema.StringAttribute{
 				Description: "The separator for cutting the input string.",
-				Optional:    true,
+				Required:    true,
 				Validators: []validator.String{
 					stringvalidator.LengthAtLeast(1),
 				},
@@ -82,4 +85,30 @@ func (*cutDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
+	// initialize input string param and separator
+	inputString := state.Param.ValueString()
+	separator := state.Separator.ValueString()
+
+	// determine string cut
+	before, after, found := strings.Cut(inputString, separator)
+
+	// provide debug logging
+	ctx = tflog.SetField(ctx, "stdlib_cut_before", before)
+	ctx = tflog.SetField(ctx, "stdlib_cut_after", after)
+	ctx = tflog.SetField(ctx, "stdlib_cut_found", found)
+	tflog.Debug(ctx, fmt.Sprintf("Input string parameter \"%s\" with separator \"%s\" has before \"%s\", after \"%s\", and found \"%t\"", inputString, separator, before, after, found))
+
+	// store returned values in state
+	state.ID = types.StringValue(inputString)
+	state.Before = types.StringValue(before)
+	state.After = types.StringValue(after)
+	state.Found = types.BoolValue(found)
+
+	// set state
+	resp.Diagnostics.Append(resp.State.Set(ctx, &state)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+	tflog.Info(ctx, "Determined string cut", map[string]any{"success": true})
 }
