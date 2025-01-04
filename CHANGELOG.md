@@ -1,4 +1,4 @@
-### 1.6.0 (Next)
+### 1.6.0
 - Add `product` and `cut` functions.
 - Optimize data source `id` where possible (may cause superficial plan changes to existing states).
 
