@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
+	"github.com/hashicorp/terraform-plugin-framework/function"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -81,6 +82,13 @@ func (*stdlibProvider) DataSources(_ context.Context) []func() datasource.DataSo
 		slicefunc.NewSortListDataSource,
 		stringfunc.NewCutDataSource,
 		stringfunc.NewLastCharDataSource,
+	}
+}
+
+// define the functions implemented in the provider
+func (*stdlibProvider) Functions(_ context.Context) []func() function.Function {
+	return []func() function.Function{
+		stringfunc.NewCutFunction,
 	}
 }
 
