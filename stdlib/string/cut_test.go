@@ -62,20 +62,21 @@ func TestCutFunction(test *testing.T) {
 
 	for name, testCase := range standardTestCases {
 		test.Run(name, func(test *testing.T) {
+			// initialize result
 			result := function.RunResponse{Result: function.NewResultData(types.TupleUnknown([]attr.Type{types.StringType, types.StringType, types.BoolType}))}
 
+			// execute function and store result
 			stringfunc.NewCutFunction().Run(context.Background(), testCase.request, &result)
 
-			//if result.Error.Equal(testCase.expected.Error) {
-			if testCase.expected.Error != nil && result.Error.Error() != testCase.expected.Error.Text {
+			// compare results
+			if !result.Error.Equal(testCase.expected.Error) {
 				test.Errorf("expected value: %s", testCase.expected.Error)
 				test.Errorf("actual value: %s", result.Error)
 			}
-			//if result.Result.Equal(testCase.expected.Result) {
-			/* if result.Result.Value().Equal(testCase.expected.Result.Value()) {
+			if !result.Result.Equal(testCase.expected.Result) {
 				test.Errorf("expected value: %+q", testCase.expected.Result.Value())
 				test.Errorf("actual value: %+q", result.Result.Value())
-			}*/
+			}
 		})
 	}
 }
