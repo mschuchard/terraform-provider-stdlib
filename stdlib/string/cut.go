@@ -4,7 +4,9 @@ import (
 	"context"
 	"strings"
 
+	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/function"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 // ensure the implementation satisfies the expected interfaces
@@ -54,16 +56,26 @@ func (*cutFunction) Run(ctx context.Context, req function.RunRequest, resp *func
 	// validate input parameters
 	if len(inputString) < 1 {
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "cut: input string parameter must be at least length 1"))
+		return
 	}
 	if len(separator) < 1 {
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "cut: separator parameter must be at least length 1"))
+		return
 	}
 
-	// determine string cut
+	// determine string cut and store in tuple result
 	before, after, found := strings.Cut(inputString, separator)
+	result, diag := types.TupleValue(
+		[]attr.Type{types.StringType, types.StringType, types.BoolType},
+		[]attr.Value{types.StringValue(before), types.StringValue(after), types.BoolValue(found)},
+	)
+	if diag.HasError() {
+		// resp.Error = ?
+		return
+	}
 
 	// provide debug logging TODO
 
 	// return the result as a tuple of string, string, bool
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, []any{before, after, found}))
+	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &result))
 }
