@@ -36,7 +36,7 @@ func (*lastCharFunction) Definition(_ context.Context, _ function.DefinitionRequ
 		},
 		VariadicParameter: function.Int32Parameter{
 			Name:        "number_of_characters",
-			Description: "Optional: The number of terminating characters at the end of the string to return (default: 1).",
+			Description: "Optional: The number of terminating characters at the end of the string to return (default: 1). This must be fewer than the number of characters in the input string.",
 		},
 		Return: function.StringReturn{},
 	}
@@ -45,8 +45,8 @@ func (*lastCharFunction) Definition(_ context.Context, _ function.DefinitionRequ
 func (*lastCharFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	// initialize input parameters
 	var inputString string
-	var numCharsVar []int
-	var numChars int
+	var numCharsVar []int32
+	var numChars int32
 
 	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &inputString, &numCharsVar))
 	if resp.Error != nil {
@@ -57,6 +57,8 @@ func (*lastCharFunction) Run(ctx context.Context, req function.RunRequest, resp 
 	if len(inputString) < 1 {
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "lastChar: input string parameter must be at least length 1"))
 	}
+	lenInputString := int32(len(inputString))
+
 	if len(numCharsVar) == 0 {
 		// assign default numChars value of 1
 		numChars = 1
@@ -67,7 +69,7 @@ func (*lastCharFunction) Run(ctx context.Context, req function.RunRequest, resp 
 		// and then continue validation
 		if numChars < 1 {
 			resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "lastChar: number_of_characters parameter must be at least 1"))
-		} else if numChars >= len(inputString) {
+		} else if numChars >= lenInputString {
 			resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "lastChar: number_of_characters parameter must be fewer than the length of the input string parameter"))
 		}
 	}
@@ -79,7 +81,7 @@ func (*lastCharFunction) Run(ctx context.Context, req function.RunRequest, resp 
 	ctx = tflog.SetField(ctx, "lastChar: number_of_characters", numChars)
 
 	// determine last char
-	lastCharacter := inputString[len(inputString)-numChars:]
+	lastCharacter := inputString[lenInputString-numChars:]
 	ctx = tflog.SetField(ctx, "lastChar: last_character(s)", lastCharacter)
 
 	// store the result as a tuple of string, string, bool
