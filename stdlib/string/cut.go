@@ -33,7 +33,7 @@ func (*cutFunction) Definition(_ context.Context, _ function.DefinitionRequest, 
 		MarkdownDescription: "Returns the strings before and after the first instance of the separator in the input string. Also returns whether or not the separator was found in the input string. The return is a tuple: `before`, `after`, `found`. If the separator is not found in the input string, then `found` will be false, `before` will be equal to `param`, and `after` will be an empty string.",
 		Parameters: []function.Parameter{
 			function.StringParameter{
-				Name:        "param",
+				Name:        "string",
 				Description: "Input string parameter for cutting around a separator.",
 			},
 			function.StringParameter{
@@ -65,7 +65,7 @@ func (*cutFunction) Run(ctx context.Context, req function.RunRequest, resp *func
 		return
 	}
 
-	ctx = tflog.SetField(ctx, "cut: param", inputString)
+	ctx = tflog.SetField(ctx, "cut: string", inputString)
 	ctx = tflog.SetField(ctx, "cut: separator", separator)
 
 	// determine string cut
@@ -86,6 +86,9 @@ func (*cutFunction) Run(ctx context.Context, req function.RunRequest, resp *func
 
 	// store the result as a tuple of string, string, bool
 	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &result))
+	if resp.Error != nil {
+		return
+	}
 	ctx = tflog.SetField(ctx, "cut: result", result)
 
 	tflog.Debug(ctx, "cut: successful return", map[string]any{"success": true})
