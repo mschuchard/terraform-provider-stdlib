@@ -84,7 +84,7 @@ func (*lastCharFunction) Run(ctx context.Context, req function.RunRequest, resp 
 	lastCharacter := inputString[lenInputString-numChars:]
 	ctx = tflog.SetField(ctx, "lastChar: last_character(s)", lastCharacter)
 
-	// store the result as a tuple of string, string, bool
+	// store the result as a string
 	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &lastCharacter))
 	if resp.Error != nil {
 		return
