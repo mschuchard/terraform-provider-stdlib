@@ -50,7 +50,7 @@ func (*sqrtDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, res
 				Description: "Function result storing the square root of the input parameter.",
 			},
 		},
-		MarkdownDescription: "Return the square root of an input parameter;.",
+		MarkdownDescription: "Return the square root of an input parameter.",
 	}
 }
 
@@ -81,7 +81,7 @@ func (*sqrtDataSource) Read(ctx context.Context, req datasource.ReadRequest, res
 	ctx = tflog.SetField(ctx, "stdlib_sqrt_result", sqrt)
 	tflog.Debug(ctx, fmt.Sprintf("Input number parameter \"%f\" square root is \"%f\"", inputNum, sqrt))
 
-	// store sqrted result in state
+	// store sqrt result in state
 	state.ID = types.Float64Value(inputNum)
 	state.Result = types.Float64Value(sqrt)
 
