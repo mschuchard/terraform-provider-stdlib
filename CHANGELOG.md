@@ -1,3 +1,6 @@
+### 2.0.0
+- Implement `string` and `number` type custom functions.
+
 ### 1.6.0
 - Add `product` and `cut` functions.
 - Optimize data source `id` where possible (may cause superficial plan changes to existing states).
