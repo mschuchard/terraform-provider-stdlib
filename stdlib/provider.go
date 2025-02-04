@@ -90,6 +90,7 @@ func (*stdlibProvider) Functions(_ context.Context) []func() function.Function {
 	return []func() function.Function{
 		numberfunc.NewExpFunction,
 		numberfunc.NewModFunction,
+		numberfunc.NewRoundFunction,
 		stringfunc.NewCutFunction,
 		stringfunc.NewLastCharFunction,
 	}
