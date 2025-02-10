@@ -2,6 +2,7 @@ package numberfunc_test
 
 import (
 	"context"
+	"math"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
@@ -42,6 +43,33 @@ func TestSqrtFunction(test *testing.T) {
 				Result: function.NewResultData(types.Float64Value(1.4142135623730951)),
 			},
 		},
+		"negative": {
+			request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{types.Float64Value(-1)}),
+			},
+			expected: function.RunResponse{
+				Error:  function.NewArgumentFuncError(0, "sqrt: the input number cannot be negative"),
+				Result: function.NewResultData(types.Float64Unknown()),
+			},
+		},
+		"infinite": {
+			request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{types.Float64Value(math.Inf(1))}),
+			},
+			expected: function.RunResponse{
+				Error:  function.NewArgumentFuncError(0, "sqrt: the input number cannot be 'positive or negative infinity'"),
+				Result: function.NewResultData(types.Float64Unknown()),
+			},
+		},
+		/*"nan": {
+			request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{types.Float64Value(math.NaN())}),
+			},
+			expected: function.RunResponse{
+				Error:  function.NewArgumentFuncError(0, "sqrt: the input number cannot be 'not a number'"),
+				Result: function.NewResultData(types.Float64Unknown()),
+			},
+		},*/
 	}
 
 	for name, testCase := range standardTestCases {
