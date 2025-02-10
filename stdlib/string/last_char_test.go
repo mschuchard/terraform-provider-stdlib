@@ -77,8 +77,8 @@ func TestLastCharFunction(test *testing.T) {
 				test.Errorf("actual value: %s", result.Error)
 			}
 			if !result.Result.Equal(testCase.expected.Result) {
-				test.Errorf("expected value: %+q", testCase.expected.Result.Value())
-				test.Errorf("actual value: %+q", result.Result.Value())
+				test.Errorf("expected value: %s", testCase.expected.Result.Value())
+				test.Errorf("actual value: %s", result.Result.Value())
 			}
 		})
 	}

@@ -31,4 +31,4 @@ unit:
 accept:
 	TF_ACC=1 go test -v ./...
 
-test: unit accept
+test: accept

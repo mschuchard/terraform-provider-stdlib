@@ -1,4 +1,4 @@
-### 2.0.0
+### 2.0.0 (Next)
 - Implement `string` and `number` type custom functions.
 
 ### 1.6.0
