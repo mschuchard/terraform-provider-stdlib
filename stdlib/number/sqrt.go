@@ -32,7 +32,7 @@ func (*sqrtFunction) Definition(_ context.Context, _ function.DefinitionRequest,
 		Parameters: []function.Parameter{
 			function.Float64Parameter{
 				Name:        "number",
-				Description: "Input number parameter for determining the square root.",
+				Description: "Input number parameter for determining the square root. This number cannot be negative, infinite (positive or negative), or NaN.",
 			},
 		},
 		Return: function.Float64Return{},
@@ -44,6 +44,13 @@ func (*sqrtFunction) Run(ctx context.Context, req function.RunRequest, resp *fun
 	var inputNum float64
 
 	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &inputNum))
+	if inputNum < 0 {
+		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "sqrt: the input number cannot be negative"))
+	} else if math.IsInf(inputNum, 0) {
+		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "sqrt: the input number cannot be 'positive or negative infinity'"))
+	} else if math.IsNaN(inputNum) {
+		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "sqrt: the input number cannot be 'not a number'"))
+	}
 	if resp.Error != nil {
 		return
 	}
@@ -52,15 +59,6 @@ func (*sqrtFunction) Run(ctx context.Context, req function.RunRequest, resp *fun
 
 	// determine the square root
 	sqrt := math.Sqrt(inputNum)
-	/*if math.IsNaN(sqrt) {
-		resp.Diagnostics.AddAttributeError(
-			path.Root("param"),
-			"Invalid Value",
-			"The square root of the input parameter must return a valid number, but instead returned 'NaN'",
-		)
-		return
-	}*/
-
 	ctx = tflog.SetField(ctx, "sqrt: square root", sqrt)
 
 	// store the result as a float64
