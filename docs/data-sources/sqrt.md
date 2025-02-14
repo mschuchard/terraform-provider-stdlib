@@ -3,12 +3,12 @@
 page_title: "stdlib_sqrt Data Source - stdlib"
 subcategory: ""
 description: |-
-  Return the square root of an input parameter;.
+  Return the square root of an input parameter.
 ---
 
 # stdlib_sqrt (Data Source)
 
-Return the square root of an input parameter;.
+Return the square root of an input parameter.
 
 ## Example Usage
 

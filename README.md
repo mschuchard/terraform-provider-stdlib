@@ -6,8 +6,10 @@ This README is purposefully short as all documentation is generated with `terraf
 
 This repository additionally does accept feature requests for e.g. additional functions or enhancements to current functions in the Github issue tracker.
 
-### Upcoming 2.0.0 Release Announcement
+If your version of Terraform is >= 1.8 then you can additionally invoke the provider custom functions instead of the data sources. Otherwise you must declare the data sources to utilize this plugin's functions.
+
+### Upcoming 2.0 Release Announcement
 - All functions as of version 1.6.0 will be re-implemented as custom provider functions.
-- All new functions implemented after the release of version 2.0.0 will be custom provider functions only, and not data sources.
+- All new functions implemented after the release of version 1.6.0 will be custom provider functions only, and not data sources.
 - All data source functions that exist at the time of the release of version 1.6.0 will be maintained afterwards for any necessary bug fixes.
 - Please upgrade to Terraform version >= 1.8 by the release of version 2.1.0 to ensure support for any new functions supported by this provider.
