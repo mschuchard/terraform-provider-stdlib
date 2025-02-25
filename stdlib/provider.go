@@ -92,6 +92,7 @@ func (*stdlibProvider) Functions(_ context.Context) []func() function.Function {
 		numberfunc.NewModFunction,
 		numberfunc.NewRoundFunction,
 		numberfunc.NewSqrtFunction,
+		slicefunc.NewCompareListFunction,
 		stringfunc.NewCutFunction,
 		stringfunc.NewLastCharFunction,
 	}
