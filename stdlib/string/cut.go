@@ -30,7 +30,7 @@ func (*cutFunction) Metadata(_ context.Context, req function.MetadataRequest, re
 func (*cutFunction) Definition(_ context.Context, _ function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:             "Cut a string in two",
-		MarkdownDescription: "Returns the strings before and after the first instance of the separator in the input string. Also returns whether or not the separator was found in the input string. The return is a tuple: `before`, `after`, `found`. If the separator is not found in the input string, then `found` will be false, `before` will be equal to `param`, and `after` will be an empty string.",
+		MarkdownDescription: "Returns the strings before and after the first instance of the separator in the input string. Also returns whether or not the separator was found in the input string. The return is a tuple: `before`, `after`, `found`. If the separator is not found in the input string, then `found` will be false, `before` will be equal to the `string` parameter, and `after` will be an empty string.",
 		Parameters: []function.Parameter{
 			function.StringParameter{
 				Name:        "string",
