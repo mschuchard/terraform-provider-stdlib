@@ -25,7 +25,8 @@ func TestCutFunction(test *testing.T) {
 			expected: function.RunResponse{
 				Result: function.NewResultData(types.TupleValueMust(
 					[]attr.Type{types.StringType, types.StringType, types.BoolType},
-					[]attr.Value{types.StringValue("foo"), types.StringValue("baz"), types.BoolValue(true)})),
+					[]attr.Value{types.StringValue("foo"), types.StringValue("baz"), types.BoolValue(true)},
+				)),
 			},
 		},
 		"separator-absent": {
@@ -35,7 +36,8 @@ func TestCutFunction(test *testing.T) {
 			expected: function.RunResponse{
 				Result: function.NewResultData(types.TupleValueMust(
 					[]attr.Type{types.StringType, types.StringType, types.BoolType},
-					[]attr.Value{types.StringValue("foobarbaz"), types.StringValue(""), types.BoolValue(false)})),
+					[]attr.Value{types.StringValue("foobarbaz"), types.StringValue(""), types.BoolValue(false)},
+				)),
 			},
 		},
 		"empty-string": {
@@ -45,7 +47,8 @@ func TestCutFunction(test *testing.T) {
 			expected: function.RunResponse{
 				Error: function.NewArgumentFuncError(0, "cut: input string parameter must be at least length 1"),
 				Result: function.NewResultData(types.TupleUnknown(
-					[]attr.Type{types.StringType, types.StringType, types.BoolType})),
+					[]attr.Type{types.StringType, types.StringType, types.BoolType},
+				)),
 			},
 		},
 		"empty-separator": {
@@ -55,7 +58,8 @@ func TestCutFunction(test *testing.T) {
 			expected: function.RunResponse{
 				Error: function.NewArgumentFuncError(1, "cut: separator parameter must be at least length 1"),
 				Result: function.NewResultData(types.TupleUnknown(
-					[]attr.Type{types.StringType, types.StringType, types.BoolType})),
+					[]attr.Type{types.StringType, types.StringType, types.BoolType},
+				)),
 			},
 		},
 	}

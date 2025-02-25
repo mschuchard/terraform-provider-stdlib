@@ -11,7 +11,7 @@ import (
 	slicefunc "github.com/mschuchard/terraform-provider-stdlib/stdlib/slice"
 )
 
-func TestCutFunction(test *testing.T) {
+func TestCompareListFunction(test *testing.T) {
 	test.Parallel()
 
 	standardTestCases := map[string]struct {
