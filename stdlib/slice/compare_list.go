@@ -5,6 +5,7 @@ import (
 	"slices"
 
 	"github.com/hashicorp/terraform-plugin-framework/function"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 )
 
@@ -31,10 +32,12 @@ func (*compareListFunction) Definition(_ context.Context, _ function.DefinitionR
 		MarkdownDescription: "Returns a comparison between two lists. The elements are compared sequentially, starting at index 0, until one element is not equal to the other. The result of comparing the first non-matching elements is returned. If both lists are equal until one of them ends, then the shorter list is considered less than the longer one. The result is 0 if list_one == list_two, -1 if list_one < list_two, and +1 if list_one > list_two. The input lists must be single-level.",
 		Parameters: []function.Parameter{
 			function.ListParameter{
+				ElementType: types.StringType,
 				Name:        "list_one",
 				Description: "First input list parameter to compare with the second.",
 			},
 			function.ListParameter{
+				ElementType: types.StringType,
 				Name:        "list_two",
 				Description: "Second input list parameter to compare with the first.",
 			},

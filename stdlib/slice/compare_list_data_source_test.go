@@ -62,7 +62,7 @@ func TestAccCompareList(test *testing.T) {
 			},
 			{
 				Config: `data "stdlib_compare_list" "test" {
-				  list_one = ["pizza", "cake", "punch]
+				  list_one = ["pizza", "cake", "punch"]
 				  list_two = ["pizza", "cake"]
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
