@@ -46,7 +46,7 @@ func (*insertFunction) Definition(_ context.Context, _ function.DefinitionReques
 				Description: "Index in the list at which to insert the values.",
 			},
 		},
-		Return: function.ListReturn{},
+		Return: function.ListReturn{ElementType: types.StringType},
 	}
 }
 
