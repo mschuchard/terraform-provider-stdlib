@@ -66,7 +66,7 @@ func (*compareListFunction) Run(ctx context.Context, req function.RunRequest, re
 	if resp.Error != nil {
 		return
 	}
-	ctx = tflog.SetField(ctx, "compare_list: result", result)
 
+	ctx = tflog.SetField(ctx, "compare_list: result", result)
 	tflog.Debug(ctx, "compare_list: successful return", map[string]any{"success": true})
 }
