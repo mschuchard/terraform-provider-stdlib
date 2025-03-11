@@ -46,7 +46,7 @@ func (*lastElementDataSource) Schema(_ context.Context, _ datasource.SchemaReque
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
 			"param": schema.ListAttribute{
-				Description: "Input list parameter for determining the last element.",
+				Description: "Input list parameter for determining the last element(s).",
 				ElementType: types.StringType,
 				Required:    true,
 				Validators: []validator.List{
