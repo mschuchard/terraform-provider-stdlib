@@ -22,7 +22,7 @@ func TestLastElementFunction(test *testing.T) {
 			request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{
 					types.ListValueMust(types.StringType, []attr.Value{types.StringValue("h"), types.StringValue("e"), types.StringValue("l"), types.StringValue("l"), types.StringValue("o")}),
-					types.Int32Null(),
+					types.TupleValueMust([]attr.Type{}, []attr.Value{}),
 				}),
 			},
 			expected: function.RunResponse{

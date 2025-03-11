@@ -20,32 +20,32 @@ func TestLastCharFunction(test *testing.T) {
 	}{
 		"optional-param-absent": {
 			request: function.RunRequest{
-				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue("hello"), types.Int32Null()}),
+				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue("hello"), types.TupleValueMust([]attr.Type{}, []attr.Value{})}),
 			},
 			expected: function.RunResponse{
 				Result: function.NewResultData(types.StringValue("o")),
 			},
 		},
-		/*"three-terminating-chars": {
+		"three-terminating-chars": {
 			request: function.RunRequest{
-				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue("hello"), types.Int32Value(3)}),
+				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue("hello"), types.TupleValueMust([]attr.Type{types.Int32Type}, []attr.Value{types.Int32Value(3)})}),
 			},
 			expected: function.RunResponse{
 				Result: function.NewResultData(types.StringValue("llo")),
 			},
-		},*/
+		},
 		"empty-string": {
 			request: function.RunRequest{
-				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue(""), types.Int32Null()}),
+				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue(""), types.TupleValueMust([]attr.Type{}, []attr.Value{})}),
 			},
 			expected: function.RunResponse{
 				Error:  function.NewArgumentFuncError(0, "lastChar: input string parameter must be at least length 1"),
 				Result: function.NewResultData(types.StringUnknown()),
 			},
 		},
-		/*"zero-num-chars": {
+		"zero-num-chars": {
 			request: function.RunRequest{
-				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue("foo"), types.Int32Value(0)}),
+				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue("foo"), types.TupleValueMust([]attr.Type{types.Int32Type}, []attr.Value{types.Int32Value(0)})}),
 			},
 			expected: function.RunResponse{
 				Error:  function.NewArgumentFuncError(1, "lastChar: number_of_characters parameter must be at least 1"),
@@ -54,13 +54,13 @@ func TestLastCharFunction(test *testing.T) {
 		},
 		"num-chars-too-high": {
 			request: function.RunRequest{
-				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue("hello"), types.Int32Value(10)}),
+				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue("hello"), types.TupleValueMust([]attr.Type{types.Int32Type}, []attr.Value{types.Int32Value(10)})}),
 			},
 			expected: function.RunResponse{
 				Error:  function.NewArgumentFuncError(1, "lastChar: number_of_characters parameter must be fewer than the length of the input string parameter"),
 				Result: function.NewResultData(types.StringUnknown()),
 			},
-		},*/
+		},
 	}
 
 	for name, testCase := range standardTestCases {
