@@ -4,7 +4,7 @@ data "stdlib_last_element" "hello" {
 }
 # result => ["o"]
 
-# Return the last three elements of a list (reverse slice)
+# Return the last three elements of a list (reverse slice):
 data "stdlib_last_element" "llo" {
   param        = ["h", "e", "l", "l", "o"]
   num_elements = 3
