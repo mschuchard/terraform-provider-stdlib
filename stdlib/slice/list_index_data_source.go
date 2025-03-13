@@ -57,7 +57,7 @@ func (*listIndexDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 				Required:    true,
 			},
 			"sorted": schema.BoolAttribute{
-				Description: "Whether the list is sorted in ascending order or not (note: see `stdlib_sort_list`). If the list is sorted then the efficient binary search algorithm will be utilized, but the combination of sorting and searching may be less efficient overall in some situations.",
+				Description: "Whether the list is sorted in ascending order or not (note: see `stdlib_sort_list`). If the list is sorted then the efficient binary search algorithm will be utilized, but the combination of sorting and searching may also be less efficient overall in some situations.",
 				Optional:    true,
 			},
 			"result": schema.Int64Attribute{

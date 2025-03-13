@@ -55,8 +55,8 @@ func (*compareListFunction) Run(ctx context.Context, req function.RunRequest, re
 		return
 	}
 
-	ctx = tflog.SetField(ctx, "compareList: list one", listOne)
-	ctx = tflog.SetField(ctx, "compareList: list two", listTwo)
+	ctx = tflog.SetField(ctx, "compare_list: list one", listOne)
+	ctx = tflog.SetField(ctx, "compare_list: list two", listTwo)
 
 	// compare lists and assign result to model field member
 	result := slices.Compare(listOne, listTwo)
