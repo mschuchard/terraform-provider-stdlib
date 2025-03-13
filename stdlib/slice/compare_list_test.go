@@ -74,8 +74,8 @@ func TestCompareListFunction(test *testing.T) {
 
 			// compare results
 			if !result.Error.Equal(testCase.expected.Error) {
-				test.Errorf("expected value: %s", testCase.expected.Error)
-				test.Errorf("actual value: %s", result.Error)
+				test.Errorf("expected error: %s", testCase.expected.Error)
+				test.Errorf("actual error: %s", result.Error)
 			}
 			if !result.Result.Equal(testCase.expected.Result) {
 				test.Errorf("expected value: %d", testCase.expected.Result.Value())
