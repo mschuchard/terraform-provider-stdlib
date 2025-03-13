@@ -11,14 +11,14 @@ import (
 	slicefunc "github.com/mschuchard/terraform-provider-stdlib/stdlib/slice"
 )
 
-func TestMaxnumberFunction(test *testing.T) {
+func TestMaxNumberFunction(test *testing.T) {
 	test.Parallel()
 
 	standardTestCases := map[string]struct {
 		request  function.RunRequest
 		expected function.RunResponse
 	}{
-		"one": {
+		"fibonacci": {
 			request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{
 					types.ListValueMust(types.Float64Type, []attr.Value{types.Float64Value(0), types.Float64Value(1), types.Float64Value(1), types.Float64Value(2), types.Float64Value(3), types.Float64Value(5), types.Float64Value(8), types.Float64Value(13)}),
