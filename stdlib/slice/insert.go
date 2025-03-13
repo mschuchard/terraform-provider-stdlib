@@ -82,7 +82,7 @@ func (*insertFunction) Run(ctx context.Context, req function.RunRequest, resp *f
 	// insert values into list at index
 	result := slices.Insert(list, index, insertValues...)
 
-	// store the result as a tuple of string, string, bool
+	// store the result as a list of strings
 	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &result))
 	if resp.Error != nil {
 		return

@@ -61,7 +61,7 @@ func (*compareListFunction) Run(ctx context.Context, req function.RunRequest, re
 	// compare lists and assign result to model field member
 	result := slices.Compare(listOne, listTwo)
 
-	// store the result as a tuple of string, string, bool
+	// store the result as an integer
 	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &result))
 	if resp.Error != nil {
 		return

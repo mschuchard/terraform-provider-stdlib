@@ -81,7 +81,7 @@ func (*lastElementFunction) Run(ctx context.Context, req function.RunRequest, re
 	// determine last element of slice
 	lastElement := list[len(list)-numElements:]
 
-	// store the result as a tuple of string, string, bool
+	// store the result as a list of strings
 	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &lastElement))
 	if resp.Error != nil {
 		return

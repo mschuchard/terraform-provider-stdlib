@@ -94,7 +94,7 @@ func (*listIndexFunction) Run(ctx context.Context, req function.RunRequest, resp
 		listIndex = slices.Index(list, elem)
 	}
 
-	// store the result as a tuple of string, string, bool
+	// store the result as an integer
 	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &listIndex))
 	if resp.Error != nil {
 		return
