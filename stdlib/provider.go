@@ -99,6 +99,7 @@ func (*stdlibProvider) Functions(_ context.Context) []func() function.Function {
 		slicefunc.NewMaxNumberFunction,
 		slicefunc.NewMaxStringFunction,
 		slicefunc.NewMinNumberFunction,
+		slicefunc.NewMinStringFunction,
 		stringfunc.NewCutFunction,
 		stringfunc.NewLastCharFunction,
 	}
