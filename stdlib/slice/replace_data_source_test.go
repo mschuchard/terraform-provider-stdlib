@@ -93,7 +93,7 @@ func TestAccReplace(test *testing.T) {
 				Config: `data "stdlib_replace" "test" {
 				  list_param     = ["zero", "foo", "bar", "baz"]
 				  replace_values = ["one", "two", "three"]
-				  index          = length(["zero", "foo", "bar", "baz"]) - (length(["one", "two", "three"]))
+				  index          = length(["zero", "foo", "bar", "baz"]) - length(["one", "two", "three"])
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// verify input param is stored correctly
