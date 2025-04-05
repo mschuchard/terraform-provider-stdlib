@@ -30,6 +30,13 @@ data "stdlib_compare_list" "equals" {
 # Returns a comparison between two lists.
 data "stdlib_compare_list" "greater" {
   list_one = ["super", "hyper", "turbo"]
+  list_two = ["pizza", "cake", "punch]
+}
+# result => 1
+
+# Returns a comparison between two lists.
+data "stdlib_compare_list" "greater" {
+  list_one = ["pizza", "cake", "punch]
   list_two = ["pizza", "cake"]
 }
 # result => 1

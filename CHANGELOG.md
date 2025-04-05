@@ -1,3 +1,6 @@
+### 2.0.1
+- Implement `slice` type custom functions.
+
 ### 2.0.0
 - Implement `string` and `number` type custom functions.
 

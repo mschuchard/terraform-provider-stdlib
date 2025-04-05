@@ -15,11 +15,11 @@ Return the last character(s) of an input string parameter. Only the terminating 
 ```terraform
 # Return the last character of a string:
 provider::stdlib::last_char("hello")
-# result: "o"
+# result => "o"
 
 # Return the last three characters of a string:
 provider::stdlib::last_char("hello", 3)
-# result: "llo"
+# result => "llo"
 ```
 
 ## Signature

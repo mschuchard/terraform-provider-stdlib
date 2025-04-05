@@ -13,7 +13,7 @@ Return the list where values are replaced at a specific element index. This func
 ## Example Usage
 
 ```terraform
-# Return the list with beginning value replaced.
+# Return the list with beginning values replaced.
 data "stdlib_replace" "begin" {
   list_param     = ["foo", "bar", "two", "three"]
   replace_values = ["zero", "one"]
@@ -42,7 +42,7 @@ data "stdlib_replace" "zeroed" {
 data "stdlib_replace" "append" {
   list_param     = ["zero", "foo", "bar", "baz"]
   replace_values = ["one", "two", "three"]
-  index          = length(["zero", "foo", "bar", "baz"]) - (length(["one", "two", "three"]))
+  index          = length(["zero", "foo", "bar", "baz"]) - length(["one", "two", "three"])
 }
 # result => ["zero", "one", "two", "three"]
 ```

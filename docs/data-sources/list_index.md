@@ -54,7 +54,7 @@ data "stdlib_list_index" "infinity" {
 
 ### Optional
 
-- `sorted` (Boolean) Whether the list is sorted in ascending order or not (note: see `stdlib_sort_list`). If the list is sorted then the efficient binary search algorithm will be utilized, but the combination of sorting and searching may be less efficient overall in some situations.
+- `sorted` (Boolean) Whether the list is sorted in ascending order or not (note: see `stdlib_sort_list`). If the list is sorted then the efficient binary search algorithm will be utilized, but the combination of sorting and searching may also be less efficient overall in some situations.
 
 ### Read-Only
 
