@@ -89,6 +89,7 @@ func (*stdlibProvider) DataSources(_ context.Context) []func() datasource.DataSo
 func (*stdlibProvider) Functions(_ context.Context) []func() function.Function {
 	return []func() function.Function{
 		mapfunc.NewEqualMapFunction,
+		mapfunc.NewFlattenMapFunction,
 		numberfunc.NewExpFunction,
 		numberfunc.NewModFunction,
 		numberfunc.NewRoundFunction,

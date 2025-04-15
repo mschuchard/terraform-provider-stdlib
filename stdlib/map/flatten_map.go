@@ -54,6 +54,14 @@ func (*flattenMapFunction) Run(ctx context.Context, req function.RunRequest, res
 
 	ctx = tflog.SetField(ctx, "flatten_map: list of maps", listMaps)
 
+	// validation
+	if len(listMaps) < 1 {
+		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "flatten_map: list of maps parameter must be at least length 1"))
+	}
+	if resp.Error != nil {
+		return
+	}
+
 	// iterate through list of maps, and merge each map into new map
 	outputMap := map[string]string{}
 	for _, nestedMap := range listMaps {
