@@ -93,6 +93,7 @@ func (*stdlibProvider) Functions(_ context.Context) []func() function.Function {
 		mapfunc.NewHasKeyFunction,
 		mapfunc.NewHasKeysFunction,
 		mapfunc.NewHasValueFunction,
+		mapfunc.NewHasValuesFunction,
 		numberfunc.NewExpFunction,
 		numberfunc.NewModFunction,
 		numberfunc.NewRoundFunction,
