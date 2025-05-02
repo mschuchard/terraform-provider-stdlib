@@ -45,7 +45,7 @@ func (*hasKeyFunction) Definition(_ context.Context, _ function.DefinitionReques
 }
 
 func (*hasKeyFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
-	// initialize comparison maps from input parameters
+	// initialize map and key from input parameters
 	var inputMap map[string]string
 	var key string
 

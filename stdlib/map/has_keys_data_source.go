@@ -56,7 +56,7 @@ func (*hasKeysDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, 
 				},
 			},
 			"map": schema.MapAttribute{
-				Description: "Input map parameter from which to check a key's existence.",
+				Description: "Input map parameter from which to check the keys' existence.",
 				ElementType: types.StringType,
 				Required:    true,
 			},

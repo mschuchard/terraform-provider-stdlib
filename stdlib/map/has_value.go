@@ -47,7 +47,7 @@ func (*hasValueFunction) Definition(_ context.Context, _ function.DefinitionRequ
 }
 
 func (*hasValueFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
-	// initialize comparison maps from input parameters
+	// initialize map and value from input parameters
 	var inputMap map[string]string
 	var value string
 
