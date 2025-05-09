@@ -11,7 +11,7 @@ import (
 	mapfunc "github.com/mschuchard/terraform-provider-stdlib/stdlib/map"
 )
 
-func TestKeyDeleteFunction(test *testing.T) {
+func TestKeysDeleteFunction(test *testing.T) {
 	test.Parallel()
 
 	standardTestCases := map[string]struct {
@@ -21,8 +21,8 @@ func TestKeyDeleteFunction(test *testing.T) {
 		"present": {
 			request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{
-					types.MapValueMust(types.StringType, map[string]attr.Value{"hello": types.StringValue("world"), "foo": types.StringValue("bar")}),
-					types.StringValue("foo"),
+					types.MapValueMust(types.StringType, map[string]attr.Value{"hello": types.StringValue("world"), "foo": types.StringValue("bar"), "baz": types.StringValue("bat")}),
+					types.ListValueMust(types.StringType, []attr.Value{types.StringValue("foo"), types.StringValue("baz")}),
 				}),
 			},
 			expected: function.RunResponse{
@@ -32,12 +32,24 @@ func TestKeyDeleteFunction(test *testing.T) {
 		"absent": {
 			request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{
-					types.MapValueMust(types.StringType, map[string]attr.Value{"hello": types.StringValue("world"), "foo": types.StringValue("bar")}),
-					types.StringValue("bar"),
+					types.MapValueMust(types.StringType, map[string]attr.Value{"hello": types.StringValue("world"), "foo": types.StringValue("bar"), "baz": types.StringValue("bat")}),
+					types.ListValueMust(types.StringType, []attr.Value{types.StringValue("foo"), types.StringValue("bar")}),
 				}),
 			},
 			expected: function.RunResponse{
-				Error:  function.NewArgumentFuncError(1, "key_delete: the key to be deleted 'bar' does not exist in the input map"),
+				Error:  function.NewArgumentFuncError(1, "keys_delete: the key to be deleted 'bar' does not exist in the input map"),
+				Result: function.NewResultData(types.MapUnknown(types.StringType)),
+			},
+		},
+		"keys-too-short": {
+			request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{
+					types.MapValueMust(types.StringType, map[string]attr.Value{"hello": types.StringValue("world"), "foo": types.StringValue("bar"), "baz": types.StringValue("bat")}),
+					types.ListValueMust(types.StringType, []attr.Value{types.StringValue("bar")}),
+				}),
+			},
+			expected: function.RunResponse{
+				Error:  function.NewArgumentFuncError(1, "delete_keys: keys parameter must be at least length 2"),
 				Result: function.NewResultData(types.MapUnknown(types.StringType)),
 			},
 		},
@@ -49,7 +61,7 @@ func TestKeyDeleteFunction(test *testing.T) {
 			result := function.RunResponse{Result: function.NewResultData(types.MapUnknown(types.StringType))}
 
 			// execute function and store result
-			mapfunc.NewKeyDeleteFunction().Run(context.Background(), testCase.request, &result)
+			mapfunc.NewKeysDeleteFunction().Run(context.Background(), testCase.request, &result)
 
 			// compare results
 			if !result.Error.Equal(testCase.expected.Error) {
