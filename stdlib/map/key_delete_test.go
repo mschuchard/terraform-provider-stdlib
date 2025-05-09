@@ -11,34 +11,33 @@ import (
 	mapfunc "github.com/mschuchard/terraform-provider-stdlib/stdlib/map"
 )
 
-func TestInsertFunction(test *testing.T) {
+func TestDeleteKeyFunction(test *testing.T) {
 	test.Parallel()
 
 	standardTestCases := map[string]struct {
 		request  function.RunRequest
 		expected function.RunResponse
 	}{
-		"prepend": {
+		"present": {
 			request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{
-					types.ListValueMust(
-						types.MapType{ElemType: types.StringType},
-						[]attr.Value{types.MapValueMust(types.StringType, map[string]attr.Value{"hello": types.StringValue("world")}), types.MapValueMust(types.StringType, map[string]attr.Value{"foo": types.StringValue("bar")})},
-					),
+					types.MapValueMust(types.StringType, map[string]attr.Value{"hello": types.StringValue("world"), "foo": types.StringValue("bar")}),
+					types.StringValue("foo"),
 				}),
 			},
 			expected: function.RunResponse{
-				Result: function.NewResultData(types.MapValueMust(types.StringType, map[string]attr.Value{"hello": types.StringValue("world"), "foo": types.StringValue("bar")})),
+				Result: function.NewResultData(types.MapValueMust(types.StringType, map[string]attr.Value{"hello": types.StringValue("world")})),
 			},
 		},
-		"list-maps-length": {
+		"absent": {
 			request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{
-					types.ListValueMust(types.MapType{ElemType: types.StringType}, []attr.Value{}),
+					types.MapValueMust(types.StringType, map[string]attr.Value{"hello": types.StringValue("world"), "foo": types.StringValue("bar")}),
+					types.StringValue("bar"),
 				}),
 			},
 			expected: function.RunResponse{
-				Error:  function.NewArgumentFuncError(0, "flatten_map: list of maps parameter must be at least length 1"),
+				Error:  function.NewArgumentFuncError(1, "key_delete: the key to be deleted 'bar' does not exist in the input map"),
 				Result: function.NewResultData(types.MapUnknown(types.StringType)),
 			},
 		},
@@ -50,7 +49,7 @@ func TestInsertFunction(test *testing.T) {
 			result := function.RunResponse{Result: function.NewResultData(types.MapUnknown(types.StringType))}
 
 			// execute function and store result
-			mapfunc.NewFlattenMapFunction().Run(context.Background(), testCase.request, &result)
+			mapfunc.NewKeyDeleteFunction().Run(context.Background(), testCase.request, &result)
 
 			// compare results
 			if !result.Error.Equal(testCase.expected.Error) {
