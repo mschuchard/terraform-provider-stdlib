@@ -53,17 +53,17 @@ func (*keysDeleteDataSource) Schema(_ context.Context, _ datasource.SchemaReques
 				},
 			},
 			"map": schema.MapAttribute{
-				Description: "Input map parameter from which to delete a key.",
+				Description: "Input map parameter from which to delete the keys.",
 				ElementType: types.StringType,
 				Required:    true,
 			},
 			"result": schema.MapAttribute{
 				Computed:    true,
-				Description: "Function result storing the map with the key removed.",
+				Description: "Function result storing the map with the keys removed.",
 				ElementType: types.StringType,
 			},
 		},
-		MarkdownDescription: "Return the input map parameter with the key parameter deleted from the map.",
+		MarkdownDescription: "Return the input map parameter with the keys parameter deleted from the map.",
 	}
 }
 
