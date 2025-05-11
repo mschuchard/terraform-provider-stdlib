@@ -3,12 +3,12 @@
 page_title: "stdlib_keys_delete Data Source - stdlib"
 subcategory: ""
 description: |-
-  Return the input map parameter with the key parameter deleted from the map.
+  Return the input map parameter with the keys parameter deleted from the map.
 ---
 
 # stdlib_keys_delete (Data Source)
 
-Return the input map parameter with the key parameter deleted from the map.
+Return the input map parameter with the keys parameter deleted from the map.
 
 ## Example Usage
 
@@ -31,9 +31,9 @@ data "stdlib_keys_delete" "foo" {
 ### Required
 
 - `keys` (List of String) Names of the keys to delete from the map.
-- `map` (Map of String) Input map parameter from which to delete a key.
+- `map` (Map of String) Input map parameter from which to delete the keys.
 
 ### Read-Only
 
 - `id` (String) Aliased to string input parameter(s) for efficiency and proper plan diff detection.
-- `result` (Map of String) Function result storing the map with the key removed.
+- `result` (Map of String) Function result storing the map with the keys removed.

@@ -3,12 +3,12 @@
 page_title: "stdlib_has_value Data Source - stdlib"
 subcategory: ""
 description: |-
-  Return whether the input key parameter is present in the input map parameter. The input map must be single-level.
+  Return whether the input value parameter is present in the input map parameter. The input map must be single-level.
 ---
 
 # stdlib_has_value (Data Source)
 
-Return whether the input key parameter is present in the input map parameter. The input map must be single-level.
+Return whether the input value parameter is present in the input map parameter. The input map must be single-level.
 
 ## Example Usage
 

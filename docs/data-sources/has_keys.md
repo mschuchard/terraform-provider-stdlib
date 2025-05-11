@@ -58,7 +58,7 @@ data "stdlib_has_keys" "three_keys_all" {
 ### Required
 
 - `keys` (List of String) Names of the keys to check for existence in the map.
-- `map` (Map of String) Input map parameter from which to check a key's existence.
+- `map` (Map of String) Input map parameter from which to check the keys' existence.
 
 ### Optional
 
