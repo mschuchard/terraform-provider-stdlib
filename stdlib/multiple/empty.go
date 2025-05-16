@@ -44,8 +44,6 @@ func (*emptyFunction) Run(ctx context.Context, req function.RunRequest, resp *fu
 	// initialize input param, converted go types, and result
 	var parameter types.Dynamic
 	var stringConvert string
-	var setlistConvert []string
-	var mapConvert map[string]string
 	var result bool
 
 	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &parameter))
@@ -65,15 +63,16 @@ func (*emptyFunction) Run(ctx context.Context, req function.RunRequest, resp *fu
 	}
 
 	// convert to one of four acceptable types
+	// string
 	if err = tfValue.As(&stringConvert); err == nil {
 		// emptiness check
 		result = len(stringConvert) == 0
-	} else if err = tfValue.As(&setlistConvert); err == nil {
+	} else if parameter.String()[:1] == "[" && parameter.String()[len(parameter.String())-1:] == "]" { // janky set or list
 		// emptiness check
-		result = len(setlistConvert) == 0
-	} else if err = tfValue.As(&mapConvert); err == nil {
+		result = parameter.String() == "[]"
+	} else if parameter.String()[:1] == "{" && parameter.String()[len(parameter.String())-1:] == "}" { // janky map
 		// emptiness check
-		result = len(mapConvert) == 0
+		result = parameter.String() == "{}"
 	} else {
 		tflog.Error(ctx, fmt.Sprintf("empty: could not convert input parameter '%s' to an acceptable terraform type", parameter.String()))
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "empty: invalid input parameter type"))
