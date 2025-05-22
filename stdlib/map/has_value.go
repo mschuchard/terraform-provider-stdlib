@@ -59,6 +59,12 @@ func (*hasValueFunction) Run(ctx context.Context, req function.RunRequest, resp 
 	ctx = tflog.SetField(ctx, "has_value: map", inputMap)
 	ctx = tflog.SetField(ctx, "has_value: value", value)
 
+	// validate input parameters
+	if len(value) == 0 {
+		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "has_value: input value parameter must not be empty"))
+		return
+	}
+
 	// assign values of map and check input value's existence
 	mapValues := slices.Collect(maps.Values(inputMap))
 	valueExists := slices.Contains(mapValues, value)

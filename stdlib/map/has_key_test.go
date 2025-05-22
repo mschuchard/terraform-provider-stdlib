@@ -40,6 +40,18 @@ func TestHasKeyFunction(test *testing.T) {
 				Result: function.NewResultData(types.BoolValue(false)),
 			},
 		},
+		"empty-key": {
+			request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{
+					types.MapValueMust(types.StringType, map[string]attr.Value{"hello": types.StringValue("world"), "foo": types.StringValue("bar")}),
+					types.StringValue(""),
+				}),
+			},
+			expected: function.RunResponse{
+				Error:  function.NewArgumentFuncError(1, "has_key: input key parameter must not be empty"),
+				Result: function.NewResultData(types.BoolUnknown()),
+			},
+		},
 	}
 
 	for name, testCase := range standardTestCases {

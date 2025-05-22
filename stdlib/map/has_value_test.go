@@ -40,6 +40,18 @@ func TestHasValueFunction(test *testing.T) {
 				Result: function.NewResultData(types.BoolValue(true)),
 			},
 		},
+		"empty-value": {
+			request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{
+					types.MapValueMust(types.StringType, map[string]attr.Value{"hello": types.StringValue("world"), "foo": types.StringValue("bar")}),
+					types.StringValue(""),
+				}),
+			},
+			expected: function.RunResponse{
+				Error:  function.NewArgumentFuncError(1, "has_value: input value parameter must not be empty"),
+				Result: function.NewResultData(types.BoolUnknown()),
+			},
+		},
 	}
 
 	for name, testCase := range standardTestCases {

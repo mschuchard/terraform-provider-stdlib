@@ -7,8 +7,10 @@ import (
 
 	"golang.org/x/exp/maps"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	util "github.com/mschuchard/terraform-provider-stdlib/internal"
@@ -46,6 +48,9 @@ func (*hasValueDataSource) Schema(_ context.Context, _ datasource.SchemaRequest,
 			"value": schema.StringAttribute{
 				Description: "Name of the value to check for existence in the map.",
 				Required:    true,
+				Validators: []validator.String{
+					stringvalidator.LengthAtLeast(1),
+				},
 			},
 			"map": schema.MapAttribute{
 				Description: "Input map parameter from which to check a value's existence.",
