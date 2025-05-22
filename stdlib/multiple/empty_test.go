@@ -70,12 +70,10 @@ func TestEmptyFunction(test *testing.T) {
 
 			// compare results
 			if !result.Error.Equal(testCase.expected.Error) {
-				test.Errorf("%s failed", name)
 				test.Errorf("expected error: %s", testCase.expected.Error)
 				test.Errorf("actual error: %s", result.Error)
 			}
 			if !result.Result.Equal(testCase.expected.Result) {
-				test.Errorf("%s failed", name)
 				test.Errorf("expected value: %+v", testCase.expected.Result.Value())
 				test.Errorf("actual value: %+v", result.Result.Value())
 			}

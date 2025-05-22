@@ -3,9 +3,8 @@ package mapfunc
 import (
 	"context"
 	"fmt"
+	"maps"
 	"slices"
-
-	"golang.org/x/exp/maps"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
@@ -103,7 +102,7 @@ func (*hasValuesDataSource) Read(ctx context.Context, req datasource.ReadRequest
 	}
 
 	// assign values of map
-	mapValues := maps.Values(inputMap)
+	mapValues := slices.Collect(maps.Values(inputMap))
 	// iterate through values to check
 	for _, value := range valuesCheck {
 		// check input values' existence

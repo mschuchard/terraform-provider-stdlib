@@ -3,8 +3,8 @@ package mapfunc
 import (
 	"context"
 	"fmt"
-
-	"golang.org/x/exp/maps"
+	"maps"
+	"slices"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
@@ -80,7 +80,7 @@ func (*equalMapDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 	result := maps.Equal(mapOne, mapTwo)
 	state.Result = types.BoolValue(result)
 	// assign id as concatentation of first key of each map
-	state.ID = types.StringValue(maps.Keys(mapOne)[0] + maps.Keys(mapTwo)[0])
+	state.ID = types.StringValue(slices.Collect(maps.Keys(mapOne))[0] + slices.Collect(maps.Keys(mapTwo))[0])
 
 	// provide more debug logging
 	ctx = tflog.SetField(ctx, "stdlib_equal_map_result", result)
