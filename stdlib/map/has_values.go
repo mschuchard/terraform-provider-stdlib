@@ -64,7 +64,7 @@ func (*hasValuesFunction) Run(ctx context.Context, req function.RunRequest, resp
 
 	ctx = tflog.SetField(ctx, "has_values: map", inputMap)
 	ctx = tflog.SetField(ctx, "has_values: values", values)
-	ctx = tflog.SetField(ctx, "has_values: all", allVar)
+	ctx = tflog.SetField(ctx, "has_values: all variadic", allVar)
 
 	// validate input parameters
 	if len(values) < 2 {
@@ -83,6 +83,8 @@ func (*hasValuesFunction) Run(ctx context.Context, req function.RunRequest, resp
 		// assume all or none of the values exist until single check proves otherwise
 		valueExists = all
 	}
+
+	ctx = tflog.SetField(ctx, "has_values: all", all)
 
 	// assign values of map
 	mapValues := slices.Collect(maps.Values(inputMap))

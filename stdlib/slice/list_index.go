@@ -63,7 +63,7 @@ func (*listIndexFunction) Run(ctx context.Context, req function.RunRequest, resp
 
 	ctx = tflog.SetField(ctx, "list_index: list", list)
 	ctx = tflog.SetField(ctx, "list_index: elem", elem)
-	ctx = tflog.SetField(ctx, "list_index: sorted", sortedVar)
+	ctx = tflog.SetField(ctx, "list_index: sorted variadic", sortedVar)
 
 	// validation
 	if len(list) == 0 {
@@ -77,6 +77,8 @@ func (*listIndexFunction) Run(ctx context.Context, req function.RunRequest, resp
 	if len(sortedVar) == 1 {
 		sorted = sortedVar[0]
 	}
+
+	ctx = tflog.SetField(ctx, "list_index: sorted", sorted)
 
 	// determine element index within slice
 	var listIndex int

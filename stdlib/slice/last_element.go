@@ -56,7 +56,7 @@ func (*lastElementFunction) Run(ctx context.Context, req function.RunRequest, re
 	}
 
 	ctx = tflog.SetField(ctx, "last_element: list", list)
-	ctx = tflog.SetField(ctx, "last_element: number of elements", numElementsVar)
+	ctx = tflog.SetField(ctx, "last_element: number of elements variadic", numElementsVar)
 
 	// validation
 	if len(numElementsVar) == 0 {
@@ -77,6 +77,8 @@ func (*lastElementFunction) Run(ctx context.Context, req function.RunRequest, re
 	if resp.Error != nil {
 		return
 	}
+
+	ctx = tflog.SetField(ctx, "last_element: number of elements", numElements)
 
 	// determine last element of slice
 	lastElement := list[len(list)-numElements:]

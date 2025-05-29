@@ -53,6 +53,9 @@ func (*lastCharFunction) Run(ctx context.Context, req function.RunRequest, resp 
 		return
 	}
 
+	ctx = tflog.SetField(ctx, "last_char: string", inputString)
+	ctx = tflog.SetField(ctx, "last_char: number of characters variadic", numCharsVar)
+
 	// validate input parameters
 	if len(inputString) < 1 {
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "lastChar: input string parameter must be at least length 1"))
@@ -77,7 +80,6 @@ func (*lastCharFunction) Run(ctx context.Context, req function.RunRequest, resp 
 		return
 	}
 
-	ctx = tflog.SetField(ctx, "last_char: string", inputString)
 	ctx = tflog.SetField(ctx, "last_char: number_of_characters", numChars)
 
 	// determine last char

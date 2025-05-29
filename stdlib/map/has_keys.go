@@ -62,7 +62,7 @@ func (*hasKeysFunction) Run(ctx context.Context, req function.RunRequest, resp *
 
 	ctx = tflog.SetField(ctx, "has_keys: map", inputMap)
 	ctx = tflog.SetField(ctx, "has_keys: keys", keys)
-	ctx = tflog.SetField(ctx, "has_keys: all", allVar)
+	ctx = tflog.SetField(ctx, "has_keys: all variadic", allVar)
 
 	// validate input parameters
 	if len(keys) < 2 {
@@ -81,6 +81,8 @@ func (*hasKeysFunction) Run(ctx context.Context, req function.RunRequest, resp *
 		// assume all or none of the keys exist until single check proves otherwise
 		keyExists = all
 	}
+
+	ctx = tflog.SetField(ctx, "has_keys: all", all)
 
 	// iterate through keys to check
 	for _, keyCheck := range keys {

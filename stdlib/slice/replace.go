@@ -68,7 +68,7 @@ func (*replaceFunction) Run(ctx context.Context, req function.RunRequest, resp *
 	ctx = tflog.SetField(ctx, "replace: list", list)
 	ctx = tflog.SetField(ctx, "replace: replace values", replaceValues)
 	ctx = tflog.SetField(ctx, "replace: index", index)
-	ctx = tflog.SetField(ctx, "replace: end_index", endIndexVar)
+	ctx = tflog.SetField(ctx, "replace: end_index variadic", endIndexVar)
 
 	// validation
 	if len(replaceValues) < 1 {
@@ -91,6 +91,8 @@ func (*replaceFunction) Run(ctx context.Context, req function.RunRequest, resp *
 		// s[i:j] element ordering
 		endIndex = index + len(replaceValues)
 	}
+
+	ctx = tflog.SetField(ctx, "replace: end_index", endIndex)
 
 	// validate end index is within bounds of slice
 	if endIndex > len(list) {
