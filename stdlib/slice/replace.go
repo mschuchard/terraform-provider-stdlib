@@ -29,7 +29,7 @@ func (*replaceFunction) Metadata(_ context.Context, req function.MetadataRequest
 func (*replaceFunction) Definition(_ context.Context, _ function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:             "Replace elements in a list",
-		MarkdownDescription: "Return the list where values are replaced at a specific element index. This function errors if the end_index, or the specified index plus the length of the replace_values list, is out of range for the original list (greater than or equal to the length of list_param).",
+		MarkdownDescription: "Return the list where values are replaced at a specific element index. This function errors if the `end_index`, or the specified index plus the length of the `replace_values` list, is out of range for the original list (greater than or equal to the length of the `list` parameter).",
 		Parameters: []function.Parameter{
 			function.ListParameter{
 				ElementType: types.StringType,

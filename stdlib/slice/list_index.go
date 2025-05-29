@@ -29,7 +29,7 @@ func (*listIndexFunction) Metadata(_ context.Context, req function.MetadataReque
 func (*listIndexFunction) Definition(_ context.Context, _ function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:             "Return index of element in list",
-		MarkdownDescription: "Return the index of the first occurrence of the element parameter in the list parameter, or return '-1' if the element parameter is not present in the input list parameter.",
+		MarkdownDescription: "Return the index of the first occurrence of the element parameter in the list parameter, or return `-1` if the element parameter is not present in the input list parameter.",
 		Parameters: []function.Parameter{
 			function.ListParameter{
 				ElementType: types.StringType,

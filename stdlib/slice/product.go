@@ -28,12 +28,12 @@ func (*productFunction) Metadata(_ context.Context, req function.MetadataRequest
 func (*productFunction) Definition(_ context.Context, _ function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:             "Return the product of a set's elements.",
-		MarkdownDescription: "Input set parameter for determining the product. The set must contain at least one element.",
+		MarkdownDescription: "Return the product of the elements within a set. This is similar to the core `sum` function, but for a mathematical product instead.",
 		Parameters: []function.Parameter{
 			function.SetParameter{
 				ElementType: types.Float64Type,
 				Name:        "set",
-				Description: "Input list parameter for determining the maximum number.",
+				Description: "Input set parameter for determining the product. The set must contain at least one element.",
 			},
 		},
 		Return: function.Float64Return{},
