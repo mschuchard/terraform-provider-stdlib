@@ -15,7 +15,7 @@ Returns the strings before and after the first instance of the separator in the 
 ```terraform
 # Return the separated strings:
 provider::stdlib::cut("foobarbaz", "bar")
-# result => ("foo", "bar", true)
+# result => ("foo", "baz", true)
 
 # Return the separated strings with absent separator:
 provider::stdlib::cut("foobarbaz", "pizza")

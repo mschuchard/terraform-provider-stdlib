@@ -8,7 +8,7 @@ description: |-
 
 # function: list_index
 
-Return the index of the first occurrence of the element parameter in the list parameter, or return '-1' if the element parameter is not present in the input list parameter.
+Return the index of the first occurrence of the element parameter in the list parameter, or return `-1` if the element parameter is not present in the input list parameter.
 
 ## Example Usage
 

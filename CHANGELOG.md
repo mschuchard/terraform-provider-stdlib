@@ -1,5 +1,6 @@
-### 2.0.3 (Next)
+### 2.0.3
 - Implement `multiple` type custom functions.
+- Improve previously implemented custom and data functions.
 
 ### 2.0.2
 - Implement `map` type custom functions.

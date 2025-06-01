@@ -8,7 +8,7 @@ description: |-
 
 # function: replace
 
-Return the list where values are replaced at a specific element index. This function errors if the end_index, or the specified index plus the length of the replace_values list, is out of range for the original list (greater than or equal to the length of list_param).
+Return the list where values are replaced at a specific element index. This function errors if the `end_index`, or the specified index plus the length of the `replace_values` list, is out of range for the original list (greater than or equal to the length of the `list` parameter).
 
 ## Example Usage
 
