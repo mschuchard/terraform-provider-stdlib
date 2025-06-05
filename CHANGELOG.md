@@ -1,3 +1,6 @@
+### 2.1.0 (Next)
+- Add `factorial` function.
+
 ### 2.0.3
 - Implement `multiple` type custom functions.
 - Improve previously implemented custom and data functions.

@@ -12,7 +12,7 @@ import (
 var _ function.Function = &factorialFunction{}
 
 // helper pseudo-constructor to simplify provider server and testing implementation
-func NewPermutationFunction() function.Function {
+func NewFactorialFunction() function.Function {
 	return &factorialFunction{}
 }
 
@@ -53,6 +53,9 @@ func (*factorialFunction) Run(ctx context.Context, req function.RunRequest, resp
 	// validate input parameters
 	if inputNumber < 0 {
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "factorial: the input number cannot be negative"))
+	}
+	if resp.Error != nil {
+		return
 	}
 
 	// determine factorial

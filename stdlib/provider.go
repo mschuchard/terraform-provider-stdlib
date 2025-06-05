@@ -98,6 +98,7 @@ func (*stdlibProvider) Functions(_ context.Context) []func() function.Function {
 		mapfunc.NewKeysDeleteFunction,
 		multiple.NewEmptyFunction,
 		numberfunc.NewExpFunction,
+		numberfunc.NewFactorialFunction,
 		numberfunc.NewModFunction,
 		numberfunc.NewRoundFunction,
 		numberfunc.NewSqrtFunction,
