@@ -44,6 +44,8 @@ func (*sqrtFunction) Run(ctx context.Context, req function.RunRequest, resp *fun
 	var inputNum float64
 
 	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &inputNum))
+
+	// validate input parameters
 	if inputNum < 0 {
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "sqrt: the input number cannot be negative"))
 	} else if math.IsInf(inputNum, 0) {
