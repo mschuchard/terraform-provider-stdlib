@@ -42,7 +42,7 @@ func (*compactMapFunction) Definition(_ context.Context, _ function.DefinitionRe
 
 func (*compactMapFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	// initialize comparison maps from input parameters
-	var inputMap map[string]string
+	var inputMap map[string]types.String
 
 	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &inputMap))
 	if resp.Error != nil {
@@ -54,7 +54,7 @@ func (*compactMapFunction) Run(ctx context.Context, req function.RunRequest, res
 	// iterate through map
 	for key, value := range inputMap {
 		// check if value is null or empty
-		if len(value) == 0 {
+		if value.IsNull() || len(value.ValueString()) == 0 {
 			// delete kv pair if null or empty
 			delete(inputMap, key)
 		}

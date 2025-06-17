@@ -88,6 +88,7 @@ func (*stdlibProvider) DataSources(_ context.Context) []func() datasource.DataSo
 // define the functions implemented in the provider
 func (*stdlibProvider) Functions(_ context.Context) []func() function.Function {
 	return []func() function.Function{
+		mapfunc.NewCompactMapFunction,
 		mapfunc.NewEqualMapFunction,
 		mapfunc.NewFlattenMapFunction,
 		mapfunc.NewHasKeyFunction,
