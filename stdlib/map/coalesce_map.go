@@ -62,6 +62,7 @@ func (*coalesceMapFunction) Run(ctx context.Context, req function.RunRequest, re
 		if len(inputMap) != 0 {
 			// assign the first non-empty map to return
 			returnMap = inputMap
+			break
 		}
 	}
 
