@@ -41,7 +41,7 @@ func (*compactMapFunction) Definition(_ context.Context, _ function.DefinitionRe
 }
 
 func (*compactMapFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
-	// initialize comparison maps from input parameters
+	// initialize map to compact from input parameters
 	var inputMap map[string]types.String
 
 	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &inputMap))
