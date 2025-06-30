@@ -1,5 +1,5 @@
 ### 2.1.0 (Next)
-- Add `coalesce_map`, `compact_map`, and `factorial` functions.
+- Add `coalesce_map`, `compact_map`, `factorial`, and `repeat` functions.
 
 ### 2.0.3
 - Implement `multiple` type custom functions.

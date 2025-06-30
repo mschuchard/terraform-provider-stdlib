@@ -48,7 +48,7 @@ func (*repeatFunction) Definition(_ context.Context, _ function.DefinitionReques
 func (*repeatFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	// initialize list and count
 	var list []string
-	var count int32
+	var count int
 
 	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &list, &count))
 	if resp.Error != nil {
@@ -63,7 +63,7 @@ func (*repeatFunction) Run(ctx context.Context, req function.RunRequest, resp *f
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "repeat: list parameter length must be at least 1"))
 	}
 	if count < 0 {
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "repeat: count parameter value cannot be negative"))
+		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "repeat: count parameter value cannot be negative"))
 	}
 	if resp.Error != nil {
 		return
