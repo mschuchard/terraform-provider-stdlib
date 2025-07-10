@@ -64,6 +64,9 @@ func (*elementsDeleteFunction) Run(ctx context.Context, req function.RunRequest,
 	ctx = tflog.SetField(ctx, "elements_delete: end_index", endIndex)
 
 	// validation
+	if len(list) == 0 {
+		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "elements_delete: list parameter must not be empty"))
+	}
 	if index < 0 {
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "elements_delete: index parameter must not be a negative number"))
 	}
