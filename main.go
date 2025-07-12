@@ -14,7 +14,7 @@ import (
 
 func main() {
 	// start provider server
-	if err := providerserver.Serve(context.Background(), provider.New("2.0.3"), providerserver.ServeOpts{
+	if err := providerserver.Serve(context.Background(), provider.New("2.1.0"), providerserver.ServeOpts{
 		Address: "registry.terraform.io/mschuchard/stdlib",
 	}); err != nil {
 		log.Fatal(err)

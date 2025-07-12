@@ -39,4 +39,3 @@ insert(list list of string, insert_values list of string, index number) list of 
 1. `list` (List of String) Input list parameter into which the values will be inserted.
 1. `insert_values` (List of String) Input list of values which will be inserted into the list.
 1. `index` (Number) Index in the list at which to insert the values.
-

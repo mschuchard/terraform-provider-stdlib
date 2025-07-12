@@ -1,4 +1,4 @@
-### 2.1.0 (Next)
+### 2.1.0
 - Add `coalesce_map`, `compact_map`, `elements_delete`, `factorial`, and `repeat` functions.
 
 ### 2.0.3
