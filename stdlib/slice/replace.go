@@ -47,8 +47,8 @@ func (*replaceFunction) Definition(_ context.Context, _ function.DefinitionReque
 			},
 		},
 		VariadicParameter: function.Int32Parameter{
-			Name:        "end_index",
-			Description: "Optional: The index in the list at which to end replacing values. If the difference between this and the index is greater than or equal to the length of the list of the replace_values, then the additional elements in the original list will all be zeroed (i.e. removed; see example stdlib_replace.zeroed). This parameter input value is only necessary for that situation as otherwise its value will be automatically deduced by the provider function.",
+			Name:                "end_index",
+			MarkdownDescription: "Optional: The index in the list at which to end replacing values. If the difference between this and the index is greater than or equal to the length of the list of the replace_values, then the additional elements in the original list will all be zeroed (i.e. removed; see third example of `provider::stdlib::replace`). This parameter input value is only necessary for that situation as otherwise its value will be automatically deduced by the provider function.",
 		},
 		Return: function.ListReturn{ElementType: types.StringType},
 	}
@@ -71,7 +71,7 @@ func (*replaceFunction) Run(ctx context.Context, req function.RunRequest, resp *
 	ctx = tflog.SetField(ctx, "replace: end_index variadic", endIndexVar)
 
 	// validation
-	if len(replaceValues) < 1 {
+	if len(replaceValues) == 0 {
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "replace: replace values parameter must be at least length 1"))
 	}
 	if index < 0 {

@@ -10,14 +10,13 @@ install-tfplugindocs:
 	@go install github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs@latest
 
 generate: install-tfplugindocs
-	export PATH="${PATH}:$(shell go env GOPATH)/bin"
-	@go generate ./...
+	PATH="${PATH}:$(shell go env GOPATH)/bin" go generate ./...
 
 install-tfproviderlint:
 	@go install github.com/bflad/tfproviderlint/cmd/tfproviderlint@latest
 
 lint: install-tfproviderlint
-	@tfproviderlint -AT003=false -AT008=false ./...
+	PATH="${PATH}:$(shell go env GOPATH)/bin" tfproviderlint -AT003=false -AT008=false ./...
 
 build: tidy
 	@go build -o terraform-provider-stdlib

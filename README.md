@@ -6,4 +6,4 @@ This README is purposefully short as all documentation is generated with `terraf
 
 This repository additionally does accept feature requests for e.g. additional functions or enhancements to current functions in the Github issue tracker.
 
-If your version of Terraform is >= 1.8 then you can additionally invoke the provider custom functions instead of the data sources. Otherwise you must declare the data sources to utilize this plugin's functions.
+If your version of Terraform is >= 1.8 then you can additionally invoke the provider custom functions instead of the data sources. Otherwise you must declare the data sources to utilize this plugin's functions. Please note that all data sources are currently in maintenance mode.
