@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-framework/function"
-	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 type TestCases map[string]struct {
@@ -13,7 +12,7 @@ type TestCases map[string]struct {
 	Expected function.RunResponse
 }
 
-func UnitTests(testCases TestCases, tfFunction function.Function, test *testing.T) {
+func UnitTests(testCases TestCases, resultData function.ResultData, tfFunction function.Function, test *testing.T) {
 	test.Parallel()
 
 	// iterate through test cases
@@ -21,7 +20,7 @@ func UnitTests(testCases TestCases, tfFunction function.Function, test *testing.
 		// execute unit test
 		test.Run(name, func(test *testing.T) {
 			// initialize result
-			result := function.RunResponse{Result: function.NewResultData(types.MapUnknown(types.StringType))}
+			result := function.RunResponse{Result: resultData}
 
 			// execute function and store result
 			tfFunction.Run(context.Background(), testCase.Request, &result)
@@ -37,5 +36,4 @@ func UnitTests(testCases TestCases, tfFunction function.Function, test *testing.
 			}
 		})
 	}
-
 }
