@@ -1,28 +1,26 @@
 package stringfunc_test
 
 import (
-	"context"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/function"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 
+	util "github.com/mschuchard/terraform-provider-stdlib/internal"
 	stringfunc "github.com/mschuchard/terraform-provider-stdlib/stdlib/string"
 )
 
 func TestCutFunction(test *testing.T) {
-	test.Parallel()
+	// initialize initial result data
+	resultData := function.NewResultData(types.TupleUnknown([]attr.Type{types.StringType, types.StringType, types.BoolType}))
 
-	standardTestCases := map[string]struct {
-		request  function.RunRequest
-		expected function.RunResponse
-	}{
+	testCases := util.TestCases{
 		"normal": {
-			request: function.RunRequest{
+			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue("foobarbaz"), types.StringValue("bar")}),
 			},
-			expected: function.RunResponse{
+			Expected: function.RunResponse{
 				Result: function.NewResultData(types.TupleValueMust(
 					[]attr.Type{types.StringType, types.StringType, types.BoolType},
 					[]attr.Value{types.StringValue("foo"), types.StringValue("baz"), types.BoolValue(true)},
@@ -30,10 +28,10 @@ func TestCutFunction(test *testing.T) {
 			},
 		},
 		"separator-absent": {
-			request: function.RunRequest{
+			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue("foobarbaz"), types.StringValue("pizza")}),
 			},
-			expected: function.RunResponse{
+			Expected: function.RunResponse{
 				Result: function.NewResultData(types.TupleValueMust(
 					[]attr.Type{types.StringType, types.StringType, types.BoolType},
 					[]attr.Value{types.StringValue("foobarbaz"), types.StringValue(""), types.BoolValue(false)},
@@ -41,46 +39,24 @@ func TestCutFunction(test *testing.T) {
 			},
 		},
 		"empty-string": {
-			request: function.RunRequest{
+			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue(""), types.StringValue("foo")}),
 			},
-			expected: function.RunResponse{
-				Error: function.NewArgumentFuncError(0, "cut: input string parameter must be at least length 1"),
-				Result: function.NewResultData(types.TupleUnknown(
-					[]attr.Type{types.StringType, types.StringType, types.BoolType},
-				)),
+			Expected: function.RunResponse{
+				Error:  function.NewArgumentFuncError(0, "cut: input string parameter must be at least length 1"),
+				Result: resultData,
 			},
 		},
 		"empty-separator": {
-			request: function.RunRequest{
+			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue("foo"), types.StringValue("")}),
 			},
-			expected: function.RunResponse{
-				Error: function.NewArgumentFuncError(1, "cut: separator parameter must be at least length 1"),
-				Result: function.NewResultData(types.TupleUnknown(
-					[]attr.Type{types.StringType, types.StringType, types.BoolType},
-				)),
+			Expected: function.RunResponse{
+				Error:  function.NewArgumentFuncError(1, "cut: separator parameter must be at least length 1"),
+				Result: resultData,
 			},
 		},
 	}
 
-	for name, testCase := range standardTestCases {
-		test.Run(name, func(test *testing.T) {
-			// initialize result
-			result := function.RunResponse{Result: function.NewResultData(types.TupleUnknown([]attr.Type{types.StringType, types.StringType, types.BoolType}))}
-
-			// execute function and store result
-			stringfunc.NewCutFunction().Run(context.Background(), testCase.request, &result)
-
-			// compare results
-			if !result.Error.Equal(testCase.expected.Error) {
-				test.Errorf("expected error: %s", testCase.expected.Error)
-				test.Errorf("actual error: %s", result.Error)
-			}
-			if !result.Result.Equal(testCase.expected.Result) {
-				test.Errorf("expected value: %+q", testCase.expected.Result.Value())
-				test.Errorf("actual value: %+q", result.Result.Value())
-			}
-		})
-	}
+	util.UnitTests(testCases, resultData, stringfunc.NewCutFunction(), test)
 }
