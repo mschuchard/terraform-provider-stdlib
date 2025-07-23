@@ -25,13 +25,23 @@ func UnitTests(testCases TestCases, resultData function.ResultData, tfFunction f
 			// execute function and store result
 			tfFunction.Run(context.Background(), testCase.Request, &result)
 
-			// compare results
-			if !result.Error.Equal(testCase.Expected.Error) {
-				test.Errorf("expected error: %s", testCase.Expected.Error)
-				test.Errorf("actual error: %s", result.Error)
+			// initialize expected for efficiency
+			expected := testCase.Expected
+
+			// compare result versus expected errors
+			if !result.Error.Equal(expected.Error) {
+				// check for error with function argument
+				if expected.Error.FunctionArgument != nil {
+					test.Errorf("expected error func arg: %d", *expected.Error.FunctionArgument)
+					test.Errorf("actual error func arg: %d", *result.Error.FunctionArgument)
+				}
+				// display information for error text
+				test.Errorf("expected error text: %s", expected.Error.Text)
+				test.Errorf("actual error text: %s", result.Error.Text)
 			}
-			if !result.Result.Equal(testCase.Expected.Result) {
-				test.Errorf("expected value: %v", testCase.Expected.Result.Value())
+			// compare result versus expected values
+			if !result.Result.Equal(expected.Result) {
+				test.Errorf("expected value: %v", expected.Result.Value())
 				test.Errorf("actual value: %v", result.Result.Value())
 			}
 		})
