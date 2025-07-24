@@ -75,7 +75,7 @@ func (*replaceFunction) Run(ctx context.Context, req function.RunRequest, resp *
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "replace: list parameter must not be empty"))
 	}
 	if len(replaceValues) == 0 {
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "replace: replace values parameter must be at least length 1"))
+		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "replace: replace values parameter must not be empty"))
 	}
 	if index < 0 {
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(2, "replace: index parameter must not be a negative number"))
@@ -88,7 +88,7 @@ func (*replaceFunction) Run(ctx context.Context, req function.RunRequest, resp *
 
 		// validation
 		if endIndex <= index {
-			resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(3, "replace: end_index parameter must be greater than or equal to the index parameter"))
+			resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(3, "replace: end index parameter must be greater than or equal to the index parameter"))
 		}
 	} else {
 		// s[i:j] element ordering

@@ -1,3 +1,7 @@
+### 2.1.1 (Next)
+- Improve unit testing.
+- Improve `replace` descriptions and parameter validation.
+
 ### 2.1.0
 - Add `coalesce_map`, `compact_map`, `elements_delete`, `factorial`, and `repeat` functions.
 

@@ -41,6 +41,7 @@ func TestElementsDeleteFunction(test *testing.T) {
 			},
 		},
 		// this returns two errors, and as far as I can tell this cannot be compared with func (*FuncError) Equal as it involves two structs
+		// see also "replace"
 		/*"empty-list": {
 			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{

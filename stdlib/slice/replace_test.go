@@ -68,6 +68,22 @@ func TestReplaceFunction(test *testing.T) {
 				Result: function.NewResultData(types.ListValueMust(types.StringType, []attr.Value{types.StringValue("zero"), types.StringValue("one"), types.StringValue("two"), types.StringValue("three")})),
 			},
 		},
+		// this returns two errors, and as far as I can tell this cannot be compared with func (*FuncError) Equal as it involves two structs
+		// see also "elements_delete"
+		/*"list-length": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{
+					types.ListValueMust(types.StringType, []attr.Value{}),
+					types.ListValueMust(types.StringType, []attr.Value{types.StringValue("foo")}),
+					types.Int32Value(0),
+					types.TupleValueMust([]attr.Type{}, []attr.Value{}),
+				}),
+			},
+			Expected: function.RunResponse{
+				Error:  function.NewArgumentFuncError(0, "replace: list parameter must not be empty"),
+				Result: resultData,
+			},
+		},*/
 		"replace-values-length": {
 			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{
@@ -78,7 +94,7 @@ func TestReplaceFunction(test *testing.T) {
 				}),
 			},
 			Expected: function.RunResponse{
-				Error:  function.NewArgumentFuncError(1, "replace: replace values parameter must be at least length 1"),
+				Error:  function.NewArgumentFuncError(1, "replace: replace values parameter must not be empty"),
 				Result: resultData,
 			},
 		},
@@ -96,7 +112,7 @@ func TestReplaceFunction(test *testing.T) {
 				Result: resultData,
 			},
 		},
-		"negative-end-index": {
+		"too-few-end-index": {
 			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{
 					types.ListValueMust(types.StringType, []attr.Value{types.StringValue("foo")}),
@@ -106,7 +122,7 @@ func TestReplaceFunction(test *testing.T) {
 				}),
 			},
 			Expected: function.RunResponse{
-				Error:  function.NewArgumentFuncError(3, "replace: end index parameter must not be a negative number"),
+				Error:  function.NewArgumentFuncError(3, "replace: end index parameter must be greater than or equal to the index parameter"),
 				Result: resultData,
 			},
 		},
