@@ -7,7 +7,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/function"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"github.com/hashicorp/terraform-plugin-go/tftypes"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 )
 
@@ -45,7 +44,6 @@ func (*emptyFunction) Definition(_ context.Context, _ function.DefinitionRequest
 func (*emptyFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	// initialize input param, converted go types, and result
 	var parameter types.Dynamic
-	var stringConvert string
 	var result bool
 
 	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &parameter))
@@ -64,28 +62,21 @@ func (*emptyFunction) Run(ctx context.Context, req function.RunRequest, resp *fu
 	}
 	// access underlying value of dynamic type parameter
 	value := parameter.UnderlyingValue()
-	// access terraform value of dynamic type parameter
-	tfValue, err := parameter.ToTerraformValue(ctx)
-	if err != nil {
-		tflog.Error(ctx, fmt.Sprintf("empty: could not convert input parameter '%s' to an acceptable terraform value", parameter.String()))
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewFuncError(err.Error()))
-		return
-	}
 
 	// convert to one of four acceptable types
 	// string
-	if err = tfValue.As(&stringConvert); err == nil {
+	if stringType, ok := value.(types.String); ok {
 		// emptiness check
-		result = len(stringConvert) == 0
-	} else if tfValue.Type().Is(tftypes.Set{}) { // set
+		result = len(stringType.ValueString()) == 0
+	} else if set, ok := value.Type(ctx).(types.SetType); ok { // set
 		// emptiness check
-		result = value.Equal(types.SetValueMust(types.StringType, []attr.Value{}))
-	} else if tfValue.Type().Is(tftypes.List{}) {
+		result = value.Equal(types.SetValueMust(set.ElementType(), []attr.Value{}))
+	} else if list, ok := value.Type(ctx).(types.ListType); ok { // list
 		// emptiness check
-		result = value.Equal(types.ListValueMust(types.StringType, []attr.Value{}))
-	} else if tfValue.Type().Is(tftypes.Map{}) { // map
+		result = value.Equal(types.ListValueMust(list.ElementType(), []attr.Value{}))
+	} else if mapType, ok := value.Type(ctx).(types.MapType); ok { // map
 		// emptiness check
-		result = value.Equal(types.MapValueMust(types.StringType, map[string]attr.Value{}))
+		result = value.Equal(types.MapValueMust(mapType.ElementType(), map[string]attr.Value{}))
 	} else {
 		tflog.Error(ctx, fmt.Sprintf("empty: could not convert input parameter '%s' to an acceptable terraform type", parameter.String()))
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "empty: invalid input parameter type"))
