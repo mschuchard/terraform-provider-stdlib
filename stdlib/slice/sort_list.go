@@ -55,8 +55,6 @@ func (*sortListFunction) Run(ctx context.Context, req function.RunRequest, resp 
 	// validation
 	if len(list) < 2 {
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "sort_list: list parameter length must be at least 2"))
-	}
-	if resp.Error != nil {
 		return
 	}
 

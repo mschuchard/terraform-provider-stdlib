@@ -54,8 +54,6 @@ func (*productFunction) Run(ctx context.Context, req function.RunRequest, resp *
 	// validation
 	if len(set) == 0 {
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "product: set parameter length must be at least 1"))
-	}
-	if resp.Error != nil {
 		return
 	}
 

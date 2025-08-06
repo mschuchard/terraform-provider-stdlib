@@ -57,8 +57,6 @@ func (*flattenMapFunction) Run(ctx context.Context, req function.RunRequest, res
 	// validation
 	if len(listMaps) < 1 {
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "flatten_map: list of maps parameter must be at least length 1"))
-	}
-	if resp.Error != nil {
 		return
 	}
 

@@ -67,8 +67,6 @@ func (*hasKeysFunction) Run(ctx context.Context, req function.RunRequest, resp *
 	// validate input parameters
 	if len(keys) < 2 {
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "has_keys: keys parameter must be at least length 2"))
-	}
-	if resp.Error != nil {
 		return
 	}
 

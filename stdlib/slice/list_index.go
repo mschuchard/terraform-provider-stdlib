@@ -68,8 +68,6 @@ func (*listIndexFunction) Run(ctx context.Context, req function.RunRequest, resp
 	// validation
 	if len(list) == 0 {
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "list_index: list parameter length must be at least 1"))
-	}
-	if resp.Error != nil {
 		return
 	}
 
