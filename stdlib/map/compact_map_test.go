@@ -26,6 +26,16 @@ func TestCompactMapFunction(test *testing.T) {
 				Result: function.NewResultData(types.MapValueMust(types.StringType, map[string]attr.Value{"hello": types.StringValue("world")})),
 			},
 		},
+		"empty": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{
+					types.MapValueMust(types.StringType, map[string]attr.Value{}),
+				}),
+			},
+			Expected: function.RunResponse{
+				Result: function.NewResultData(types.MapValueMust(types.StringType, map[string]attr.Value{})),
+			},
+		},
 	}
 
 	util.UnitTests(testCases, resultData, mapfunc.NewCompactMapFunction(), test)
