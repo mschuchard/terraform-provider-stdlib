@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/function"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
+	util "github.com/mschuchard/terraform-provider-stdlib/internal"
 )
 
 // ensure the implementation satisfies the expected interfaces
@@ -60,26 +60,11 @@ func (*emptyFunction) Run(ctx context.Context, req function.RunRequest, resp *fu
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "empty: underlying value type refined"))
 		return
 	}
-	// access underlying value of dynamic type parameter
-	value := parameter.UnderlyingValue()
 
-	// convert to one of four acceptable types
-	// string
-	if stringType, ok := value.(types.String); ok {
-		// emptiness check
-		result = len(stringType.ValueString()) == 0
-	} else if set, ok := value.Type(ctx).(types.SetType); ok { // set
-		// emptiness check
-		result = value.Equal(types.SetValueMust(set.ElementType(), []attr.Value{}))
-	} else if list, ok := value.Type(ctx).(types.ListType); ok { // list
-		// emptiness check
-		result = value.Equal(types.ListValueMust(list.ElementType(), []attr.Value{}))
-	} else if mapType, ok := value.Type(ctx).(types.MapType); ok { // map
-		// emptiness check
-		result = value.Equal(types.MapValueMust(mapType.ElementType(), map[string]attr.Value{}))
-	} else {
-		tflog.Error(ctx, fmt.Sprintf("empty: could not convert input parameter '%s' to an acceptable terraform type", parameter.String()))
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "empty: invalid input parameter type"))
+	// check if empty
+	result, funcErr := util.IsDynamicEmpty(parameter, ctx)
+	if funcErr != nil {
+		resp.Error = function.ConcatFuncErrors(resp.Error, funcErr)
 		return
 	}
 
