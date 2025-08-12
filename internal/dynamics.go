@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 )
 
-// checks if a tf dynamic type underlying value is null or empty
+// checks if a tf dynamic type underlying value is empty
 func IsDynamicEmpty(dynamicType types.Dynamic, ctx context.Context) (bool, *function.FuncError) {
 	// access underlying value of dynamic type parameter
 	value := dynamicType.UnderlyingValue()

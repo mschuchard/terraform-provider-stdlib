@@ -28,16 +28,27 @@ func UnitTests(testCases TestCases, resultData function.ResultData, tfFunction f
 			// initialize expected for efficiency
 			expected := testCase.Expected
 
-			// compare result versus expected errors
+			// compare result versus expected error
 			if !result.Error.Equal(expected.Error) {
-				// check for error with function argument
-				if expected.Error.FunctionArgument != nil {
-					test.Errorf("expected error func arg: %d", *expected.Error.FunctionArgument)
-					test.Errorf("actual error func arg: %d", *result.Error.FunctionArgument)
+				// check if expected error information exists
+				if expected.Error != nil {
+					// display information for error text
+					test.Errorf("expected error text: %s", expected.Error.Text)
+
+					// check for error with function argument
+					if expected.Error.FunctionArgument != nil {
+						test.Errorf("expected error func arg: %d", *expected.Error.FunctionArgument)
+					}
 				}
-				// display information for error text
-				test.Errorf("expected error text: %s", expected.Error.Text)
-				test.Errorf("actual error text: %s", result.Error.Text)
+				// check if result error information exists
+				if result.Error != nil {
+					test.Errorf("actual error text: %s", result.Error.Text)
+
+					// check for error with function argument
+					if result.Error.FunctionArgument != nil {
+						test.Errorf("actual error func arg: %d", *result.Error.FunctionArgument)
+					}
+				}
 			}
 			// compare result versus expected values
 			if !result.Result.Equal(expected.Result) {
