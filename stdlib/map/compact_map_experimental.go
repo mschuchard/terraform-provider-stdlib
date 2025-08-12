@@ -28,8 +28,8 @@ func (*compactMapExperimentalFunction) Metadata(_ context.Context, req function.
 // define the provider-level definition for the function
 func (*compactMapExperimentalFunction) Definition(_ context.Context, _ function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
-		Summary:             "Compact a map",
-		MarkdownDescription: "Return a map with all of the key-value pairs removed where the corresponding value is `null` or empty. The types checked for emptiness are String, Set, List, and Map. Other types will error due to lack of definition for emptiness.",
+		Summary:             "Compact a map (experimental and not yet included in provider plugin).",
+		MarkdownDescription: "Return a map with all of the key-value pairs removed where the corresponding value is `null` or empty. The types checked for emptiness are String, Set, List, and Map. Other types will error due to lack of definition for emptiness. Note this function is unsupported in the current version of the Terraform Plugin Framework due to explicit schema enforcement, and represents future functionality once it is supported (it currently behaves as expected according to unit test cases). As such this function is not currently included in the provider plugin.",
 		Parameters: []function.Parameter{
 			function.MapParameter{
 				ElementType: types.DynamicType,
