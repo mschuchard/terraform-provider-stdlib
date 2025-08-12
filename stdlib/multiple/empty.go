@@ -30,7 +30,7 @@ func (*emptyFunction) Metadata(_ context.Context, req function.MetadataRequest, 
 func (*emptyFunction) Definition(_ context.Context, _ function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:             "Determine if input is empty",
-		MarkdownDescription: "Return whether the input parameter of one of four possible different types (String, Set, List, or Map) is empty or not.",
+		MarkdownDescription: "Return whether the input parameter of one of four possible different types (String, Set, List, or Map) is empty or not. Other types will error due to lack of definition for emptiness.",
 		Parameters: []function.Parameter{
 			function.DynamicParameter{
 				Name:        "input",
