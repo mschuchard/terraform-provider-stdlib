@@ -51,7 +51,7 @@ func (*hasValueFunction) Run(ctx context.Context, req function.RunRequest, resp 
 	var inputMap map[string]string
 	var value string
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &inputMap, &value))
+	resp.Error = req.Arguments.Get(ctx, &inputMap, &value)
 	if resp.Error != nil {
 		return
 	}
@@ -61,7 +61,7 @@ func (*hasValueFunction) Run(ctx context.Context, req function.RunRequest, resp 
 
 	// validate input parameters
 	if len(value) == 0 {
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "has_value: input value parameter must not be empty"))
+		resp.Error = function.NewArgumentFuncError(1, "has_value: input value parameter must not be empty")
 		return
 	}
 
@@ -70,7 +70,7 @@ func (*hasValueFunction) Run(ctx context.Context, req function.RunRequest, resp 
 	valueExists := slices.Contains(mapValues, value)
 
 	// store the result as a bool
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &valueExists))
+	resp.Error = resp.Result.Set(ctx, &valueExists)
 	if resp.Error != nil {
 		return
 	}

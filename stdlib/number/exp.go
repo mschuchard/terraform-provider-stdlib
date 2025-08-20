@@ -43,7 +43,7 @@ func (*expFunction) Run(ctx context.Context, req function.RunRequest, resp *func
 	// initialize input parameters
 	var inputNumber float64
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &inputNumber))
+	resp.Error = req.Arguments.Get(ctx, &inputNumber)
 	if resp.Error != nil {
 		return
 	}
@@ -55,7 +55,7 @@ func (*expFunction) Run(ctx context.Context, req function.RunRequest, resp *func
 	ctx = tflog.SetField(ctx, "exp: exponential", exponential)
 
 	// store the result as a float64
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &exponential))
+	resp.Error = resp.Result.Set(ctx, &exponential)
 	if resp.Error != nil {
 		return
 	}

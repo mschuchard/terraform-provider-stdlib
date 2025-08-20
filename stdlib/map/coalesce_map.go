@@ -42,7 +42,7 @@ func (*coalesceMapFunction) Run(ctx context.Context, req function.RunRequest, re
 	// initialize maps to coalesce from input parameters
 	var inputMaps []map[string]string
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &inputMaps))
+	resp.Error = req.Arguments.Get(ctx, &inputMaps)
 	if resp.Error != nil {
 		return
 	}
@@ -51,7 +51,7 @@ func (*coalesceMapFunction) Run(ctx context.Context, req function.RunRequest, re
 
 	// validate at least one input argument
 	if len(inputMaps) == 0 {
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewFuncError("coalesce_map: at least one argument is required"))
+		resp.Error = function.NewFuncError("coalesce_map: at least one argument is required")
 		return
 	}
 
@@ -68,12 +68,12 @@ func (*coalesceMapFunction) Run(ctx context.Context, req function.RunRequest, re
 
 	// validate at least one non-empty map in arguments
 	if returnMap == nil {
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewFuncError("coalesce_map: all arguments are empty maps"))
+		resp.Error = function.NewFuncError("coalesce_map: all arguments are empty maps")
 		return
 	}
 
 	// store the result as a map
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &returnMap))
+	resp.Error = resp.Result.Set(ctx, &returnMap)
 	if resp.Error != nil {
 		return
 	}

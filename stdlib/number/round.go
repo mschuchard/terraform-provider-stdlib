@@ -43,7 +43,7 @@ func (*roundFunction) Run(ctx context.Context, req function.RunRequest, resp *fu
 	// initialize input parameters
 	var inputNum float64
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &inputNum))
+	resp.Error = req.Arguments.Get(ctx, &inputNum)
 	if resp.Error != nil {
 		return
 	}
@@ -55,7 +55,7 @@ func (*roundFunction) Run(ctx context.Context, req function.RunRequest, resp *fu
 	ctx = tflog.SetField(ctx, "round: round", round)
 
 	// store the result as an int64
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &round))
+	resp.Error = resp.Result.Set(ctx, &round)
 	if resp.Error != nil {
 		return
 	}

@@ -44,7 +44,7 @@ func (*productFunction) Run(ctx context.Context, req function.RunRequest, resp *
 	// initialize set
 	var set []float64
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &set))
+	resp.Error = req.Arguments.Get(ctx, &set)
 	if resp.Error != nil {
 		return
 	}
@@ -53,7 +53,7 @@ func (*productFunction) Run(ctx context.Context, req function.RunRequest, resp *
 
 	// validation
 	if len(set) == 0 {
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "product: set parameter length must be at least 1"))
+		resp.Error = function.NewArgumentFuncError(0, "product: set parameter length must be at least 1")
 		return
 	}
 
@@ -64,7 +64,7 @@ func (*productFunction) Run(ctx context.Context, req function.RunRequest, resp *
 	}
 
 	// store the result as a float
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &product))
+	resp.Error = resp.Result.Set(ctx, &product)
 	if resp.Error != nil {
 		return
 	}

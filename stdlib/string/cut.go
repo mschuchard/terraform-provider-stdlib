@@ -49,7 +49,7 @@ func (*cutFunction) Run(ctx context.Context, req function.RunRequest, resp *func
 	// initialize input string param and separator from input parameters
 	var inputString, separator string
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &inputString, &separator))
+	resp.Error = req.Arguments.Get(ctx, &inputString, &separator)
 	if resp.Error != nil {
 		return
 	}
@@ -80,12 +80,12 @@ func (*cutFunction) Run(ctx context.Context, req function.RunRequest, resp *func
 		[]attr.Value{types.StringValue(before), types.StringValue(after), types.BoolValue(found)},
 	)
 	if diags.HasError() {
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.FuncErrorFromDiags(ctx, diags))
+		resp.Error = function.FuncErrorFromDiags(ctx, diags)
 		return
 	}
 
 	// store the result as a tuple of string, string, bool
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &result))
+	resp.Error = resp.Result.Set(ctx, &result)
 	if resp.Error != nil {
 		return
 	}

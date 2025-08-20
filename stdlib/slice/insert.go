@@ -55,7 +55,7 @@ func (*insertFunction) Run(ctx context.Context, req function.RunRequest, resp *f
 	var list, insertValues []string
 	var index int
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &list, &insertValues, &index))
+	resp.Error = req.Arguments.Get(ctx, &list, &insertValues, &index)
 	if resp.Error != nil {
 		return
 	}
@@ -83,7 +83,7 @@ func (*insertFunction) Run(ctx context.Context, req function.RunRequest, resp *f
 	result := slices.Insert(list, index, insertValues...)
 
 	// store the result as a list of strings
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &result))
+	resp.Error = resp.Result.Set(ctx, &result)
 	if resp.Error != nil {
 		return
 	}

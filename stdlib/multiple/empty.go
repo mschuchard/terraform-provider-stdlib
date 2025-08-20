@@ -46,7 +46,7 @@ func (*emptyFunction) Run(ctx context.Context, req function.RunRequest, resp *fu
 	var parameter types.Dynamic
 	var result bool
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &parameter))
+	resp.Error = req.Arguments.Get(ctx, &parameter)
 	if resp.Error != nil {
 		return
 	}
@@ -57,19 +57,19 @@ func (*emptyFunction) Run(ctx context.Context, req function.RunRequest, resp *fu
 	// ascertain parameter was not refined to a specific value type
 	if parameter.IsUnderlyingValueNull() || parameter.IsUnderlyingValueUnknown() {
 		tflog.Error(ctx, fmt.Sprintf("empty: input parameter '%s' was refined by terraform to a specific underlying value type, and this prevents evaluation of the value's emptiness", parameter.String()))
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "empty: underlying value type refined"))
+		resp.Error = function.NewArgumentFuncError(0, "empty: underlying value type refined")
 		return
 	}
 
 	// check if empty
 	result, funcErr := util.IsDynamicEmpty(parameter, ctx)
 	if funcErr != nil {
-		resp.Error = function.ConcatFuncErrors(resp.Error, funcErr)
+		resp.Error = funcErr
 		return
 	}
 
 	// store the result as a boolean
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &result))
+	resp.Error = resp.Result.Set(ctx, &result)
 	if resp.Error != nil {
 		return
 	}

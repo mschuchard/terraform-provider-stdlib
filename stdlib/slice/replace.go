@@ -60,7 +60,7 @@ func (*replaceFunction) Run(ctx context.Context, req function.RunRequest, resp *
 	var index, endIndex int
 	var endIndexVar []int
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &list, &replaceValues, &index, &endIndexVar))
+	resp.Error = req.Arguments.Get(ctx, &list, &replaceValues, &index, &endIndexVar)
 	if resp.Error != nil {
 		return
 	}
@@ -110,7 +110,7 @@ func (*replaceFunction) Run(ctx context.Context, req function.RunRequest, resp *
 	result := slices.Replace(list, index, endIndex, replaceValues...)
 
 	// store the result as a list of strings
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &result))
+	resp.Error = resp.Result.Set(ctx, &result)
 	if resp.Error != nil {
 		return
 	}

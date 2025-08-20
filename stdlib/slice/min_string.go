@@ -45,7 +45,7 @@ func (*minStringFunction) Run(ctx context.Context, req function.RunRequest, resp
 	// initialize list
 	var list []string
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &list))
+	resp.Error = req.Arguments.Get(ctx, &list)
 	if resp.Error != nil {
 		return
 	}
@@ -54,7 +54,7 @@ func (*minStringFunction) Run(ctx context.Context, req function.RunRequest, resp
 
 	// validation
 	if len(list) == 0 {
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "min_string: list parameter length must be at least 1"))
+		resp.Error = function.NewArgumentFuncError(0, "min_string: list parameter length must be at least 1")
 		return
 	}
 
@@ -62,7 +62,7 @@ func (*minStringFunction) Run(ctx context.Context, req function.RunRequest, resp
 	minString := slices.Min(list)
 
 	// store the result as a string
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &minString))
+	resp.Error = resp.Result.Set(ctx, &minString)
 	if resp.Error != nil {
 		return
 	}

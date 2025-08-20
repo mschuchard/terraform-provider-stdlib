@@ -28,8 +28,8 @@ func (*compactMapExperimentalFunction) Metadata(_ context.Context, req function.
 // define the provider-level definition for the function
 func (*compactMapExperimentalFunction) Definition(_ context.Context, _ function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
-		Summary:             "Compact a map (experimental and not yet included in provider plugin).",
-		MarkdownDescription: "Return a map with all of the key-value pairs removed where the corresponding value is `null` or empty. The types checked for emptiness are String, Set, List, and Map. Other types will error due to lack of definition for emptiness. Note this function is unsupported in the current version of the Terraform Plugin Framework due to explicit schema enforcement, and represents future functionality once it is supported (it currently behaves as expected according to unit test cases). As such this function is not currently included in the provider plugin.",
+		Summary:             "Compact a map (cannot yet be supported by TF Plugin Framework, and thus not yet included in provider plugin).",
+		MarkdownDescription: "Return a map with all of the key-value pairs removed where the corresponding value is `null` or empty. The types checked for emptiness are String, Set, List, and Map. Other types will error due to lack of definition for emptiness. Note this function is unsupported in the current version of the Terraform Plugin Framework due to explicit schema enforcement, and represents future functionality once it is supported (it currently behaves as expected according to unit test cases). As such this function is not currently included in the provider plugin. See/Follow https://github.com/hashicorp/terraform-plugin-framework/issues/973.",
 		Parameters: []function.Parameter{
 			function.MapParameter{
 				ElementType: types.DynamicType,
@@ -45,7 +45,7 @@ func (*compactMapExperimentalFunction) Run(ctx context.Context, req function.Run
 	// initialize map to compact from input parameters
 	var inputMap map[string]types.Dynamic
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &inputMap))
+	resp.Error = req.Arguments.Get(ctx, &inputMap)
 	if resp.Error != nil {
 		return
 	}
@@ -61,7 +61,7 @@ func (*compactMapExperimentalFunction) Run(ctx context.Context, req function.Run
 		} else if empty, funcErr := util.IsDynamicEmpty(value, ctx); empty || funcErr != nil { // check if value is empty
 			// check on error during emptiness check
 			if funcErr != nil {
-				resp.Error = function.ConcatFuncErrors(resp.Error, funcErr)
+				resp.Error = funcErr
 				return
 			} else {
 				// delete kv pair if empty
@@ -71,7 +71,7 @@ func (*compactMapExperimentalFunction) Run(ctx context.Context, req function.Run
 	}
 
 	// store the result as a map
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &inputMap))
+	resp.Error = resp.Result.Set(ctx, &inputMap)
 	if resp.Error != nil {
 		return
 	}

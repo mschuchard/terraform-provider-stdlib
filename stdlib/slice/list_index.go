@@ -56,7 +56,7 @@ func (*listIndexFunction) Run(ctx context.Context, req function.RunRequest, resp
 	var sortedVar []bool
 	sorted := false
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &list, &elem, &sortedVar))
+	resp.Error = req.Arguments.Get(ctx, &list, &elem, &sortedVar)
 	if resp.Error != nil {
 		return
 	}
@@ -67,7 +67,7 @@ func (*listIndexFunction) Run(ctx context.Context, req function.RunRequest, resp
 
 	// validation
 	if len(list) == 0 {
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "list_index: list parameter length must be at least 1"))
+		resp.Error = function.NewArgumentFuncError(0, "list_index: list parameter length must be at least 1")
 		return
 	}
 
@@ -95,7 +95,7 @@ func (*listIndexFunction) Run(ctx context.Context, req function.RunRequest, resp
 	}
 
 	// store the result as an integer
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &listIndex))
+	resp.Error = resp.Result.Set(ctx, &listIndex)
 	if resp.Error != nil {
 		return
 	}

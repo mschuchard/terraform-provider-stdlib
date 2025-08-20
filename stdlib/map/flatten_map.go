@@ -47,7 +47,7 @@ func (*flattenMapFunction) Run(ctx context.Context, req function.RunRequest, res
 	// initialize comparison maps from input parameters
 	var listMaps []map[string]string
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &listMaps))
+	resp.Error = req.Arguments.Get(ctx, &listMaps)
 	if resp.Error != nil {
 		return
 	}
@@ -56,7 +56,7 @@ func (*flattenMapFunction) Run(ctx context.Context, req function.RunRequest, res
 
 	// validation
 	if len(listMaps) < 1 {
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "flatten_map: list of maps parameter must be at least length 1"))
+		resp.Error = function.NewArgumentFuncError(0, "flatten_map: list of maps parameter must be at least length 1")
 		return
 	}
 
@@ -67,7 +67,7 @@ func (*flattenMapFunction) Run(ctx context.Context, req function.RunRequest, res
 	}
 
 	// store the result as a map
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &outputMap))
+	resp.Error = resp.Result.Set(ctx, &outputMap)
 	if resp.Error != nil {
 		return
 	}

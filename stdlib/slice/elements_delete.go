@@ -54,7 +54,7 @@ func (*elementsDeleteFunction) Run(ctx context.Context, req function.RunRequest,
 	var list []string
 	var index, endIndex int
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &list, &index, &endIndex))
+	resp.Error = req.Arguments.Get(ctx, &list, &index, &endIndex)
 	if resp.Error != nil {
 		return
 	}
@@ -87,7 +87,7 @@ func (*elementsDeleteFunction) Run(ctx context.Context, req function.RunRequest,
 	result := slices.Delete(list, index, endIndex)
 
 	// store the result as a list of strings
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &result))
+	resp.Error = resp.Result.Set(ctx, &result)
 	if resp.Error != nil {
 		return
 	}

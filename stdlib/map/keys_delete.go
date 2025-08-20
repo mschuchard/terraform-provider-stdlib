@@ -51,7 +51,7 @@ func (*keysDeleteFunction) Run(ctx context.Context, req function.RunRequest, res
 	var inputMap map[string]string
 	var keys []string
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &inputMap, &keys))
+	resp.Error = req.Arguments.Get(ctx, &inputMap, &keys)
 	if resp.Error != nil {
 		return
 	}
@@ -61,7 +61,7 @@ func (*keysDeleteFunction) Run(ctx context.Context, req function.RunRequest, res
 
 	// validate input parameters
 	if len(keys) < 2 {
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "delete_keys: keys parameter must be at least length 2"))
+		resp.Error = function.NewArgumentFuncError(1, "delete_keys: keys parameter must be at least length 2")
 		return
 	}
 
@@ -73,13 +73,13 @@ func (*keysDeleteFunction) Run(ctx context.Context, req function.RunRequest, res
 			delete(inputMap, key)
 		} else {
 			// key did not exist in map
-			resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, fmt.Sprintf("keys_delete: the key to be deleted '%s' does not exist in the input map", key)))
+			resp.Error = function.NewArgumentFuncError(1, fmt.Sprintf("keys_delete: the key to be deleted '%s' does not exist in the input map", key))
 			return
 		}
 	}
 
 	// store the result as a map
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &inputMap))
+	resp.Error = resp.Result.Set(ctx, &inputMap)
 	if resp.Error != nil {
 		return
 	}

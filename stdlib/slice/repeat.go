@@ -50,7 +50,7 @@ func (*repeatFunction) Run(ctx context.Context, req function.RunRequest, resp *f
 	var list []string
 	var count int
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &list, &count))
+	resp.Error = req.Arguments.Get(ctx, &list, &count)
 	if resp.Error != nil {
 		return
 	}
@@ -73,7 +73,7 @@ func (*repeatFunction) Run(ctx context.Context, req function.RunRequest, resp *f
 	repeated := slices.Repeat(list, count)
 
 	// store the result as a slice of strings
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &repeated))
+	resp.Error = resp.Result.Set(ctx, &repeated)
 	if resp.Error != nil {
 		return
 	}

@@ -43,7 +43,7 @@ func (*factorialFunction) Run(ctx context.Context, req function.RunRequest, resp
 	// initialize input parameters
 	var inputNumber int64
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &inputNumber))
+	resp.Error = req.Arguments.Get(ctx, &inputNumber)
 	if resp.Error != nil {
 		return
 	}
@@ -52,7 +52,7 @@ func (*factorialFunction) Run(ctx context.Context, req function.RunRequest, resp
 
 	// validate input parameters
 	if inputNumber < 0 {
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "factorial: the input number cannot be negative"))
+		resp.Error = function.NewArgumentFuncError(0, "factorial: the input number cannot be negative")
 		return
 	}
 
@@ -62,7 +62,7 @@ func (*factorialFunction) Run(ctx context.Context, req function.RunRequest, resp
 	ctx = tflog.SetField(ctx, "factorial: factorial", factorial)
 
 	// store the result as an int64
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &factorial))
+	resp.Error = resp.Result.Set(ctx, &factorial)
 	if resp.Error != nil {
 		return
 	}

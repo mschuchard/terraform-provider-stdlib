@@ -44,7 +44,7 @@ func (*compactMapFunction) Run(ctx context.Context, req function.RunRequest, res
 	// initialize map to compact from input parameters
 	var inputMap map[string]types.String
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &inputMap))
+	resp.Error = req.Arguments.Get(ctx, &inputMap)
 	if resp.Error != nil {
 		return
 	}
@@ -61,7 +61,7 @@ func (*compactMapFunction) Run(ctx context.Context, req function.RunRequest, res
 	}
 
 	// store the result as a map
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &inputMap))
+	resp.Error = resp.Result.Set(ctx, &inputMap)
 	if resp.Error != nil {
 		return
 	}

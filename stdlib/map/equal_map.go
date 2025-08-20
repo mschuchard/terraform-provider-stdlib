@@ -50,7 +50,7 @@ func (*equalMapFunction) Run(ctx context.Context, req function.RunRequest, resp 
 	// initialize comparison maps from input parameters
 	var mapOne, mapTwo map[string]string
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &mapOne, &mapTwo))
+	resp.Error = req.Arguments.Get(ctx, &mapOne, &mapTwo)
 	if resp.Error != nil {
 		return
 	}
@@ -62,7 +62,7 @@ func (*equalMapFunction) Run(ctx context.Context, req function.RunRequest, resp 
 	result := maps.Equal(mapOne, mapTwo)
 
 	// store the result as a bool
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &result))
+	resp.Error = resp.Result.Set(ctx, &result)
 	if resp.Error != nil {
 		return
 	}

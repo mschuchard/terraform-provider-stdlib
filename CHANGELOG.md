@@ -2,6 +2,7 @@
 - Improve unit testing.
 - Improve `replace` descriptions and parameter validation.
 - Improve `empty` function behavior.
+- Optimize function error returns.
 - Add experimental `compact_map` function.
 
 ### 2.1.0

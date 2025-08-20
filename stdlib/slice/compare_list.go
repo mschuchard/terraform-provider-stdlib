@@ -50,7 +50,7 @@ func (*compareListFunction) Run(ctx context.Context, req function.RunRequest, re
 	// initialize comparison lists from input parameters
 	var listOne, listTwo []string
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &listOne, &listTwo))
+	resp.Error = req.Arguments.Get(ctx, &listOne, &listTwo)
 	if resp.Error != nil {
 		return
 	}
@@ -62,7 +62,7 @@ func (*compareListFunction) Run(ctx context.Context, req function.RunRequest, re
 	result := slices.Compare(listOne, listTwo)
 
 	// store the result as an integer
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &result))
+	resp.Error = resp.Result.Set(ctx, &result)
 	if resp.Error != nil {
 		return
 	}

@@ -45,7 +45,7 @@ func (*sortListFunction) Run(ctx context.Context, req function.RunRequest, resp 
 	// initialize list
 	var list []string
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &list))
+	resp.Error = req.Arguments.Get(ctx, &list)
 	if resp.Error != nil {
 		return
 	}
@@ -54,7 +54,7 @@ func (*sortListFunction) Run(ctx context.Context, req function.RunRequest, resp 
 
 	// validation
 	if len(list) < 2 {
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "sort_list: list parameter length must be at least 2"))
+		resp.Error = function.NewArgumentFuncError(0, "sort_list: list parameter length must be at least 2")
 		return
 	}
 
@@ -64,7 +64,7 @@ func (*sortListFunction) Run(ctx context.Context, req function.RunRequest, resp 
 	slices.Sort(sortedList)
 
 	// store the result as a string
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &sortedList))
+	resp.Error = resp.Result.Set(ctx, &sortedList)
 	if resp.Error != nil {
 		return
 	}

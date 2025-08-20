@@ -47,7 +47,7 @@ func (*modFunction) Run(ctx context.Context, req function.RunRequest, resp *func
 	// initialize input parameters
 	var dividend, divisor float64
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &dividend, &divisor))
+	resp.Error = req.Arguments.Get(ctx, &dividend, &divisor)
 	if resp.Error != nil {
 		return
 	}
@@ -60,7 +60,7 @@ func (*modFunction) Run(ctx context.Context, req function.RunRequest, resp *func
 	ctx = tflog.SetField(ctx, "mod: modulus", modulus)
 
 	// store the result as a float64
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &modulus))
+	resp.Error = resp.Result.Set(ctx, &modulus)
 	if resp.Error != nil {
 		return
 	}

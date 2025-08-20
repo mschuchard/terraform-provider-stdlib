@@ -50,7 +50,7 @@ func (*lastElementFunction) Run(ctx context.Context, req function.RunRequest, re
 	var numElementsVar []int
 	var numElements int
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, req.Arguments.Get(ctx, &list, &numElementsVar))
+	resp.Error = req.Arguments.Get(ctx, &list, &numElementsVar)
 	if resp.Error != nil {
 		return
 	}
@@ -84,7 +84,7 @@ func (*lastElementFunction) Run(ctx context.Context, req function.RunRequest, re
 	lastElement := list[len(list)-numElements:]
 
 	// store the result as a list of strings
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, &lastElement))
+	resp.Error = resp.Result.Set(ctx, &lastElement)
 	if resp.Error != nil {
 		return
 	}
