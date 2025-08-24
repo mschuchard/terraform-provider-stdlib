@@ -8,7 +8,7 @@ description: |-
 
 # function: empty
 
-Return whether the input parameter of one of four possible different types (String, Set, List, or Map) is empty or not.
+Return whether the input parameter of one of four possible different types (String, Set, List, or Map) is empty or not. Other types will error due to lack of definition for emptiness.
 
 ## Example Usage
 

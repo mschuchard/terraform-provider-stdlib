@@ -1,4 +1,4 @@
-### 2.1.1 (Next)
+### 2.1.1
 - Improve unit testing.
 - Improve `replace` descriptions and parameter validation.
 - Improve `empty` function behavior.

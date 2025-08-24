@@ -13,7 +13,7 @@ Return a map with all of the key-value pairs removed where the corresponding val
 ## Example Usage
 
 ```terraform
-# Return map with null and empty values removed.
+# Return map with null and empty values of type String removed.
 provider::stdlib::compact_map({
   "hello" = "world",
   "foo"   = "",
