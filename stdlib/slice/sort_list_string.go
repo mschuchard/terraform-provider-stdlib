@@ -28,8 +28,8 @@ func (*sortListStringFunction) Metadata(_ context.Context, req function.Metadata
 // define the provider-level definition for the function
 func (*sortListStringFunction) Definition(_ context.Context, _ function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
-		Summary:             "Sort the elements in a list",
-		MarkdownDescription: "Return the list where values are sorted in ascending order. Note that the Terraform 'types' package has issues converting some numbers for comparisons such that e.g. 49 will be sorted before 5 due to 4 < 5, but 45 would be correctly sorted before 49. Therefore, it would be preferred to use `sort_list_number` for lists of numbers not implicitly cast or recast to strings.",
+		Summary:             "Sort the string elements in a list",
+		MarkdownDescription: "Return the list where string values are sorted in ascending order. Note that the Terraform 'types' package has issues converting some numbers for comparisons such that e.g. 49 will be sorted before 5 due to 4 < 5, but 45 would be correctly sorted before 49. Therefore, it would be preferred to use `sort_list_number` for lists of numbers not implicitly cast or recast to strings.",
 		Parameters: []function.Parameter{
 			function.ListParameter{
 				ElementType: types.StringType,
