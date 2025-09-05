@@ -1,5 +1,6 @@
 ### 2.2.0
 - Rename former `sort_list` to `sort_list_string`.
+- Add `sort_list_number` function.
 
 ### 2.1.1
 - Improve unit testing.

@@ -61,7 +61,7 @@ func (*sortListStringFunction) Run(ctx context.Context, req function.RunRequest,
 	// sort the list
 	slices.Sort(list)
 
-	// store the result as a string
+	// store the result as a list of strings
 	resp.Error = resp.Result.Set(ctx, &list)
 	if resp.Error != nil {
 		return
