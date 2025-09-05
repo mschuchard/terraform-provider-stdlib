@@ -28,7 +28,7 @@ func (*compactMapFunction) Metadata(_ context.Context, req function.MetadataRequ
 func (*compactMapFunction) Definition(_ context.Context, _ function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:             "Compact a map",
-		MarkdownDescription: "Return a map with all of the key-value pairs removed where the corresponding value is `null` or empty.",
+		MarkdownDescription: "Return a map with all of the key-value pairs removed where the corresponding value is `null` or an empty String.",
 		Parameters: []function.Parameter{
 			function.MapParameter{
 				ElementType: types.StringType,

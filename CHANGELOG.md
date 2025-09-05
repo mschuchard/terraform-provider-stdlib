@@ -1,3 +1,6 @@
+### 2.2.0
+- Rename former `sort_list` to `sort_list_string`.
+
 ### 2.1.1
 - Improve unit testing.
 - Improve `replace` descriptions and parameter validation.

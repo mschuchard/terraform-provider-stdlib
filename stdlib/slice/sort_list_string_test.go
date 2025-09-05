@@ -11,7 +11,7 @@ import (
 	slicefunc "github.com/mschuchard/terraform-provider-stdlib/stdlib/slice"
 )
 
-func TestSortListFunction(test *testing.T) {
+func TestSortListStringFunction(test *testing.T) {
 	// initialize initial result data
 	resultData := function.NewResultData(types.ListUnknown(types.StringType))
 
@@ -43,11 +43,11 @@ func TestSortListFunction(test *testing.T) {
 				}),
 			},
 			Expected: function.RunResponse{
-				Error:  function.NewArgumentFuncError(0, "sort_list: list parameter length must be at least 2"),
+				Error:  function.NewArgumentFuncError(0, "sort_list_string: list parameter length must be at least 2"),
 				Result: resultData,
 			},
 		},
 	}
 
-	util.UnitTests(testCases, resultData, slicefunc.NewSortListFunction(), test)
+	util.UnitTests(testCases, resultData, slicefunc.NewSortListStringFunction(), test)
 }
