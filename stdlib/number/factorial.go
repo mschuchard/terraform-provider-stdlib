@@ -57,8 +57,7 @@ func (*factorialFunction) Run(ctx context.Context, req function.RunRequest, resp
 	}
 
 	// determine factorial
-	bigInt := &big.Int{}
-	factorial := bigInt.MulRange(1, inputNumber).Int64()
+	factorial := (&big.Int{}).MulRange(1, inputNumber).Int64()
 	ctx = tflog.SetField(ctx, "factorial: factorial", factorial)
 
 	// store the result as an int64

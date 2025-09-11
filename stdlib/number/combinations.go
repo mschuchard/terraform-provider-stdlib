@@ -69,17 +69,16 @@ func (*combinationsFunction) Run(ctx context.Context, req function.RunRequest, r
 		// in this situation the result is zero and should not be calculated
 		combinations = 0
 	} else {
-		bigInt := &big.Int{}
 		// n!
-		numerator := bigInt.MulRange(1, numElements)
+		numerator := (&big.Int{}).MulRange(1, numElements)
 		// k!
-		kFact := bigInt.MulRange(1, selectionSize)
+		kFact := (&big.Int{}).MulRange(1, selectionSize)
 		// (n-k)!
-		nMinuskFact := bigInt.MulRange(1, numElements-selectionSize)
+		nMinuskFact := (&big.Int{}).MulRange(1, numElements-selectionSize)
 		// k! * (n-k)!
-		denominator := bigInt.Mul(kFact, nMinuskFact)
+		denominator := (&big.Int{}).Mul(kFact, nMinuskFact)
 		// n! / (k! * (n-k)!)
-		combinations = bigInt.Div(numerator, denominator).Int64()
+		combinations = big.NewInt(0).Div(numerator, denominator).Int64()
 	}
 
 	ctx = tflog.SetField(ctx, "combinations: combinations", combinations)

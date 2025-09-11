@@ -1,4 +1,3 @@
-// test negative, 0, and some reasonable num
 package numberfunc_test
 
 import (
