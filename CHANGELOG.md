@@ -1,4 +1,4 @@
-### 2.2.0
+### 2.2.0 (Next)
 - Rename former `sort_list` to `sort_list_string`.
 - Add `sort_list_number` function.
 
