@@ -99,6 +99,7 @@ func (*stdlibProvider) Functions(_ context.Context) []func() function.Function {
 		mapfunc.NewKeyDeleteFunction,
 		mapfunc.NewKeysDeleteFunction,
 		multiple.NewEmptyFunction,
+		numberfunc.NewCombinationsFunction,
 		numberfunc.NewExpFunction,
 		numberfunc.NewFactorialFunction,
 		numberfunc.NewModFunction,
