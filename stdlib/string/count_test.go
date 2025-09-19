@@ -16,7 +16,7 @@ func TestCountFunction(test *testing.T) {
 	resultData := function.NewResultData(types.Int32Unknown())
 
 	testCases := util.TestCases{
-		"optional-param-absent": {
+		"normal": {
 			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue("pizza"), types.StringValue("z")}),
 			},
@@ -24,7 +24,7 @@ func TestCountFunction(test *testing.T) {
 				Result: function.NewResultData(types.Int32Value(2)),
 			},
 		},
-		"empty-string": {
+		"empty-substring": {
 			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue("hello"), types.StringValue("")}),
 			},
