@@ -1,6 +1,6 @@
 ### 2.2.0 (Next)
 - Rename former `sort_list` to `sort_list_string`.
-- Add `combinations` and `sort_list_number` functions.
+- Add `combinations`, `count`, and `sort_list_number` functions.
 
 ### 2.1.1
 - Improve unit testing.
