@@ -37,7 +37,7 @@ func TestLastCharFunction(test *testing.T) {
 				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue(""), types.TupleValueMust([]attr.Type{}, []attr.Value{})}),
 			},
 			Expected: function.RunResponse{
-				Error:  function.NewArgumentFuncError(0, "lastChar: input string parameter must be at least length 1"),
+				Error:  function.NewArgumentFuncError(0, "last_char: input string parameter must be at least length 1"),
 				Result: resultData,
 			},
 		},
@@ -46,7 +46,7 @@ func TestLastCharFunction(test *testing.T) {
 				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue("foo"), types.TupleValueMust([]attr.Type{types.Int32Type}, []attr.Value{types.Int32Value(0)})}),
 			},
 			Expected: function.RunResponse{
-				Error:  function.NewArgumentFuncError(1, "lastChar: number_of_characters parameter must be at least 1"),
+				Error:  function.NewArgumentFuncError(1, "last_char: number_of_characters parameter must be at least 1"),
 				Result: resultData,
 			},
 		},
@@ -55,7 +55,7 @@ func TestLastCharFunction(test *testing.T) {
 				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue("hello"), types.TupleValueMust([]attr.Type{types.Int32Type}, []attr.Value{types.Int32Value(10)})}),
 			},
 			Expected: function.RunResponse{
-				Error:  function.NewArgumentFuncError(1, "lastChar: number_of_characters parameter must be fewer than the length of the input string parameter"),
+				Error:  function.NewArgumentFuncError(1, "last_char: number_of_characters parameter must be fewer than the length of the input string parameter"),
 				Result: resultData,
 			},
 		},

@@ -58,7 +58,7 @@ func (*lastCharFunction) Run(ctx context.Context, req function.RunRequest, resp 
 
 	// validate input parameters
 	if len(inputString) < 1 {
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "lastChar: input string parameter must be at least length 1"))
+		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "last_char: input string parameter must be at least length 1"))
 	}
 	lenInputString := int32(len(inputString))
 
@@ -71,9 +71,9 @@ func (*lastCharFunction) Run(ctx context.Context, req function.RunRequest, resp 
 
 		// and then continue validation
 		if numChars < 1 {
-			resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "lastChar: number_of_characters parameter must be at least 1"))
+			resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "last_char: number_of_characters parameter must be at least 1"))
 		} else if numChars >= lenInputString {
-			resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "lastChar: number_of_characters parameter must be fewer than the length of the input string parameter"))
+			resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "last_char: number_of_characters parameter must be fewer than the length of the input string parameter"))
 		}
 	}
 	if resp.Error != nil {
@@ -92,5 +92,5 @@ func (*lastCharFunction) Run(ctx context.Context, req function.RunRequest, resp 
 		return
 	}
 
-	tflog.Debug(ctx, "lastChar: successful return", map[string]any{"success": true})
+	tflog.Debug(ctx, "last_char: successful return", map[string]any{"success": true})
 }
