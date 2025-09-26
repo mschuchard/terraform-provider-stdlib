@@ -10,11 +10,20 @@ import (
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 )
 
-// checks if a tf dynamic type underlying value is empty
-func IsDynamicEmpty(dynamicType types.Dynamic, ctx context.Context) (bool, *function.FuncError) {
-	// access underlying value of dynamic type parameter
-	value := dynamicType.UnderlyingValue()
+// validates and returns dynamic type underlying value
+func GetDynamicUnderlyingValue(dynamicType types.Dynamic, ctx context.Context) (attr.Value, *function.FuncError) {
+	// ascertain parameter was not refined to a specific value type
+	if dynamicType.IsUnderlyingValueNull() || dynamicType.IsUnderlyingValueUnknown() {
+		tflog.Error(ctx, fmt.Sprintf("GetDynamicUnderlyingValue: input parameter '%s' was refined by terraform to a specific underlying value type, and this prevents further usage", dynamicType.String()))
+		return nil, function.NewArgumentFuncError(0, "GetDynamicUnderlyingValue (helper): underlying value type refined")
+	}
 
+	// access underlying value of dynamic type parameter
+	return dynamicType.UnderlyingValue(), nil
+}
+
+// checks if a tf dynamic type underlying value is empty
+func IsDynamicEmpty(value attr.Value, ctx context.Context) (bool, *function.FuncError) {
 	// convert to one of four acceptable types
 	// string
 	if stringType, ok := value.(types.String); ok {
@@ -30,7 +39,7 @@ func IsDynamicEmpty(dynamicType types.Dynamic, ctx context.Context) (bool, *func
 		// emptiness check
 		return value.Equal(types.MapValueMust(mapType.ElementType(), map[string]attr.Value{})), nil
 	} else {
-		tflog.Error(ctx, fmt.Sprintf("IsDynamicEmpty (helper): could not convert input parameter '%s' to an acceptable terraform type", dynamicType.String()))
-		return false, function.NewArgumentFuncError(0, "IsDynamicEntry (helper): invalid input parameter type")
+		tflog.Error(ctx, fmt.Sprintf("IsDynamicEmpty (helper): could not convert input parameter '%s' to an acceptable terraform type", value.String()))
+		return false, function.NewArgumentFuncError(0, "IsDynamicEmpty (helper): invalid input parameter type")
 	}
 }
