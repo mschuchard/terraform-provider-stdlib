@@ -53,7 +53,7 @@ func TestEmptyFunction(test *testing.T) {
 				Arguments: function.NewArgumentsData([]attr.Value{types.DynamicValue(types.BoolValue(false))}),
 			},
 			Expected: function.RunResponse{
-				Error:  function.NewArgumentFuncError(0, "IsDynamicEntry (helper): invalid input parameter type"),
+				Error:  function.NewArgumentFuncError(0, "IsDynamicEmpty (helper): invalid input parameter type"),
 				Result: resultData,
 			},
 		},

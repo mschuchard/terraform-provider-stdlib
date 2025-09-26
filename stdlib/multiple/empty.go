@@ -2,7 +2,6 @@ package multiple
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/hashicorp/terraform-plugin-framework/function"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -44,7 +43,6 @@ func (*emptyFunction) Definition(_ context.Context, _ function.DefinitionRequest
 func (*emptyFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	// initialize input param, converted go types, and result
 	var parameter types.Dynamic
-	var result bool
 
 	resp.Error = req.Arguments.Get(ctx, &parameter)
 	if resp.Error != nil {
@@ -53,16 +51,15 @@ func (*emptyFunction) Run(ctx context.Context, req function.RunRequest, resp *fu
 
 	ctx = tflog.SetField(ctx, "empty: input", parameter.String())
 
-	// determine input parameter type and check for emptiness
-	// ascertain parameter was not refined to a specific value type
-	if parameter.IsUnderlyingValueNull() || parameter.IsUnderlyingValueUnknown() {
-		tflog.Error(ctx, fmt.Sprintf("empty: input parameter '%s' was refined by terraform to a specific underlying value type, and this prevents evaluation of the value's emptiness", parameter.String()))
-		resp.Error = function.NewArgumentFuncError(0, "empty: underlying value type refined")
+	// retrieve underlying dynamic value
+	paramValue, funcErr := util.GetDynamicUnderlyingValue(parameter, ctx)
+	if funcErr != nil {
+		resp.Error = funcErr
 		return
 	}
 
 	// check if empty
-	result, funcErr := util.IsDynamicEmpty(parameter, ctx)
+	result, funcErr := util.IsDynamicEmpty(paramValue, ctx)
 	if funcErr != nil {
 		resp.Error = funcErr
 		return
