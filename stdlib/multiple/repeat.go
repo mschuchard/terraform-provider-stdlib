@@ -83,21 +83,37 @@ func (*repeatFunction) Run(ctx context.Context, req function.RunRequest, resp *f
 	}
 
 	// determine the repeated list or string
-	var repeated any
+	var repeated types.Dynamic
 	// check if string type
 	if stringValue, ok := repeaterValue.(types.String); ok {
 		// repeat the string value
-		repeated = strings.Repeat(stringValue.ValueString(), count)
+		repeatedString := strings.Repeat(stringValue.ValueString(), count)
+
+		// convert to explicit string type
+		repeatedTFString := types.StringValue(repeatedString)
+
+		// convert to dynamic type
+		repeated = types.DynamicValue(repeatedTFString)
 	} else if list, ok := repeaterValue.(types.List); ok { // check if list type
-		// convert list to slice of any
-		var listValue []any
+		// convert list to slice of string
+		var listValue []string
 		if diags := list.ElementsAs(ctx, &listValue, false); diags.HasError() {
 			resp.Error = function.FuncErrorFromDiags(ctx, diags)
 			return
 		}
 
 		// repeat the slice value
-		repeated = slices.Repeat(listValue, count)
+		repeatedList := slices.Repeat(listValue, count)
+
+		// convert to explicit list type
+		repeatedTFList, diags := types.ListValueFrom(ctx, types.StringType, repeatedList)
+		if diags.HasError() {
+			resp.Error = function.FuncErrorFromDiags(ctx, diags)
+			return
+		}
+
+		// convert to dynamic type
+		repeated = types.DynamicValue(repeatedTFList)
 	} else {
 		resp.Error = function.NewArgumentFuncError(0, "repeat: invalid input parameter type")
 		return
