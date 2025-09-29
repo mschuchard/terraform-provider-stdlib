@@ -13,52 +13,78 @@ import (
 
 func TestRepeatFunction(test *testing.T) {
 	// initialize initial result data
-	resultData := function.NewResultData(types.ListUnknown(types.StringType))
+	resultData := function.NewResultData(types.DynamicUnknown())
 
 	testCases := util.TestCases{
-		"double": {
+		"list-double": {
 			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{
-					types.ListValueMust(types.StringType, []attr.Value{types.StringValue("zero"), types.StringValue("one"), types.StringValue("two")}),
+					types.DynamicValue(types.ListValueMust(types.StringType, []attr.Value{types.StringValue("zero"), types.StringValue("one"), types.StringValue("two")})),
 					types.Int32Value(2),
 				}),
 			},
 			Expected: function.RunResponse{
-				Result: function.NewResultData(types.ListValueMust(types.StringType, []attr.Value{types.StringValue("zero"), types.StringValue("one"), types.StringValue("two"), types.StringValue("zero"), types.StringValue("one"), types.StringValue("two")})),
+				Result: function.NewResultData(types.DynamicValue(types.ListValueMust(types.StringType, []attr.Value{types.StringValue("zero"), types.StringValue("one"), types.StringValue("two"), types.StringValue("zero"), types.StringValue("one"), types.StringValue("two")}))),
 			},
 		},
-		"empty": {
+		// string double
+		"list-empty": {
 			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{
-					types.ListValueMust(types.StringType, []attr.Value{types.StringValue("zero"), types.StringValue("one"), types.StringValue("two")}),
+					types.DynamicValue(types.ListValueMust(types.StringType, []attr.Value{types.StringValue("zero"), types.StringValue("one"), types.StringValue("two")})),
 					types.Int32Value(0),
 				}),
 			},
 			Expected: function.RunResponse{
-				Result: function.NewResultData(types.ListValueMust(types.StringType, []attr.Value{})),
+				Result: function.NewResultData(types.DynamicValue(types.ListValueMust(types.StringType, []attr.Value{}))),
 			},
 		},
-		"insert-values-length": {
+		// string empty
+		"repeater-list-length": {
 			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{
-					types.ListValueMust(types.StringType, []attr.Value{}),
+					types.DynamicValue(types.ListValueMust(types.StringType, []attr.Value{})),
 					types.Int32Value(0),
 				}),
 			},
 			Expected: function.RunResponse{
-				Error:  function.NewArgumentFuncError(0, "repeat: list parameter length must be at least 1"),
+				Error:  function.NewArgumentFuncError(0, "repeat: repeater parameter length must be at least 1"),
 				Result: resultData,
 			},
 		},
-		"negative-index": {
+		"repeater-string-length": {
 			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{
-					types.ListValueMust(types.StringType, []attr.Value{types.StringValue("foo")}),
+					types.DynamicValue(types.StringValue("")),
+					types.Int32Value(0),
+				}),
+			},
+			Expected: function.RunResponse{
+				Error:  function.NewArgumentFuncError(0, "repeat: repeater parameter length must be at least 1"),
+				Result: resultData,
+			},
+		},
+		"count-negative": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{
+					types.DynamicValue(types.ListValueMust(types.StringType, []attr.Value{types.StringValue("foo")})),
 					types.Int32Value(-1),
 				}),
 			},
 			Expected: function.RunResponse{
 				Error:  function.NewArgumentFuncError(1, "repeat: count parameter value cannot be negative"),
+				Result: resultData,
+			},
+		},
+		"invalid-type": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{
+					types.DynamicValue(types.SetValueMust(types.StringType, []attr.Value{types.StringValue("foo")})),
+					types.Int32Value(2),
+				}),
+			},
+			Expected: function.RunResponse{
+				Error:  function.NewArgumentFuncError(0, "repeat: invalid input parameter type"),
 				Result: resultData,
 			},
 		},
