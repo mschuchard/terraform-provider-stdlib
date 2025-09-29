@@ -11,15 +11,21 @@ import (
 )
 
 // validates and returns dynamic type underlying value
-func GetDynamicUnderlyingValue(dynamicType types.Dynamic, ctx context.Context) (attr.Value, *function.FuncError) {
-	// ascertain parameter was not refined to a specific value type
-	if dynamicType.IsUnderlyingValueNull() || dynamicType.IsUnderlyingValueUnknown() {
-		tflog.Error(ctx, fmt.Sprintf("GetDynamicUnderlyingValue: input parameter '%s' was refined by terraform to a specific underlying value type, and this prevents further usage", dynamicType.String()))
-		return nil, function.NewArgumentFuncError(0, "GetDynamicUnderlyingValue (helper): underlying value type refined")
+func GetDynamicUnderlyingValue(dynamicType types.Dynamic, ctx context.Context) (attr.Value, bool, bool) {
+	// initialize unknown and null vars
+	var unknown, null bool
+
+	// ascertain if dynamic type is unknown...
+	if dynamicType.IsUnknown() || dynamicType.IsUnderlyingValueUnknown() {
+		tflog.Info(ctx, fmt.Sprintf("GetDynamicUnderlyingValue (helper): input parameter '%s' is unknown, or was refined by terraform to an unknown", dynamicType.String()))
+		unknown = true
+	} else if dynamicType.IsNull() || dynamicType.IsUnderlyingValueNull() { // ...or null
+		tflog.Info(ctx, fmt.Sprintf("GetDynamicUnderlyingValue (helper): input parameter '%s' is null, or was refined by terraform to a specific underlying type (but value is still null)", dynamicType.String()))
+		null = true
 	}
 
-	// access underlying value of dynamic type parameter
-	return dynamicType.UnderlyingValue(), nil
+	// access underlying value of dynamic type parameter, and return unknown/null status
+	return dynamicType.UnderlyingValue(), unknown, null
 }
 
 // checks if a tf dynamic type underlying value is empty
