@@ -1,4 +1,4 @@
-package slicefunc_test
+package multiple_test
 
 import (
 	"testing"
@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 
 	util "github.com/mschuchard/terraform-provider-stdlib/internal"
-	slicefunc "github.com/mschuchard/terraform-provider-stdlib/stdlib/slice"
+	"github.com/mschuchard/terraform-provider-stdlib/stdlib/multiple"
 )
 
 func TestRepeatFunction(test *testing.T) {
@@ -64,5 +64,5 @@ func TestRepeatFunction(test *testing.T) {
 		},
 	}
 
-	util.UnitTests(testCases, resultData, slicefunc.NewRepeatFunction(), test)
+	util.UnitTests(testCases, resultData, multiple.NewRepeatFunction(), test)
 }
