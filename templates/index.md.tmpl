@@ -21,45 +21,6 @@ Use the navigation to the left to read about the available custom functions, and
 
 {{ .SchemaMarkdown | trimspace }}
 
-## Data Sources as Functions
-The documentation overview for data sources as functions (necessary for Terraform version < 1.8). The following is an enumeration of the supported data sources as functions. These are categorized by their primary input types.
-
-### String
-- cut
-- last_char
-
-### Number
-- exp
-- mod
-- round
-- sqrt
-
-### Map
-- equal_map
-- flatten_map
-- has_key
-- has_keys
-- has_value
-- has_values
-- key_delete
-- keys_delete
-
-### List/Set
-- compare_list
-- insert
-- last_element
-- list_index
-- max_number
-- max_string
-- min_number
-- min_string
-- product
-- replace
-- sort_list
-
-### Generic
-- empty
-
 ## Custom Functions
 The documentation overview for custom functions (available for Terraform version >= 1.8). The following is an enumeration of the supported custom functions. These are categorized by their primary input types.
 
@@ -99,10 +60,49 @@ The documentation overview for custom functions (available for Terraform version
 - min_number
 - min_string
 - product
-- repeat
 - replace
 - sort_list_string
 - sort_list_number
+
+### Generic
+- empty
+- repeat
+
+## Data Sources as Functions
+The documentation overview for data sources as functions (necessary for Terraform version < 1.8). The following is an enumeration of the supported data sources as functions. These are categorized by their primary input types.
+
+### String
+- cut
+- last_char
+
+### Number
+- exp
+- mod
+- round
+- sqrt
+
+### Map
+- equal_map
+- flatten_map
+- has_key
+- has_keys
+- has_value
+- has_values
+- key_delete
+- keys_delete
+
+### List/Set
+- compare_list
+- insert
+- last_element
+- list_index
+- max_number
+- max_string
+- min_number
+- min_string
+- product
+- replace
+- sort_list
 
 ### Generic
 - empty

@@ -27,7 +27,17 @@ func TestRepeatFunction(test *testing.T) {
 				Result: function.NewResultData(types.DynamicValue(types.ListValueMust(types.StringType, []attr.Value{types.StringValue("zero"), types.StringValue("one"), types.StringValue("two"), types.StringValue("zero"), types.StringValue("one"), types.StringValue("two")}))),
 			},
 		},
-		// string double
+		"string-double": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{
+					types.DynamicValue(types.StringValue("pizza")),
+					types.Int32Value(2),
+				}),
+			},
+			Expected: function.RunResponse{
+				Result: function.NewResultData(types.DynamicValue(types.StringValue("pizzapizza"))),
+			},
+		},
 		"list-empty": {
 			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{
@@ -39,7 +49,17 @@ func TestRepeatFunction(test *testing.T) {
 				Result: function.NewResultData(types.DynamicValue(types.ListValueMust(types.StringType, []attr.Value{}))),
 			},
 		},
-		// string empty
+		"string-empty": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{
+					types.DynamicValue(types.StringValue("pizza")),
+					types.Int32Value(0),
+				}),
+			},
+			Expected: function.RunResponse{
+				Result: function.NewResultData(types.DynamicValue(types.StringValue(""))),
+			},
+		},
 		"repeater-list-length": {
 			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{

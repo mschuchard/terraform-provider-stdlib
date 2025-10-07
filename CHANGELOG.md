@@ -1,5 +1,6 @@
 ### 2.2.0 (Next)
 - Rename former `sort_list` to `sort_list_string`.
+- Update `repeat` function to also accept string input.
 - Add `combinations`, `count`, and `sort_list_number` functions.
 
 ### 2.1.1
