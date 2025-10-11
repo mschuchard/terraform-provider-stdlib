@@ -8,7 +8,7 @@ description: |-
 
 # function: compact_map
 
-Return a map with all of the key-value pairs removed where the corresponding value is `null` or empty.
+Return a map with all of the key-value pairs removed where the corresponding value is `null` or an empty String.
 
 ## Example Usage
 
