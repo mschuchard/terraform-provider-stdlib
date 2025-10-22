@@ -52,8 +52,8 @@ func UnitTests(testCases TestCases, resultData function.ResultData, tfFunction f
 			}
 			// compare result versus expected values
 			if !result.Result.Equal(expected.Result) {
-				test.Errorf("expected value: %v", expected.Result.Value())
-				test.Errorf("actual value: %v", result.Result.Value())
+				test.Errorf("expected value, type: %v, %T", expected.Result.Value(), expected.Result.Value())
+				test.Errorf("actual value, type: %v, %T", result.Result.Value(), result.Result.Value())
 			}
 		})
 	}
