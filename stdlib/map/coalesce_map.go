@@ -34,7 +34,7 @@ func (*coalesceMapFunction) Definition(_ context.Context, _ function.DefinitionR
 			Name:        "map",
 			Description: "One or more of the input maps to coalesce.",
 		},
-		Return: function.MapReturn{ElementType: types.MapType{ElemType: types.StringType}},
+		Return: function.MapReturn{ElementType: types.StringType},
 	}
 }
 

@@ -36,7 +36,7 @@ func (*flattenMapFunction) Definition(_ context.Context, _ function.DefinitionRe
 					ElemType: types.StringType,
 				},
 				Name:        "list_of_maps",
-				Description: "Input list of maps to flatten.",
+				Description: "Input list of maps to flatten. This must not be an empty list.",
 			},
 		},
 		Return: function.MapReturn{ElementType: types.StringType},

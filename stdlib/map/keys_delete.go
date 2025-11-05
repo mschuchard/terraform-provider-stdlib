@@ -61,7 +61,7 @@ func (*keysDeleteFunction) Run(ctx context.Context, req function.RunRequest, res
 
 	// validate input parameters
 	if len(keys) < 2 {
-		resp.Error = function.NewArgumentFuncError(1, "delete_keys: keys parameter must be at least length 2")
+		resp.Error = function.NewArgumentFuncError(1, "keys_delete: keys parameter must be at least length 2")
 		return
 	}
 
