@@ -29,7 +29,7 @@ func GetDynamicUnderlyingValue(dynamicType types.Dynamic, ctx context.Context) (
 }
 
 // checks if a tf dynamic type underlying value is empty
-func IsDynamicEmpty(value attr.Value, ctx context.Context) (bool, *function.FuncError) {
+func IsDynamicEmpty(value attr.Value, position int64, ctx context.Context) (bool, *function.FuncError) {
 	// convert to one of four acceptable types
 	// string
 	if stringType, ok := value.(types.String); ok {
@@ -46,6 +46,6 @@ func IsDynamicEmpty(value attr.Value, ctx context.Context) (bool, *function.Func
 		return value.Equal(types.MapValueMust(mapType.ElementType(), map[string]attr.Value{})), nil
 	} else {
 		tflog.Error(ctx, fmt.Sprintf("IsDynamicEmpty (helper): could not convert input parameter '%s' to an acceptable terraform type", value.String()))
-		return false, function.NewArgumentFuncError(0, "IsDynamicEmpty (helper): invalid input parameter type")
+		return false, function.NewArgumentFuncError(position, "IsDynamicEmpty (helper): invalid input parameter type")
 	}
 }

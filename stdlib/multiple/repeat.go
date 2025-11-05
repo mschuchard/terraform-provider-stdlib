@@ -67,7 +67,7 @@ func (*repeatFunction) Run(ctx context.Context, req function.RunRequest, resp *f
 	}
 
 	// validation
-	if empty, err := util.IsDynamicEmpty(repeaterValue, ctx); err != nil || empty {
+	if empty, err := util.IsDynamicEmpty(repeaterValue, 0, ctx); err != nil || empty {
 		// invalid type probably
 		if err != nil {
 			resp.Error = function.ConcatFuncErrors(resp.Error, err)

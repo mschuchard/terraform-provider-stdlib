@@ -59,7 +59,7 @@ func (*emptyFunction) Run(ctx context.Context, req function.RunRequest, resp *fu
 	}
 
 	// check if empty
-	result, funcErr := util.IsDynamicEmpty(paramValue, ctx)
+	result, funcErr := util.IsDynamicEmpty(paramValue, 0, ctx)
 	if funcErr != nil {
 		resp.Error = funcErr
 		return
