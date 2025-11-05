@@ -2,8 +2,6 @@ package mapfunc
 
 import (
 	"context"
-	"maps"
-	"slices"
 
 	"github.com/hashicorp/terraform-plugin-framework/function"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -66,8 +64,13 @@ func (*hasValueFunction) Run(ctx context.Context, req function.RunRequest, resp 
 	}
 
 	// assign values of map and check input value's existence
-	mapValues := slices.Collect(maps.Values(inputMap))
-	valueExists := slices.Contains(mapValues, value)
+	valueExists := false
+	for _, mapValue := range inputMap {
+		if mapValue == value {
+			valueExists = true
+			break
+		}
+	}
 
 	// store the result as a bool
 	resp.Error = resp.Result.Set(ctx, &valueExists)
