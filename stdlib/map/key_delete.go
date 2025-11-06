@@ -2,7 +2,6 @@ package mapfunc
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/hashicorp/terraform-plugin-framework/function"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -64,8 +63,7 @@ func (*keyDeleteFunction) Run(ctx context.Context, req function.RunRequest, resp
 		delete(inputMap, key)
 	} else {
 		// key did not exist in map
-		resp.Error = function.NewArgumentFuncError(1, fmt.Sprintf("key_delete: the key to be deleted '%s' does not exist in the input map", key))
-		return
+		tflog.Warn(ctx, "key_delete: the key to be deleted does not exist in the input map", map[string]any{"key": key})
 	}
 
 	// store the result as a map

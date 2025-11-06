@@ -35,8 +35,7 @@ func TestKeyDeleteFunction(test *testing.T) {
 				}),
 			},
 			Expected: function.RunResponse{
-				Error:  function.NewArgumentFuncError(1, "key_delete: the key to be deleted 'bar' does not exist in the input map"),
-				Result: resultData,
+				Result: function.NewResultData(types.MapValueMust(types.StringType, map[string]attr.Value{"hello": types.StringValue("world"), "foo": types.StringValue("bar")})),
 			},
 		},
 	}

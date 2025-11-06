@@ -2,6 +2,7 @@
 - Dynamic input emptiness error message now logs accurate parameter position.
 - Fix return type for `coalesce_map` function.
 - Optimize `has_value` function logic.
+- Modify missing key for `key(s)_delete` function from error to warning.
 
 ### 2.2.0
 - Rename former `sort_list` to `sort_list_string`.

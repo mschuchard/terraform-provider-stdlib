@@ -35,8 +35,7 @@ func TestKeysDeleteFunction(test *testing.T) {
 				}),
 			},
 			Expected: function.RunResponse{
-				Error:  function.NewArgumentFuncError(1, "keys_delete: the key to be deleted 'bar' does not exist in the input map"),
-				Result: resultData,
+				Result: function.NewResultData(types.MapValueMust(types.StringType, map[string]attr.Value{"hello": types.StringValue("world"), "baz": types.StringValue("bat")})),
 			},
 		},
 		"keys-too-short": {
@@ -47,7 +46,7 @@ func TestKeysDeleteFunction(test *testing.T) {
 				}),
 			},
 			Expected: function.RunResponse{
-				Error:  function.NewArgumentFuncError(1, "delete_keys: keys parameter must be at least length 2"),
+				Error:  function.NewArgumentFuncError(1, "keys_delete: keys parameter must be at least length 2"),
 				Result: resultData,
 			},
 		},
