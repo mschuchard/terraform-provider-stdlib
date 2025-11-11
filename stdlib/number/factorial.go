@@ -57,7 +57,13 @@ func (*factorialFunction) Run(ctx context.Context, req function.RunRequest, resp
 	}
 
 	// determine factorial
-	factorial := (&big.Int{}).MulRange(1, inputNumber).Int64()
+	result := (&big.Int{}).MulRange(1, inputNumber)
+	if !result.IsInt64() {
+		resp.Error = function.NewFuncError("factorial: result exceeds maximum int64 value")
+		return
+	}
+	factorial := result.Int64()
+
 	ctx = tflog.SetField(ctx, "factorial: factorial", factorial)
 
 	// store the result as an int64

@@ -121,7 +121,6 @@ func (*repeatFunction) Run(ctx context.Context, req function.RunRequest, resp *f
 
 	// store the result as a dynamic value
 	resp.Error = resp.Result.Set(ctx, &repeated)
-	//resp.Error = resp.Result.Set(ctx, &repeated)
 	if resp.Error != nil {
 		return
 	}

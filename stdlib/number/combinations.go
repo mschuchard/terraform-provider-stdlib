@@ -78,7 +78,12 @@ func (*combinationsFunction) Run(ctx context.Context, req function.RunRequest, r
 		// k! * (n-k)!
 		denominator := (&big.Int{}).Mul(kFact, nMinuskFact)
 		// n! / (k! * (n-k)!)
-		combinations = big.NewInt(0).Div(numerator, denominator).Int64()
+		result := big.NewInt(0).Div(numerator, denominator)
+		if !result.IsInt64() {
+			resp.Error = function.NewArgumentFuncError(0, "combinations: result exceeds maximum int64 value")
+			return
+		}
+		combinations = result.Int64()
 	}
 
 	ctx = tflog.SetField(ctx, "combinations: combinations", combinations)

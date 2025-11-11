@@ -3,6 +3,7 @@
 - Fix return type for `coalesce_map` function.
 - Optimize `has_value` function logic.
 - Modify missing key for `key(s)_delete` function from error to warning.
+- Protect against overflows in `combinations` and `factorial` functions.
 
 ### 2.2.0
 - Rename former `sort_list` to `sort_list_string`.
