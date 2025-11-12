@@ -32,12 +32,21 @@ func TestCombinationsFunction(test *testing.T) {
 				Result: function.NewResultData(types.Int64Value(0)),
 			},
 		},
-		"negative": {
+		"negative-num-elements": {
 			Request: function.RunRequest{
-				Arguments: function.NewArgumentsData([]attr.Value{types.Int64Value(-1), types.Int64Value(-1)}),
+				Arguments: function.NewArgumentsData([]attr.Value{types.Int64Value(-1), types.Int64Value(1)}),
 			},
 			Expected: function.RunResponse{
-				Error:  function.NewArgumentFuncError(0, "combinations: the input number(s) cannot be negative"),
+				Error:  function.NewArgumentFuncError(0, "combinations: the number of elements cannot be negative"),
+				Result: resultData,
+			},
+		},
+		"negative-selection-size": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{types.Int64Value(1), types.Int64Value(-1)}),
+			},
+			Expected: function.RunResponse{
+				Error:  function.NewArgumentFuncError(1, "combinations: the selection size cannot be negative"),
 				Result: resultData,
 			},
 		},

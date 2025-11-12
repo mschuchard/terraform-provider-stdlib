@@ -56,8 +56,13 @@ func (*combinationsFunction) Run(ctx context.Context, req function.RunRequest, r
 	ctx = tflog.SetField(ctx, "combinations: selection_size", selectionSize)
 
 	// validate input parameters
-	if numElements < 0 || selectionSize < 0 {
-		resp.Error = function.NewArgumentFuncError(0, "combinations: the input number(s) cannot be negative")
+	if numElements < 0 {
+		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "combinations: the number of elements cannot be negative"))
+	}
+	if selectionSize < 0 {
+		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "combinations: the selection size cannot be negative"))
+	}
+	if resp.Error != nil {
 		return
 	}
 
@@ -80,7 +85,7 @@ func (*combinationsFunction) Run(ctx context.Context, req function.RunRequest, r
 		// n! / (k! * (n-k)!)
 		result := big.NewInt(0).Div(numerator, denominator)
 		if !result.IsInt64() {
-			resp.Error = function.NewArgumentFuncError(0, "combinations: result exceeds maximum int64 value")
+			resp.Error = function.NewFuncError("combinations: result exceeds maximum int64 value")
 			return
 		}
 		combinations = result.Int64()
