@@ -44,6 +44,11 @@ func (*sqrtFunction) Run(ctx context.Context, req function.RunRequest, resp *fun
 	var inputNum float64
 
 	resp.Error = req.Arguments.Get(ctx, &inputNum)
+	if resp.Error != nil {
+		return
+	}
+
+	ctx = tflog.SetField(ctx, "sqrt: number", inputNum)
 
 	// validate input parameters
 	if inputNum < 0 {
@@ -56,8 +61,6 @@ func (*sqrtFunction) Run(ctx context.Context, req function.RunRequest, resp *fun
 	if resp.Error != nil {
 		return
 	}
-
-	ctx = tflog.SetField(ctx, "sqrt: number", inputNum)
 
 	// determine the square root
 	sqrt := math.Sqrt(inputNum)
