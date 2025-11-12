@@ -55,6 +55,12 @@ func (*modFunction) Run(ctx context.Context, req function.RunRequest, resp *func
 	ctx = tflog.SetField(ctx, "mod: dividend", dividend)
 	ctx = tflog.SetField(ctx, "mod: divisor", divisor)
 
+	// validate input parameters
+	if divisor == 0 {
+		resp.Error = function.NewArgumentFuncError(1, "mod: divisor cannot be zero")
+		return
+	}
+
 	// determine the modulus
 	modulus := math.Mod(dividend, divisor)
 	ctx = tflog.SetField(ctx, "mod: modulus", modulus)

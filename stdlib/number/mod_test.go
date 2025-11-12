@@ -40,6 +40,15 @@ func TestModFunction(test *testing.T) {
 				Result: function.NewResultData(types.Float64Value(0.5)),
 			},
 		},
+		"zero-divisor": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{types.Float64Value(10), types.Float64Value(0)}),
+			},
+			Expected: function.RunResponse{
+				Result: resultData,
+				Error:  function.NewArgumentFuncError(1, "mod: divisor cannot be zero"),
+			},
+		},
 	}
 
 	util.UnitTests(testCases, resultData, numberfunc.NewModFunction(), test)
