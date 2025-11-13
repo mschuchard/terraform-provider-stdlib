@@ -7,6 +7,7 @@
 - Fix input parameter reflection error check in `sqrt` function.
 - Improve error messages for invalid input parameters in `combinations` function.
 - Validate divisor is not 0 in `mod` function.
+- Update `round` function input parameter type from `float64` to `number`.
 
 ### 2.2.0
 - Rename former `sort_list` to `sort_list_string`.

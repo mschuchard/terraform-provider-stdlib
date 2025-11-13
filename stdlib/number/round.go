@@ -3,6 +3,7 @@ package numberfunc
 import (
 	"context"
 	"math"
+	"math/big"
 
 	"github.com/hashicorp/terraform-plugin-framework/function"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
@@ -30,7 +31,7 @@ func (*roundFunction) Definition(_ context.Context, _ function.DefinitionRequest
 		Summary:             "Determine rounding of a number",
 		MarkdownDescription: "Return the nearest integer of an input parameter; rounding half away from zero.",
 		Parameters: []function.Parameter{
-			function.Float64Parameter{
+			function.NumberParameter{
 				Name:        "number",
 				Description: "Input number parameter for determining the rounding.",
 			},
@@ -41,7 +42,7 @@ func (*roundFunction) Definition(_ context.Context, _ function.DefinitionRequest
 
 func (*roundFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	// initialize input parameters
-	var inputNum float64
+	var inputNum *big.Float
 
 	resp.Error = req.Arguments.Get(ctx, &inputNum)
 	if resp.Error != nil {
@@ -50,8 +51,15 @@ func (*roundFunction) Run(ctx context.Context, req function.RunRequest, resp *fu
 
 	ctx = tflog.SetField(ctx, "round: number", inputNum)
 
+	// convert to float64 for rounding
+	float, _ := inputNum.Float64()
+	if math.IsNaN(float) || math.IsInf(float, 0) {
+		resp.Error = function.NewFuncError("round: input number is beyond the limits of float64 for rounding")
+		return
+	}
+
 	// determine the rounded integer
-	round := int64(math.Round(inputNum))
+	round := int64(math.Round(float))
 	ctx = tflog.SetField(ctx, "round: round", round)
 
 	// store the result as an int64
