@@ -3,6 +3,7 @@ package numberfunc
 import (
 	"context"
 	"math"
+	"math/big"
 
 	"github.com/hashicorp/terraform-plugin-framework/function"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
@@ -30,11 +31,11 @@ func (*modFunction) Definition(_ context.Context, _ function.DefinitionRequest, 
 		Summary:             "Determine modulus of a number",
 		MarkdownDescription: "Return the remainder of the dividend number divided by the divisor number.",
 		Parameters: []function.Parameter{
-			function.Float64Parameter{
+			function.NumberParameter{
 				Name:        "dividend",
 				Description: "The dividend number from which to divide.",
 			},
-			function.Float64Parameter{
+			function.NumberParameter{
 				Name:        "divisor",
 				Description: "The divisor number by which to divide.",
 			},
@@ -45,7 +46,7 @@ func (*modFunction) Definition(_ context.Context, _ function.DefinitionRequest, 
 
 func (*modFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	// initialize input parameters
-	var dividend, divisor float64
+	var dividend, divisor *big.Float
 
 	resp.Error = req.Arguments.Get(ctx, &dividend, &divisor)
 	if resp.Error != nil {
@@ -55,14 +56,27 @@ func (*modFunction) Run(ctx context.Context, req function.RunRequest, resp *func
 	ctx = tflog.SetField(ctx, "mod: dividend", dividend)
 	ctx = tflog.SetField(ctx, "mod: divisor", divisor)
 
+	// convert to float64
+	floatDividend, _ := dividend.Float64()
+	if math.IsNaN(floatDividend) || math.IsInf(floatDividend, 0) {
+		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "mod: dividend is beyond the limits of float64"))
+	}
+	floatDivisor, _ := divisor.Float64()
+	if math.IsNaN(floatDivisor) || math.IsInf(floatDivisor, 0) {
+		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "mod: divisor is beyond the limits of float64"))
+	}
+	if resp.Error != nil {
+		return
+	}
+
 	// validate input parameters
-	if divisor == 0 {
+	if floatDivisor == 0 {
 		resp.Error = function.NewArgumentFuncError(1, "mod: divisor cannot be zero")
 		return
 	}
 
 	// determine the modulus
-	modulus := math.Mod(dividend, divisor)
+	modulus := math.Mod(floatDividend, floatDivisor)
 	ctx = tflog.SetField(ctx, "mod: modulus", modulus)
 
 	// store the result as a float64

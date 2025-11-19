@@ -1,3 +1,7 @@
+### 2.2.2 (Next)
+- Update `exp`, `mod`, and `sqrt` functions' input parameter type from `float64` to `number`.
+- Update `sqrt` return type to `number`.
+
 ### 2.2.1
 - Dynamic input emptiness error message now logs accurate parameter position.
 - Fix return type for `coalesce_map` function.
