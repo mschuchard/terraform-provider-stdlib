@@ -51,10 +51,10 @@ func (*roundFunction) Run(ctx context.Context, req function.RunRequest, resp *fu
 
 	ctx = tflog.SetField(ctx, "round: number", inputNum)
 
-	// convert to float64 for rounding
+	// convert to float64
 	float, _ := inputNum.Float64()
 	if math.IsNaN(float) || math.IsInf(float, 0) {
-		resp.Error = function.NewFuncError("round: input number is beyond the limits of float64 for rounding")
+		resp.Error = function.NewArgumentFuncError(0, "round: input number is beyond the limits of float64")
 		return
 	}
 

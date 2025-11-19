@@ -3,6 +3,7 @@ package numberfunc
 import (
 	"context"
 	"math"
+	"math/big"
 
 	"github.com/hashicorp/terraform-plugin-framework/function"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
@@ -30,7 +31,7 @@ func (*expFunction) Definition(_ context.Context, _ function.DefinitionRequest, 
 		Summary:             "Determine exponential of a number",
 		MarkdownDescription: "Return the base-e exponential of an input number parameter.",
 		Parameters: []function.Parameter{
-			function.Float64Parameter{
+			function.NumberParameter{
 				Name:        "number",
 				Description: "Input number parameter for determining the base-e exponential.",
 			},
@@ -41,17 +42,24 @@ func (*expFunction) Definition(_ context.Context, _ function.DefinitionRequest, 
 
 func (*expFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	// initialize input parameters
-	var inputNumber float64
+	var inputNum *big.Float
 
-	resp.Error = req.Arguments.Get(ctx, &inputNumber)
+	resp.Error = req.Arguments.Get(ctx, &inputNum)
 	if resp.Error != nil {
 		return
 	}
 
-	ctx = tflog.SetField(ctx, "exp: number", inputNumber)
+	ctx = tflog.SetField(ctx, "exp: number", inputNum)
+
+	// convert to float64
+	float, _ := inputNum.Float64()
+	if math.IsNaN(float) || math.IsInf(float, 0) {
+		resp.Error = function.NewArgumentFuncError(0, "exp: input number is beyond the limits of float64")
+		return
+	}
 
 	// determine base e exponential
-	exponential := math.Exp(inputNumber)
+	exponential := math.Exp(float)
 	ctx = tflog.SetField(ctx, "exp: exponential", exponential)
 
 	// store the result as a float64

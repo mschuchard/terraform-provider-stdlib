@@ -47,7 +47,7 @@ func TestRoundFunction(test *testing.T) {
 			},
 			Expected: function.RunResponse{
 				Result: resultData,
-				Error:  function.NewFuncError("round: input number is beyond the limits of float64 for rounding"),
+				Error:  function.NewArgumentFuncError(0, "round: input number is beyond the limits of float64"),
 			},
 		},
 	}

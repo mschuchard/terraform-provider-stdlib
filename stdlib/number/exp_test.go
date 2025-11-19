@@ -1,6 +1,7 @@
 package numberfunc_test
 
 import (
+	"math/big"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
@@ -30,6 +31,15 @@ func TestExpFunction(test *testing.T) {
 			},
 			Expected: function.RunResponse{
 				Result: function.NewResultData(types.Float64Value(2.9999997339956828)),
+			},
+		},
+		"beyond-upper-limit": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{types.NumberValue(func() *big.Float { f := new(big.Float); f.SetString("1e+310"); return f }())}),
+			},
+			Expected: function.RunResponse{
+				Result: resultData,
+				Error:  function.NewArgumentFuncError(0, "exp: input number is beyond the limits of float64"),
 			},
 		},
 	}
