@@ -2,7 +2,7 @@ package numberfunc
 
 import (
 	"context"
-	"math"
+	"math/big"
 
 	"github.com/hashicorp/terraform-plugin-framework/function"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
@@ -30,18 +30,18 @@ func (*sqrtFunction) Definition(_ context.Context, _ function.DefinitionRequest,
 		Summary:             "Determine square root of a number",
 		MarkdownDescription: "Return the square root of an input parameter.",
 		Parameters: []function.Parameter{
-			function.Float64Parameter{
+			function.NumberParameter{
 				Name:        "number",
 				Description: "Input number parameter for determining the square root. This number cannot be negative, infinite (positive or negative), or NaN.",
 			},
 		},
-		Return: function.Float64Return{},
+		Return: function.NumberReturn{},
 	}
 }
 
 func (*sqrtFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	// initialize input parameters
-	var inputNum float64
+	var inputNum *big.Float
 
 	resp.Error = req.Arguments.Get(ctx, &inputNum)
 	if resp.Error != nil {
@@ -51,22 +51,20 @@ func (*sqrtFunction) Run(ctx context.Context, req function.RunRequest, resp *fun
 	ctx = tflog.SetField(ctx, "sqrt: number", inputNum)
 
 	// validate input parameters
-	if inputNum < 0 {
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "sqrt: the input number cannot be negative"))
-	} else if math.IsInf(inputNum, 0) {
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "sqrt: the input number cannot be 'positive or negative infinity'"))
-	} else if math.IsNaN(inputNum) {
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "sqrt: the input number cannot be 'not a number'"))
+	if inputNum.Cmp(big.NewFloat(0.0)) < 0 {
+		resp.Error = function.NewArgumentFuncError(0, "sqrt: the input number cannot be negative")
+		return
 	}
-	if resp.Error != nil {
+	if inputNum.IsInf() {
+		resp.Error = function.NewArgumentFuncError(0, "sqrt: the input number cannot be 'positive or negative infinity'")
 		return
 	}
 
 	// determine the square root
-	sqrt := math.Sqrt(inputNum)
+	sqrt := (&big.Float{}).Sqrt(inputNum)
 	ctx = tflog.SetField(ctx, "sqrt: square root", sqrt)
 
-	// store the result as a float64
+	// store the result as a number
 	resp.Error = resp.Result.Set(ctx, &sqrt)
 	if resp.Error != nil {
 		return

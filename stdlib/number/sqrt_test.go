@@ -2,6 +2,7 @@ package numberfunc_test
 
 import (
 	"math"
+	"math/big"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
@@ -14,7 +15,7 @@ import (
 
 func TestSqrtFunction(test *testing.T) {
 	// initialize initial result data
-	resultData := function.NewResultData(types.Float64Unknown())
+	resultData := function.NewResultData(types.NumberUnknown())
 
 	testCases := util.TestCases{
 		"four": {
@@ -22,7 +23,7 @@ func TestSqrtFunction(test *testing.T) {
 				Arguments: function.NewArgumentsData([]attr.Value{types.Float64Value(4)}),
 			},
 			Expected: function.RunResponse{
-				Result: function.NewResultData(types.Float64Value(2)),
+				Result: function.NewResultData(types.NumberValue(big.NewFloat(2.0))),
 			},
 		},
 		"zero": {
@@ -30,7 +31,7 @@ func TestSqrtFunction(test *testing.T) {
 				Arguments: function.NewArgumentsData([]attr.Value{types.Float64Value(0)}),
 			},
 			Expected: function.RunResponse{
-				Result: function.NewResultData(types.Float64Value(0)),
+				Result: function.NewResultData(types.NumberValue(big.NewFloat(0.0))),
 			},
 		},
 		"two": {
@@ -38,7 +39,7 @@ func TestSqrtFunction(test *testing.T) {
 				Arguments: function.NewArgumentsData([]attr.Value{types.Float64Value(2)}),
 			},
 			Expected: function.RunResponse{
-				Result: function.NewResultData(types.Float64Value(1.4142135623730951)),
+				Result: function.NewResultData(types.NumberValue(big.NewFloat(1.4142135623730951))),
 			},
 		},
 		"negative": {
@@ -59,15 +60,6 @@ func TestSqrtFunction(test *testing.T) {
 				Result: resultData,
 			},
 		},
-		/*"nan": {
-			Request: function.RunRequest{
-				Arguments: function.NewArgumentsData([]attr.Value{types.Float64Value(math.NaN())}),
-			},
-			Expected: function.RunResponse{
-				Error:  function.NewArgumentFuncError(0, "sqrt: the input number cannot be 'not a number'"),
-				Result: resultData,
-			},
-		},*/
 	}
 
 	util.UnitTests(testCases, resultData, numberfunc.NewSqrtFunction(), test)
