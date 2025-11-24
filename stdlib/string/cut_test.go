@@ -43,8 +43,10 @@ func TestCutFunction(test *testing.T) {
 				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue(""), types.StringValue("foo")}),
 			},
 			Expected: function.RunResponse{
-				Error:  function.NewArgumentFuncError(0, "cut: input string parameter must be at least length 1"),
-				Result: resultData,
+				Result: function.NewResultData(types.TupleValueMust(
+					[]attr.Type{types.StringType, types.StringType, types.BoolType},
+					[]attr.Value{types.StringValue(""), types.StringValue(""), types.BoolValue(false)},
+				)),
 			},
 		},
 		"empty-separator": {

@@ -55,13 +55,8 @@ func (*cutFunction) Run(ctx context.Context, req function.RunRequest, resp *func
 	}
 
 	// validate input parameters
-	if len(inputString) < 1 {
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "cut: input string parameter must be at least length 1"))
-	}
 	if len(separator) < 1 {
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "cut: separator parameter must be at least length 1"))
-	}
-	if resp.Error != nil {
+		resp.Error = function.NewArgumentFuncError(1, "cut: separator parameter must be at least length 1")
 		return
 	}
 

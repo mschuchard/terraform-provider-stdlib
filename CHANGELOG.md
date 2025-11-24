@@ -3,6 +3,7 @@
 - Update `sqrt` return type to `number`.
 - Verify `round` return does not under/overflow.
 - Permit `number_of_characters` to be equal to `string` parameter length.
+- Permit empty string input value for `cut`.
 
 ### 2.2.1
 - Dynamic input emptiness error message now logs accurate parameter position.
