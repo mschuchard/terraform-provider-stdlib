@@ -36,7 +36,7 @@ func (*lastCharFunction) Definition(_ context.Context, _ function.DefinitionRequ
 		},
 		VariadicParameter: function.Int32Parameter{
 			Name:        "number_of_characters",
-			Description: "Optional: The number of terminating characters at the end of the string to return (default: 1). This must be fewer than the number of characters in the input string.",
+			Description: "Optional: The number of terminating characters at the end of the string to return (default: 1). This must be less than or equal to the number of characters in the input string.",
 		},
 		Return: function.StringReturn{},
 	}
@@ -72,8 +72,8 @@ func (*lastCharFunction) Run(ctx context.Context, req function.RunRequest, resp 
 		// and then continue validation
 		if numChars < 1 {
 			resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "last_char: number_of_characters parameter must be at least 1"))
-		} else if numChars >= lenInputString {
-			resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "last_char: number_of_characters parameter must be fewer than the length of the input string parameter"))
+		} else if numChars > lenInputString {
+			resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "last_char: number_of_characters parameter must be less than or equal to the length of the input string parameter"))
 		}
 	}
 	if resp.Error != nil {

@@ -55,7 +55,7 @@ func TestLastCharFunction(test *testing.T) {
 				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue("hello"), types.TupleValueMust([]attr.Type{types.Int32Type}, []attr.Value{types.Int32Value(10)})}),
 			},
 			Expected: function.RunResponse{
-				Error:  function.NewArgumentFuncError(1, "last_char: number_of_characters parameter must be fewer than the length of the input string parameter"),
+				Error:  function.NewArgumentFuncError(1, "last_char: number_of_characters parameter must be less than or equal to the length of the input string parameter"),
 				Result: resultData,
 			},
 		},
