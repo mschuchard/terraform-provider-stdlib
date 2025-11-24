@@ -1,6 +1,7 @@
 ### 2.2.2 (Next)
 - Update `exp`, `mod`, and `sqrt` functions' input parameter type from `float64` to `number`.
 - Update `sqrt` return type to `number`.
+- Verify `round` return does not under/overflow.
 
 ### 2.2.1
 - Dynamic input emptiness error message now logs accurate parameter position.

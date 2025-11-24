@@ -50,6 +50,15 @@ func TestRoundFunction(test *testing.T) {
 				Error:  function.NewArgumentFuncError(0, "round: input number is beyond the limits of float64"),
 			},
 		},
+		"overflow": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{types.Float64Value(9.223372036854777e+18)}), // math.MaxInt64 + 1
+			},
+			Expected: function.RunResponse{
+				Result: resultData,
+				Error:  function.NewArgumentFuncError(0, "round: rounded input number is beyond the limits of int64"),
+			},
+		},
 	}
 
 	util.UnitTests(testCases, resultData, numberfunc.NewRoundFunction(), test)

@@ -59,11 +59,17 @@ func (*roundFunction) Run(ctx context.Context, req function.RunRequest, resp *fu
 	}
 
 	// determine the rounded integer
-	round := int64(math.Round(float))
-	ctx = tflog.SetField(ctx, "round: round", round)
+	round := math.Round(float)
+	if round > float64(math.MaxInt64) || round < float64(math.MinInt64) {
+		resp.Error = function.NewArgumentFuncError(0, "round: rounded input number is beyond the limits of int64")
+		return
+	}
+	result := int64(round)
+
+	ctx = tflog.SetField(ctx, "round: round", result)
 
 	// store the result as an int64
-	resp.Error = resp.Result.Set(ctx, &round)
+	resp.Error = resp.Result.Set(ctx, &result)
 	if resp.Error != nil {
 		return
 	}
