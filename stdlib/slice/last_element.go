@@ -71,8 +71,8 @@ func (*lastElementFunction) Run(ctx context.Context, req function.RunRequest, re
 			resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "last_element: number of elements parameter value must be at least 1"))
 		}
 	}
-	if numElements >= len(list) {
-		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "last_element: the number of terminating elements to return must be fewer than the length of the input list parameter"))
+	if numElements > len(list) {
+		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(1, "last_element: the number of terminating elements to return must be fewer than or equal to the length of the input list parameter"))
 	}
 	if resp.Error != nil {
 		return

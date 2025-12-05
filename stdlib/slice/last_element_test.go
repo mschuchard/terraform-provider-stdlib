@@ -46,7 +46,7 @@ func TestLastElementFunction(test *testing.T) {
 				}),
 			},
 			Expected: function.RunResponse{
-				Error:  function.NewArgumentFuncError(1, "last_element: the number of terminating elements to return must be fewer than the length of the input list parameter"),
+				Error:  function.NewArgumentFuncError(1, "last_element: the number of terminating elements to return must be fewer than or equal to the length of the input list parameter"),
 				Result: resultData,
 			},
 		},

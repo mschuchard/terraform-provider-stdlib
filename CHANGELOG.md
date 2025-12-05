@@ -5,6 +5,7 @@
 - Permit `number_of_characters` to be equal to `string` parameter length.
 - Permit empty string input value for `cut`.
 - `sort_list_number` element type updated from Float32 to Float64.
+- Permit `number_of_elements` to equal length of list in `last_element`.
 
 ### 2.2.1
 - Dynamic input emptiness error message now logs accurate parameter position.
