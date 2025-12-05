@@ -13,33 +13,33 @@ import (
 
 func TestSortListNumberFunction(test *testing.T) {
 	// initialize initial result data
-	resultData := function.NewResultData(types.ListUnknown(types.Float32Type))
+	resultData := function.NewResultData(types.ListUnknown(types.Float64Type))
 
 	testCases := util.TestCases{
 		"integers": {
 			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{
-					types.ListValueMust(types.Float32Type, []attr.Value{types.Float32Value(0), types.Float32Value(4), types.Float32Value(-10), types.Float32Value(8)}),
+					types.ListValueMust(types.Float64Type, []attr.Value{types.Float64Value(0), types.Float64Value(4), types.Float64Value(-10), types.Float64Value(8)}),
 				}),
 			},
 			Expected: function.RunResponse{
-				Result: function.NewResultData(types.ListValueMust(types.Float32Type, []attr.Value{types.Float32Value(-10), types.Float32Value(0), types.Float32Value(4), types.Float32Value(8)})),
+				Result: function.NewResultData(types.ListValueMust(types.Float64Type, []attr.Value{types.Float64Value(-10), types.Float64Value(0), types.Float64Value(4), types.Float64Value(8)})),
 			},
 		},
 		"floats": {
 			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{
-					types.ListValueMust(types.Float32Type, []attr.Value{types.Float32Value(9.0), types.Float32Value(45.5), types.Float32Value(123.4), types.Float32Value(-0.5)}),
+					types.ListValueMust(types.Float64Type, []attr.Value{types.Float64Value(9.0), types.Float64Value(45.5), types.Float64Value(123.4), types.Float64Value(-0.5)}),
 				}),
 			},
 			Expected: function.RunResponse{
-				Result: function.NewResultData(types.ListValueMust(types.Float32Type, []attr.Value{types.Float32Value(-0.5), types.Float32Value(9.0), types.Float32Value(45.5), types.Float32Value(123.4)})),
+				Result: function.NewResultData(types.ListValueMust(types.Float64Type, []attr.Value{types.Float64Value(-0.5), types.Float64Value(9.0), types.Float64Value(45.5), types.Float64Value(123.4)})),
 			},
 		},
 		"minimum-length": {
 			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{
-					types.ListValueMust(types.Float32Type, []attr.Value{types.Float32Value(0)}),
+					types.ListValueMust(types.Float64Type, []attr.Value{types.Float64Value(0)}),
 				}),
 			},
 			Expected: function.RunResponse{

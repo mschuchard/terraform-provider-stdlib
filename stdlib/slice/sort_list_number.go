@@ -32,18 +32,18 @@ func (*sortListNumberFunction) Definition(_ context.Context, _ function.Definiti
 		MarkdownDescription: "Return the list where numeric values are sorted in ascending order.",
 		Parameters: []function.Parameter{
 			function.ListParameter{
-				ElementType: types.Float32Type,
+				ElementType: types.Float64Type,
 				Name:        "list",
 				Description: "Input list parameter for sorting. This must be at least size 2.",
 			},
 		},
-		Return: function.ListReturn{ElementType: types.Float32Type},
+		Return: function.ListReturn{ElementType: types.Float64Type},
 	}
 }
 
 func (*sortListNumberFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	// initialize list
-	var list []float32
+	var list []float64
 
 	resp.Error = req.Arguments.Get(ctx, &list)
 	if resp.Error != nil {
