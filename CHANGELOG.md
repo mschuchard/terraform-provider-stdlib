@@ -2,10 +2,10 @@
 - Update `exp`, `mod`, and `sqrt` functions' input parameter type from `float64` to `number`.
 - Update `sqrt` return type to `number`.
 - Verify `round` return does not under/overflow.
-- Permit `number_of_characters` to be equal to `string` parameter length.
+- Permit `number_of_characters` to be equal to `string` parameter length for `last_char`.
 - Permit empty string input value for `cut`.
-- `sort_list_number` element type updated from Float32 to Float64.
-- Permit `number_of_elements` to equal length of list in `last_element`.
+- `sort_list_number` parameter element type updated from `float32`to `float64`.
+- Permit `number_of_elements` to equal length of `list` in `last_element`.
 
 ### 2.2.1
 - Dynamic input emptiness error message now logs accurate parameter position.

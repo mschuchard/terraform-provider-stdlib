@@ -58,7 +58,7 @@ func (*minNumberFunction) Run(ctx context.Context, req function.RunRequest, resp
 		return
 	}
 
-	// determine maximum number element of slice
+	// determine minimum number element of slice
 	minNumber := slices.Min(list)
 
 	// store the result as a float

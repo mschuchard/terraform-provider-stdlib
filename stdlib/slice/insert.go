@@ -72,7 +72,7 @@ func (*insertFunction) Run(ctx context.Context, req function.RunRequest, resp *f
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(2, "insert: index parameter must not be a negative number"))
 	}
 	// determine if index is out of bounds for slice
-	if int(index) > len(list) {
+	if index > len(list) {
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(2, "insert: index parameter must not be out of range for list"))
 	}
 	if resp.Error != nil {

@@ -58,7 +58,7 @@ func (*minStringFunction) Run(ctx context.Context, req function.RunRequest, resp
 		return
 	}
 
-	// determine maximum string element of slice
+	// determine minimum string element of slice
 	minString := slices.Min(list)
 
 	// store the result as a string
