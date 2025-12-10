@@ -7,5 +7,7 @@ import (
 
 // factory function for provider instantiation
 var TestAccProtoV6ProviderFactories = map[string]func() (tfprotov6.ProviderServer, error){
-	"stdlib": providerserver.NewProtocol6WithError(NewStruct("test")),
+	"stdlib": providerserver.NewProtocol6WithError(&stdlibProvider{
+		version: "test",
+	}),
 }

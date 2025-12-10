@@ -22,13 +22,9 @@ var _ provider.Provider = &stdlibProvider{}
 // helper pseudo-constructors to simplify provider server and testing implementation (second needed due to nuance in TF testing framework)
 func New(version string) func() provider.Provider {
 	return func() provider.Provider {
-		return NewStruct(version)
-	}
-}
-
-func NewStruct(version string) provider.Provider {
-	return &stdlibProvider{
-		version: version,
+		return &stdlibProvider{
+			version: version,
+		}
 	}
 }
 
@@ -45,7 +41,7 @@ func (*stdlibProvider) Metadata(_ context.Context, _ provider.MetadataRequest, r
 // define the provider-level schema for configuration data
 func (*stdlibProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description: "The stdlib provider provides additional functions for use within Terraform's HCL2 configuration language.",
+		Description: "The stdlib provider provides additional custom functions for use within Terraform's HCL2 configuration language.",
 	}
 }
 
