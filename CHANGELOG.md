@@ -1,4 +1,4 @@
-### 2.2.2 (Next)
+### 2.2.2
 - Update `exp`, `mod`, and `sqrt` functions' input parameter type from `float64` to `number`.
 - Update `sqrt` return type to `number`.
 - Verify `round` return does not under/overflow.
