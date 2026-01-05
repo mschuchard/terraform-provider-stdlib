@@ -48,6 +48,7 @@ The documentation overview for custom functions (available for Terraform version
 - [mod](functions/mod.html)
 - [round](functions/round.html)
 - [sqrt](functions/sqrt.html)
+- [truncate](functions/truncate.html)
 
 ### Map
 - [coalesce_map](functions/coalesce_map.html)
