@@ -1,5 +1,6 @@
 ### 2.3.0 (Next)
 - Add `truncate` function.
+- Add `even` optional parameter to `round` function.
 
 ### 2.2.2
 - Update `exp`, `mod`, and `sqrt` functions' input parameter type from `float64` to `number`.

@@ -38,7 +38,7 @@ func (*roundFunction) Definition(_ context.Context, _ function.DefinitionRequest
 		},
 		VariadicParameter: function.BoolParameter{
 			Name:                "even",
-			MarkdownDescription: "If true then round to the nearest even integer instead. Specifying `false` is the same as not providing an input value for this parameter (default behavior).",
+			MarkdownDescription: "If true then round 'ties' (i.e. `.5`) to the nearest even integer instead. Specifying `false` is the same as not providing an input value for this parameter (default behavior).",
 		},
 		Return: function.Int64Return{},
 	}

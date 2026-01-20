@@ -19,7 +19,7 @@ func TestRoundFunction(test *testing.T) {
 	testCases := util.TestCases{
 		"round-down": {
 			Request: function.RunRequest{
-				Arguments: function.NewArgumentsData([]attr.Value{types.Float64Value(1.2)}),
+				Arguments: function.NewArgumentsData([]attr.Value{types.Float64Value(1.2), types.TupleValueMust([]attr.Type{}, []attr.Value{})}),
 			},
 			Expected: function.RunResponse{
 				Result: function.NewResultData(types.Int64Value(1)),
@@ -27,7 +27,7 @@ func TestRoundFunction(test *testing.T) {
 		},
 		"round-up": {
 			Request: function.RunRequest{
-				Arguments: function.NewArgumentsData([]attr.Value{types.Float64Value(1.8)}),
+				Arguments: function.NewArgumentsData([]attr.Value{types.Float64Value(1.8), types.TupleValueMust([]attr.Type{}, []attr.Value{})}),
 			},
 			Expected: function.RunResponse{
 				Result: function.NewResultData(types.Int64Value(2)),
@@ -35,15 +35,31 @@ func TestRoundFunction(test *testing.T) {
 		},
 		"round-half": {
 			Request: function.RunRequest{
-				Arguments: function.NewArgumentsData([]attr.Value{types.Float64Value(1.5)}),
+				Arguments: function.NewArgumentsData([]attr.Value{types.Float64Value(1.5), types.TupleValueMust([]attr.Type{}, []attr.Value{})}),
 			},
 			Expected: function.RunResponse{
 				Result: function.NewResultData(types.Int64Value(2)),
 			},
 		},
+		"round-half-even-true": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{types.Float64Value(2.5), types.TupleValueMust([]attr.Type{types.BoolType}, []attr.Value{types.BoolValue(true)})}),
+			},
+			Expected: function.RunResponse{
+				Result: function.NewResultData(types.Int64Value(2)),
+			},
+		},
+		"round-half-even-false": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{types.Float64Value(2.5), types.TupleValueMust([]attr.Type{types.BoolType}, []attr.Value{types.BoolValue(false)})}),
+			},
+			Expected: function.RunResponse{
+				Result: function.NewResultData(types.Int64Value(3)),
+			},
+		},
 		"beyond-upper-limit": {
 			Request: function.RunRequest{
-				Arguments: function.NewArgumentsData([]attr.Value{types.NumberValue(func() *big.Float { f := new(big.Float); f.SetString("1e+310"); return f }())}),
+				Arguments: function.NewArgumentsData([]attr.Value{types.NumberValue(func() *big.Float { f := new(big.Float); f.SetString("1e+310"); return f }()), types.TupleValueMust([]attr.Type{}, []attr.Value{})}),
 			},
 			Expected: function.RunResponse{
 				Result: resultData,
@@ -52,7 +68,7 @@ func TestRoundFunction(test *testing.T) {
 		},
 		"overflow": {
 			Request: function.RunRequest{
-				Arguments: function.NewArgumentsData([]attr.Value{types.Float64Value(9.223372036854777e+18)}), // math.MaxInt64 + 1
+				Arguments: function.NewArgumentsData([]attr.Value{types.Float64Value(9.223372036854777e+18), types.TupleValueMust([]attr.Type{}, []attr.Value{})}), // math.MaxInt64 + 1
 			},
 			Expected: function.RunResponse{
 				Result: resultData,
