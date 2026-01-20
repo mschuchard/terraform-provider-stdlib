@@ -36,6 +36,10 @@ func (*roundFunction) Definition(_ context.Context, _ function.DefinitionRequest
 				Description: "Input number parameter for determining the rounding.",
 			},
 		},
+		VariadicParameter: function.BoolParameter{
+			Name:                "even",
+			MarkdownDescription: "If true then round to the nearest even integer instead. Specifying `false` is the same as not providing an input value for this parameter (default behavior).",
+		},
 		Return: function.Int64Return{},
 	}
 }
@@ -43,13 +47,16 @@ func (*roundFunction) Definition(_ context.Context, _ function.DefinitionRequest
 func (*roundFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	// initialize input parameters
 	var inputNum *big.Float
+	var round float64
+	var evenVar []bool
 
-	resp.Error = req.Arguments.Get(ctx, &inputNum)
+	resp.Error = req.Arguments.Get(ctx, &inputNum, &evenVar)
 	if resp.Error != nil {
 		return
 	}
 
 	ctx = tflog.SetField(ctx, "round: number", inputNum)
+	ctx = tflog.SetField(ctx, "round: even variadic", evenVar)
 
 	// convert to float64
 	float, _ := inputNum.Float64()
@@ -58,8 +65,16 @@ func (*roundFunction) Run(ctx context.Context, req function.RunRequest, resp *fu
 		return
 	}
 
-	// determine the rounded integer
-	round := math.Round(float)
+	// determine if even rounding is requested
+	if len(evenVar) > 0 && evenVar[0] {
+		// determine the even rounded integer
+		round = math.RoundToEven(float)
+	} else {
+		// determine the rounded integer
+		round = math.Round(float)
+	}
+
+	// validate result
 	if round > float64(math.MaxInt64) || round < float64(math.MinInt64) {
 		resp.Error = function.NewArgumentFuncError(0, "round: rounded input number is beyond the limits of int64")
 		return
