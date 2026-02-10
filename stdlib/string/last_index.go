@@ -58,6 +58,7 @@ func (*lastIndexFunction) Run(ctx context.Context, req function.RunRequest, resp
 	// validate input parameters
 	if len(inputString) < 1 {
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "last_index: input string parameter must be at least length 1"))
+		return
 	}
 
 	// determine last char

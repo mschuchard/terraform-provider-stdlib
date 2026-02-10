@@ -119,6 +119,7 @@ func (*stdlibProvider) Functions(_ context.Context) []func() function.Function {
 		stringfunc.NewCountFunction,
 		stringfunc.NewCutFunction,
 		stringfunc.NewLastCharFunction,
+		stringfunc.NewLastIndexFunction,
 	}
 }
 

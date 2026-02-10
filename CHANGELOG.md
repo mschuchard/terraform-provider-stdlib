@@ -1,5 +1,5 @@
 ### 2.3.0 (Next)
-- Add `truncate` function.
+- Add `last_index` and `truncate` functions.
 - Add `even` optional parameter to `round` function.
 
 ### 2.2.2
