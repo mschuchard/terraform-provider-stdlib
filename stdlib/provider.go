@@ -120,6 +120,7 @@ func (*stdlibProvider) Functions(_ context.Context) []func() function.Function {
 		stringfunc.NewCutFunction,
 		stringfunc.NewLastCharFunction,
 		stringfunc.NewLastIndexFunction,
+		stringfunc.NewSplitAfterFunction,
 	}
 }
 
