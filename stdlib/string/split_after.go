@@ -62,7 +62,7 @@ func (*splitAfterFunction) Run(ctx context.Context, req function.RunRequest, res
 		return
 	}
 
-	// determine last char
+	// determine string split after
 	splitAfter := strings.SplitAfter(inputString, separator)
 	ctx = tflog.SetField(ctx, "split_after: result", splitAfter)
 
