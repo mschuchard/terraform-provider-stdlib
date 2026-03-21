@@ -13,7 +13,7 @@ The Terraform provider plugin "stdlib" provides additional functions for Terrafo
 
 Please note all data sources are in maintenance mode as of release version 2.0.0.
 
-Use the navigation to the left to read about the available custom functions, and the alternative data sources which are each equivalent to Terraform functions.
+Use the navigation to the left to read about the available custom functions, and the alternative data sources which are each equivalent to Terraform functions. The documentation links are also sorted by input type below if you prefer.
 
 ## Example Usage
 
@@ -37,9 +37,12 @@ provider "stdlib" {} # can be omitted
 The documentation overview for custom functions (available for Terraform version >= 1.8). The following is an enumeration of the supported custom functions. These are categorized by their primary input types.
 
 ### String
+- [compare_string](functions/compare_string.html)
 - [count](functions/count.html)
 - [cut](functions/cut.html)
 - [last_char](functions/last_char.html)
+- [last_index](functions/last_index.html)
+- [split_after](functions/split_after.html)
 
 ### Number
 - [combinations](functions/combinations.html)

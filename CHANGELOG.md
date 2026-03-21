@@ -1,4 +1,4 @@
-### 2.3.0 (Next)
+### 2.3.0
 - Add `compare_string`, `last_index`, `split_after`, and `truncate` functions.
 - Add `even` optional parameter to `round` function.
 
