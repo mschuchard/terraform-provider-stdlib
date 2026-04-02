@@ -1,5 +1,6 @@
 ### 2.3.1 (Next)
 - Fix state setting for string parameter in legacy `empty` data source.
+- Update legacy `last_char` and `last_element` data sources to be consistent with 2.2.2 update permitting length equality.
 
 ### 2.3.0
 - Add `compare_string`, `last_index`, `split_after`, and `truncate` functions.

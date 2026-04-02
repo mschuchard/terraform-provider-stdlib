@@ -89,12 +89,12 @@ func (*lastElementDataSource) Read(ctx context.Context, req datasource.ReadReque
 		// re-assign
 		numElements = int(state.NumElements.ValueInt64())
 
-		// number of terminating elements must be fewer than length of input list
-		if numElements >= len(inputList) {
+		// number of terminating elements must be fewer than or equal to length of input list
+		if numElements > len(inputList) {
 			resp.Diagnostics.AddAttributeError(
 				path.Root("num_elements"),
 				"Invalid Value",
-				"The number of terminating elements to return must be fewer than the length of the input list parameter.",
+				"The number of terminating elements to return must be fewer than or equal to the length of the input list parameter.",
 			)
 			return
 		}

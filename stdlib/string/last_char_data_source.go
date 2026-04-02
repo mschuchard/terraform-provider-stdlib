@@ -86,12 +86,12 @@ func (*lastCharDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 		// re-assign
 		numChars = int(state.NumChars.ValueInt64())
 
-		// number of terminating chars must be fewer than length of input string
-		if numChars >= len(inputString) {
+		// number of terminating chars must be fewer than or equal to length of input string
+		if numChars > len(inputString) {
 			resp.Diagnostics.AddAttributeError(
 				path.Root("num_chars"),
 				"Invalid Value",
-				"The number of terminating characters to return must be fewer than the length of the input string parameter",
+				"The number of terminating characters to return must be fewer than or equal to the length of the input string parameter",
 			)
 			return
 		}
