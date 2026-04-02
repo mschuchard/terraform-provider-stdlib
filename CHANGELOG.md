@@ -1,3 +1,6 @@
+### 2.3.1 (Next)
+- Fix state setting for string parameter in legacy `empty` data source.
+
 ### 2.3.0
 - Add `compare_string`, `last_index`, `split_after`, and `truncate` functions.
 - Add `even` optional parameter to `round` function.

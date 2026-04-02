@@ -142,11 +142,13 @@ func (*emptyDataSource) Read(ctx context.Context, req datasource.ReadRequest, re
 		} else {
 			state.ID = types.StringValue(setParam[0])
 		}
-	} else if !state.StringParam.IsNull() && len(state.StringParam.ValueString()) == 0 {
-		// check if string param is empty
-		result = true
+	} else if !state.StringParam.IsNull() {
 		// set state id
 		state.ID = state.StringParam
+		// determine emptiness
+		if len(state.StringParam.ValueString()) == 0 {
+			result = true
+		}
 	}
 
 	// convert result of emptiness test and assign to model field member
