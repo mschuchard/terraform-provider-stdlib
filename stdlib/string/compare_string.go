@@ -60,7 +60,7 @@ func (*compareStringFunction) Run(ctx context.Context, req function.RunRequest, 
 	ctx = tflog.SetField(ctx, "compare_string: result", result)
 
 	// store the result as a list of strings
-	resp.Error = resp.Result.Set(ctx, result)
+	resp.Error = resp.Result.Set(ctx, &result)
 	if resp.Error != nil {
 		return
 	}

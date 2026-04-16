@@ -40,7 +40,7 @@ func (*hasValuesFunction) Definition(_ context.Context, _ function.DefinitionReq
 			function.ListParameter{
 				ElementType: types.StringType,
 				Name:        "values",
-				Description: "Name of the values to check for existence in the map.",
+				Description: "Name of the values to check for existence in the map. This must be at least length 2; otherwise use the singular version of this function.",
 			},
 		},
 		VariadicParameter: function.BoolParameter{

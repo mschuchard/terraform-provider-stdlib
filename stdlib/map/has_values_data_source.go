@@ -50,7 +50,7 @@ func (*hasValuesDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 				Optional:    true,
 			},
 			"values": schema.ListAttribute{
-				Description: "Names of the values to check for existence in the map.",
+				Description: "Names of the values to check for existence in the map. This must be at least length 2; otherwise use the singular version of this data source.",
 				Required:    true,
 				ElementType: types.StringType,
 				Validators: []validator.List{

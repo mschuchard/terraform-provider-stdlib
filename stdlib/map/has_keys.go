@@ -38,7 +38,7 @@ func (*hasKeysFunction) Definition(_ context.Context, _ function.DefinitionReque
 			function.ListParameter{
 				ElementType: types.StringType,
 				Name:        "keys",
-				Description: "Names of the keys to check for existence in the map.",
+				Description: "Names of the keys to check for existence in the map. This must be at least length 2; otherwise use the singular version of this function.",
 			},
 		},
 		VariadicParameter: function.BoolParameter{

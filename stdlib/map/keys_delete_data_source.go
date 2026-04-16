@@ -45,7 +45,7 @@ func (*keysDeleteDataSource) Schema(_ context.Context, _ datasource.SchemaReques
 		Attributes: map[string]schema.Attribute{
 			"id": util.IDStringAttribute(),
 			"keys": schema.ListAttribute{
-				Description: "Names of the keys to delete from the map.",
+				Description: "Names of the keys to delete from the map. This must be at least length 2; otherwise use the singular version of this data source.",
 				Required:    true,
 				ElementType: types.StringType,
 				Validators: []validator.List{

@@ -38,7 +38,7 @@ func (*keysDeleteFunction) Definition(_ context.Context, _ function.DefinitionRe
 			function.ListParameter{
 				ElementType: types.StringType,
 				Name:        "keys",
-				Description: "Names of the keys to delete from the map.",
+				Description: "Names of the keys to delete from the map. This must be at least length 2; otherwise use the singular version of this function.",
 			},
 		},
 		Return: function.MapReturn{ElementType: types.StringType},

@@ -48,7 +48,7 @@ func (*hasKeysDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, 
 				Optional:    true,
 			},
 			"keys": schema.ListAttribute{
-				Description: "Names of the keys to check for existence in the map.",
+				Description: "Names of the keys to check for existence in the map. This must be at least length 2; otherwise use the singular version of this data source.",
 				Required:    true,
 				ElementType: types.StringType,
 				Validators: []validator.List{
