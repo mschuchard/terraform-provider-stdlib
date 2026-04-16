@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"maps"
-	"slices"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
@@ -27,10 +26,10 @@ type equalMapDataSource struct{}
 
 // maps the data source schema data to the model
 type equalMapDataSourceModel struct {
-	ID     types.String `tfsdk:"id"`
-	MapOne types.Map    `tfsdk:"map_one"`
-	MapTwo types.Map    `tfsdk:"map_two"`
-	Result types.Bool   `tfsdk:"result"`
+	ID     types.Int64 `tfsdk:"id"`
+	MapOne types.Map   `tfsdk:"map_one"`
+	MapTwo types.Map   `tfsdk:"map_two"`
+	Result types.Bool  `tfsdk:"result"`
 }
 
 // data source metadata
@@ -42,7 +41,7 @@ func (*equalMapDataSource) Metadata(_ context.Context, req datasource.MetadataRe
 func (*equalMapDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
-			"id": util.IDStringAttribute(),
+			"id": util.IDInt64Attribute(),
 			"map_one": schema.MapAttribute{
 				Description: "First input map parameter to check for equality with the second.",
 				ElementType: types.StringType,
@@ -80,7 +79,7 @@ func (*equalMapDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 	result := maps.Equal(mapOne, mapTwo)
 	state.Result = types.BoolValue(result)
 	// assign id as concatentation of first key of each map
-	state.ID = types.StringValue(slices.Collect(maps.Keys(mapOne))[0] + slices.Collect(maps.Keys(mapTwo))[0])
+	state.ID = types.Int64Value(int64(len(mapOne) + len(mapTwo)))
 
 	// provide more debug logging
 	ctx = tflog.SetField(ctx, "stdlib_equal_map_result", result)

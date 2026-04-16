@@ -25,7 +25,7 @@ func TestAccEqualMap(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_equal_map.test", "map_two.%", "1"),
 					resource.TestCheckResourceAttr("data.stdlib_equal_map.test", "map_two.hello", "world"),
 					// verify map equality result is stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_equal_map.test", "id", "hellohello"),
+					resource.TestCheckResourceAttr("data.stdlib_equal_map.test", "id", "2"),
 					resource.TestCheckResourceAttr("data.stdlib_equal_map.test", "result", "true"),
 				),
 			},
@@ -41,7 +41,7 @@ func TestAccEqualMap(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_equal_map.test", "map_two.%", "1"),
 					resource.TestCheckResourceAttr("data.stdlib_equal_map.test", "map_two.foo", "bar"),
 					// verify map equality result is stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_equal_map.test", "id", "hellofoo"),
+					resource.TestCheckResourceAttr("data.stdlib_equal_map.test", "id", "2"),
 					resource.TestCheckResourceAttr("data.stdlib_equal_map.test", "result", "false"),
 				),
 			},
