@@ -19,7 +19,7 @@ func TestAccLastElement(test *testing.T) {
 				  param = ["h", "e", "l", "l", "o"]
 				  num_elements = 10
 				}`,
-				ExpectError: regexp.MustCompile("The number of terminating elements to return must be fewer than"),
+				ExpectError: regexp.MustCompile("The number of terminating elements to return must be fewer than or equal to"),
 			},
 			// test basic list slice last element
 			{

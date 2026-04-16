@@ -25,7 +25,7 @@ func TestAccLastChar(test *testing.T) {
 				  param = "%s"
 				  num_chars = 10
 				}`, param),
-				ExpectError: regexp.MustCompile("The number of terminating characters to return must be fewer than the length"),
+				ExpectError: regexp.MustCompile("The number of terminating characters to return must be fewer than or equal to"),
 			},
 			// test basic string slice last char
 			{
