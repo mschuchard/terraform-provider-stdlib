@@ -34,7 +34,7 @@ func TestAccEmpty(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_empty.test", "map_param.%", "1"),
 					resource.TestCheckResourceAttr("data.stdlib_empty.test", "map_param.foo", "bar"),
 					// verify emptiness result is stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_empty.test", "id", "foo"),
+					resource.TestCheckResourceAttr("data.stdlib_empty.test", "id", "1"),
 					resource.TestCheckResourceAttr("data.stdlib_empty.test", "result", "false"),
 				),
 			},

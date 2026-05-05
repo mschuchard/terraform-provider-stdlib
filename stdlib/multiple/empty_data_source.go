@@ -2,8 +2,7 @@ package multiple
 
 import (
 	"context"
-	"maps"
-	"slices"
+	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
@@ -125,7 +124,7 @@ func (*emptyDataSource) Read(ctx context.Context, req datasource.ReadRequest, re
 			result = true
 			state.ID = types.StringValue("zero")
 		} else {
-			state.ID = types.StringValue(slices.Collect(maps.Keys(mapParam))[0])
+			state.ID = types.StringValue(strconv.Itoa(len(mapParam)))
 		}
 	} else if !state.SetParam.IsNull() {
 		// convert set param
