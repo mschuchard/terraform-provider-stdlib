@@ -1,7 +1,7 @@
 ### 2.3.1 (Next)
+- Fix `compare_string` result setting.
 - Fix state setting for string parameter in legacy `empty` data source.
 - Update legacy `last_char` and `last_element` data sources to be consistent with 2.2.2 update permitting length equality.
-- Fix `compare_string` result setting.
 - Safeguard legacy `equal_map` and `empty` (map parameter) data sources' state ID with accuracy compromise.
 
 ### 2.3.0

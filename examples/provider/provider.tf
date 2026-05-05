@@ -7,4 +7,4 @@ terraform {
   }
 }
 
-provider "stdlib" {} # can be omitted
+provider "stdlib" {} # can be omitted as there are no configuration options
