@@ -30,7 +30,7 @@ data "stdlib_keys_delete" "foo" {
 
 ### Required
 
-- `keys` (List of String) Names of the keys to delete from the map.
+- `keys` (List of String) Names of the keys to delete from the map. This must be at least length 2; otherwise use the singular version of this data source.
 - `map` (Map of String) Input map parameter from which to delete the keys.
 
 ### Read-Only

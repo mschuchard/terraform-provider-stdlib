@@ -38,5 +38,5 @@ data "stdlib_equal_map" "bar" {
 
 ### Read-Only
 
-- `id` (String) Aliased to string input parameter(s) for efficiency and proper plan diff detection.
+- `id` (Number) Aliased to number input parameter(s) for efficiency and proper plan diff detection.
 - `result` (Boolean) Function result storing whether the two maps are equal.

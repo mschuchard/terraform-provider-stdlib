@@ -58,7 +58,7 @@ data "stdlib_has_values" "three_values_all" {
 ### Required
 
 - `map` (Map of String) Input map parameter from which to check the values' existence.
-- `values` (List of String) Names of the values to check for existence in the map.
+- `values` (List of String) Names of the values to check for existence in the map. This must be at least length 2; otherwise use the singular version of this data source.
 
 ### Optional
 
