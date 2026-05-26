@@ -1,5 +1,6 @@
 ### 2.3.2 (Next)
 - Document behavior for missing keys in legacy `key(s)_delete` data sources.
+- Safeguard against panic in legacy `product` and `insert` data sources during state drift.
 
 ### 2.3.1
 - Fix `compare_string` result setting.

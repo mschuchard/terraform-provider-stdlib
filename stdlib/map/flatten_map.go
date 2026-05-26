@@ -29,7 +29,7 @@ func (*flattenMapFunction) Metadata(_ context.Context, req function.MetadataRequ
 func (*flattenMapFunction) Definition(_ context.Context, _ function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:             "Flatten a list of maps",
-		MarkdownDescription: "Return the flattened map of an input list of maps. Note that if a key is repeated between distinct element maps, then the last entry will overwrite any previous entries in the result (maps cannot contain repeated keys).",
+		MarkdownDescription: "Return the flattened map of an input list of maps. Note that if a key is repeated between distinct element maps, then the last entry will overwrite any previous entries in the result (maps cannot contain repeated keys). This function is especially helpful for the standard nested map and object flattening algorithm for use with the `for_each` meta-parameter.",
 		Parameters: []function.Parameter{
 			function.ListParameter{
 				ElementType: types.MapType{

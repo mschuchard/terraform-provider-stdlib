@@ -83,7 +83,11 @@ func (*productDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 	tflog.Debug(ctx, fmt.Sprintf("Input set \"%f\" product is \"%f\"", param, result))
 
 	// store product of set in state
-	state.ID = types.Float64Value(param[0])
+	if len(param) > 0 {
+		state.ID = types.Float64Value(param[0])
+	} else {
+		state.ID = types.Float64Value(0)
+	}
 	state.Result = types.Float64Value(result)
 
 	// set state

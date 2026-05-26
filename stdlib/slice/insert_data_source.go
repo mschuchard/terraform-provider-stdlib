@@ -141,7 +141,12 @@ func (*insertDataSource) Read(ctx context.Context, req datasource.ReadRequest, r
 	tflog.Debug(ctx, fmt.Sprintf("Resulting list is \"%s\"", result))
 
 	// store zeroth element of input as id
-	state.ID = types.StringValue(listParam[0])
+	if len(listParam) > 0 {
+		state.ID = types.StringValue(listParam[0])
+	} else {
+		state.ID = types.StringValue("")
+	}
+
 	// store list with values inserted at index in state
 	var listConvertDiags diag.Diagnostics
 	state.Result, listConvertDiags = types.ListValueFrom(ctx, types.StringType, result)

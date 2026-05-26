@@ -59,7 +59,7 @@ func (*flattenMapDataSource) Schema(_ context.Context, _ datasource.SchemaReques
 				ElementType: types.StringType,
 			},
 		},
-		MarkdownDescription: "Return the flattened map of an input list of maps parameter. Note that if a key is repeated then the last entry will overwrite any previous entries in the result.",
+		MarkdownDescription: "Return the flattened map of an input list of maps parameter. Note that if a key is repeated then the last entry will overwrite any previous entries in the result. This data source is especially helpful for the standard nested map and object flattening algorithm for use with the `for_each` meta-parameter.",
 	}
 }
 
