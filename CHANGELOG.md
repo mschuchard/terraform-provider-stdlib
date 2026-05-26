@@ -1,3 +1,6 @@
+### 2.3.2 (Next)
+- Document behavior for missing keys in legacy `key(s)_delete` data sources.
+
 ### 2.3.1
 - Fix `compare_string` result setting.
 - Fix state setting for string parameter in legacy `empty` data source.

@@ -57,7 +57,7 @@ func (*keyDeleteDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 				ElementType: types.StringType,
 			},
 		},
-		MarkdownDescription: "Return the input map parameter with the key parameter deleted from the map.",
+		MarkdownDescription: "Return the input map parameter with the key parameter deleted from the map. The data source will return an error if the key parameter does not exist in the map parameter.",
 	}
 }
 

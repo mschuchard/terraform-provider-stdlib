@@ -16,7 +16,7 @@ func TestHasValueFunction(test *testing.T) {
 	resultData := function.NewResultData(types.BoolUnknown())
 
 	testCases := util.TestCases{
-		"present": {
+		"absent": {
 			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{
 					types.MapValueMust(types.StringType, map[string]attr.Value{"hello": types.StringValue("world"), "foo": types.StringValue("bar")}),
@@ -27,7 +27,7 @@ func TestHasValueFunction(test *testing.T) {
 				Result: function.NewResultData(types.BoolValue(false)),
 			},
 		},
-		"absent": {
+		"present": {
 			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{
 					types.MapValueMust(types.StringType, map[string]attr.Value{"hello": types.StringValue("world"), "foo": types.StringValue("bar")}),
