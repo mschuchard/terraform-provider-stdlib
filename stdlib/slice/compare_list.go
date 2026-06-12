@@ -29,7 +29,7 @@ func (*compareListFunction) Metadata(_ context.Context, req function.MetadataReq
 func (*compareListFunction) Definition(_ context.Context, _ function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:             "Compare the elements of two lists similar to the spaceship operator",
-		MarkdownDescription: "Returns a comparison between two lists. The elements are compared sequentially, starting at index 0, until one element is not equal to the other. The result of comparing the first non-matching elements is returned. If both lists are equal until one of them ends, then the shorter list is considered less than the longer one. The result is 0 if list_one == list_two, -1 if list_one < list_two, and +1 if list_one > list_two. The input lists must be single-level.",
+		MarkdownDescription: "Returns a comparison between two lists. The elements are compared sequentially, starting at index 0, until one element is not equal to the other. The result of comparing the first non-matching elements is returned. If both lists are equal until one of them ends, then the shorter list is considered less than the longer one. The result is `0` if `list_one == list_two`, `-1` if `list_one < list_two`, and `+1` if `list_one > list_two`. The input lists must be single-level.",
 		Parameters: []function.Parameter{
 			function.ListParameter{
 				ElementType: types.StringType,

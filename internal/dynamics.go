@@ -35,17 +35,24 @@ func IsDynamicEmpty(value attr.Value, position int64, ctx context.Context) (bool
 	if stringType, ok := value.(types.String); ok {
 		// emptiness check
 		return len(stringType.ValueString()) == 0, nil
-	} else if set, ok := value.Type(ctx).(types.SetType); ok { // set
+	}
+	// set
+	if set, ok := value.Type(ctx).(types.SetType); ok {
 		// emptiness check
 		return value.Equal(types.SetValueMust(set.ElementType(), []attr.Value{})), nil
-	} else if list, ok := value.Type(ctx).(types.ListType); ok { // list
+	}
+	// list
+	if list, ok := value.Type(ctx).(types.ListType); ok {
 		// emptiness check
 		return value.Equal(types.ListValueMust(list.ElementType(), []attr.Value{})), nil
-	} else if mapType, ok := value.Type(ctx).(types.MapType); ok { // map
+	}
+	// map
+	if mapType, ok := value.Type(ctx).(types.MapType); ok {
 		// emptiness check
 		return value.Equal(types.MapValueMust(mapType.ElementType(), map[string]attr.Value{})), nil
-	} else {
-		tflog.Error(ctx, fmt.Sprintf("IsDynamicEmpty (helper): could not convert input parameter '%s' to an acceptable terraform type", value.String()))
-		return false, function.NewArgumentFuncError(position, "IsDynamicEmpty (helper): invalid input parameter type")
 	}
+
+	// invalid type for emptiness check; log error and return function error
+	tflog.Error(ctx, fmt.Sprintf("IsDynamicEmpty (helper): could not convert input parameter '%s' to an acceptable terraform type", value.String()))
+	return false, function.NewArgumentFuncError(position, "IsDynamicEmpty (helper): invalid input parameter type")
 }
