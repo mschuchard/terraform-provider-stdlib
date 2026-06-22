@@ -60,7 +60,9 @@ func (*lastCharFunction) Run(ctx context.Context, req function.RunRequest, resp 
 	if len(inputString) < 1 {
 		resp.Error = function.ConcatFuncErrors(resp.Error, function.NewArgumentFuncError(0, "last_char: input string parameter must be at least length 1"))
 	}
-	lenInputString := int32(len(inputString))
+	// use runes for length of input string to handle non ascii text
+	inputRunes := []rune(inputString)
+	lenInputString := int32(len(inputRunes))
 
 	if len(numCharsVar) == 0 {
 		// assign default numChars value of 1

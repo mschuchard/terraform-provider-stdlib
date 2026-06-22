@@ -139,7 +139,7 @@ func (*keysDeleteDataSource) Read(ctx context.Context, req datasource.ReadReques
 		} else {
 			// key did not exist in map
 			resp.Diagnostics.AddAttributeError(
-				path.Root("key"),
+				path.Root("keys"),
 				"Improper Attribute Value",
 				fmt.Sprintf("The key to be deleted '%s' does not exist in the input map", deleteKey),
 			)
