@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/int32validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
@@ -31,7 +31,7 @@ type lastCharDataSource struct{}
 type lastCharDataSourceModel struct {
 	ID       types.String `tfsdk:"id"`
 	Param    types.String `tfsdk:"param"`
-	NumChars types.Int64  `tfsdk:"num_chars"`
+	NumChars types.Int32  `tfsdk:"num_chars"`
 	Result   types.String `tfsdk:"result"`
 }
 
@@ -52,11 +52,11 @@ func (*lastCharDataSource) Schema(_ context.Context, _ datasource.SchemaRequest,
 					stringvalidator.LengthAtLeast(1),
 				},
 			},
-			"num_chars": schema.Int64Attribute{
+			"num_chars": schema.Int32Attribute{
 				Description: "The number of terminating characters at the end of the string to return (default: 1).",
 				Optional:    true,
-				Validators: []validator.Int64{
-					int64validator.AtLeast(1),
+				Validators: []validator.Int32{
+					int32validator.AtLeast(1),
 				},
 			},
 			"result": schema.StringAttribute{
@@ -79,15 +79,19 @@ func (*lastCharDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 
 	// initialize input string and number of terminating chars
 	inputString := state.Param.ValueString()
-	numChars := 1
+	var numChars int32 = 1
+
+	// use runes for length of input string to handle non ascii text
+	inputRunes := []rune(inputString)
+	lenInputString := int32(len(inputRunes))
 
 	// validate num_chars if input and re-assign from default value
 	if !state.NumChars.IsNull() {
 		// re-assign
-		numChars = int(state.NumChars.ValueInt64())
+		numChars = state.NumChars.ValueInt32()
 
 		// number of terminating chars must be fewer than or equal to length of input string
-		if numChars > len(inputString) {
+		if numChars > lenInputString {
 			resp.Diagnostics.AddAttributeError(
 				path.Root("num_chars"),
 				"Invalid Value",
@@ -97,7 +101,7 @@ func (*lastCharDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 		}
 	}
 	// determine last char of string
-	lastCharacter := inputString[len(inputString)-numChars:]
+	lastCharacter := inputString[lenInputString-numChars:]
 
 	// provide debug logging
 	ctx = tflog.SetField(ctx, "stdlib_last_char_result", lastCharacter)
