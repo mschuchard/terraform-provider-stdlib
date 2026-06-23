@@ -24,6 +24,14 @@ func TestLastCharFunction(test *testing.T) {
 				Result: function.NewResultData(types.StringValue("o")),
 			},
 		},
+		"non-ascii": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue("héllo"), types.TupleValueMust([]attr.Type{}, []attr.Value{})}),
+			},
+			Expected: function.RunResponse{
+				Result: function.NewResultData(types.StringValue("o")),
+			},
+		},
 		"three-terminating-chars": {
 			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{types.StringValue("hello"), types.TupleValueMust([]attr.Type{types.Int32Type}, []attr.Value{types.Int32Value(3)})}),

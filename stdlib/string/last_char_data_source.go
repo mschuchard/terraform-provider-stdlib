@@ -101,7 +101,7 @@ func (*lastCharDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 		}
 	}
 	// determine last char of string
-	lastCharacter := inputString[lenInputString-numChars:]
+	lastCharacter := string(inputRunes[lenInputString-numChars:])
 
 	// provide debug logging
 	ctx = tflog.SetField(ctx, "stdlib_last_char_result", lastCharacter)
