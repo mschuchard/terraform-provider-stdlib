@@ -46,7 +46,7 @@ func (*lastCharFunction) Run(ctx context.Context, req function.RunRequest, resp 
 	// initialize input parameters
 	var inputString string
 	var numCharsVar []int32
-	var numChars int32
+	var numChars int32 = 1
 
 	resp.Error = req.Arguments.Get(ctx, &inputString, &numCharsVar)
 	if resp.Error != nil {
@@ -64,10 +64,7 @@ func (*lastCharFunction) Run(ctx context.Context, req function.RunRequest, resp 
 	inputRunes := []rune(inputString)
 	lenInputString := int32(len(inputRunes))
 
-	if len(numCharsVar) == 0 {
-		// assign default numChars value of 1
-		numChars = 1
-	} else {
+	if len(numCharsVar) != 0 {
 		// assign numChars from variadic
 		numChars = numCharsVar[0]
 

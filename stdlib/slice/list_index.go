@@ -54,7 +54,7 @@ func (*listIndexFunction) Run(ctx context.Context, req function.RunRequest, resp
 	var list []string
 	var elem string
 	var sortedVar []bool
-	sorted := false
+	var sorted bool
 
 	resp.Error = req.Arguments.Get(ctx, &list, &elem, &sortedVar)
 	if resp.Error != nil {

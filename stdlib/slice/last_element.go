@@ -48,7 +48,7 @@ func (*lastElementFunction) Run(ctx context.Context, req function.RunRequest, re
 	// initialize list and num elem from input parameters
 	var list []string
 	var numElementsVar []int
-	var numElements int
+	var numElements int = 1
 
 	resp.Error = req.Arguments.Get(ctx, &list, &numElementsVar)
 	if resp.Error != nil {
@@ -59,10 +59,7 @@ func (*lastElementFunction) Run(ctx context.Context, req function.RunRequest, re
 	ctx = tflog.SetField(ctx, "last_element: number of elements variadic", numElementsVar)
 
 	// validation
-	if len(numElementsVar) == 0 {
-		// assign default numElements value of 1
-		numElements = 1
-	} else {
+	if len(numElementsVar) != 0 {
 		// assign numElements from variadic
 		numElements = numElementsVar[0]
 
