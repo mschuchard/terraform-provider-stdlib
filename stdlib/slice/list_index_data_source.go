@@ -104,7 +104,7 @@ func (*listIndexDataSource) Read(ctx context.Context, req datasource.ReadRequest
 	tflog.Debug(ctx, fmt.Sprintf("Input element parameter \"%s\" index in list parameter \"%v\" is \"%d\"", elemParam, listParam, listIndex))
 
 	// store listIndex element(s) of list in state
-	state.ID = types.StringValue(listParam[0])
+	state.ID = types.StringValue("foo")
 	state.Result = types.Int64Value(int64(listIndex))
 
 	// set state

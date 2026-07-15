@@ -80,7 +80,7 @@ func (*minStringDataSource) Read(ctx context.Context, req datasource.ReadRequest
 	tflog.Debug(ctx, fmt.Sprintf("Input list parameter \"%v\" min string is \"%s\"", inputList, minString))
 
 	// store minString from element(s) of list in state
-	state.ID = types.StringValue(inputList[0])
+	state.ID = types.StringValue("foo")
 	state.Result = types.StringValue(minString)
 
 	// set state

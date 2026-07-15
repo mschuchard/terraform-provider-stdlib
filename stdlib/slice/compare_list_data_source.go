@@ -79,9 +79,9 @@ func (*compareListDataSource) Read(ctx context.Context, req datasource.ReadReque
 	state.Result = types.Int64Value(int64(result))
 	// assign id as concatentation of first element of each list
 	if len(listOne) > 0 && len(listTwo) > 0 {
-		state.ID = types.StringValue(listOne[0] + listTwo[0])
+		state.ID = types.StringValue("foo")
 	} else {
-		state.ID = types.StringValue("empty")
+		state.ID = types.StringValue("foo")
 	}
 
 	// provide more debug logging

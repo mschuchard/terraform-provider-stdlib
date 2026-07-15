@@ -2,7 +2,6 @@ package multiple
 
 import (
 	"context"
-	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
@@ -107,9 +106,9 @@ func (*emptyDataSource) Read(ctx context.Context, req datasource.ReadRequest, re
 		// check if list param is empty and set state id
 		if len(listParam) == 0 {
 			result = true
-			state.ID = types.StringValue("zero")
+			state.ID = types.StringValue("foo")
 		} else {
-			state.ID = types.StringValue(listParam[0])
+			state.ID = types.StringValue("foo")
 		}
 	} else if !state.MapParam.IsNull() {
 		// convert map param
@@ -122,9 +121,9 @@ func (*emptyDataSource) Read(ctx context.Context, req datasource.ReadRequest, re
 		// check if map is empty and set state id
 		if len(mapParam) == 0 {
 			result = true
-			state.ID = types.StringValue("zero")
+			state.ID = types.StringValue("foo")
 		} else {
-			state.ID = types.StringValue(strconv.Itoa(len(mapParam)))
+			state.ID = types.StringValue("foo")
 		}
 	} else if !state.SetParam.IsNull() {
 		// convert set param
@@ -137,9 +136,9 @@ func (*emptyDataSource) Read(ctx context.Context, req datasource.ReadRequest, re
 		// check if set param is empty and set state id
 		if len(setParam) == 0 {
 			result = true
-			state.ID = types.StringValue("zero")
+			state.ID = types.StringValue("foo")
 		} else {
-			state.ID = types.StringValue(setParam[0])
+			state.ID = types.StringValue("foo")
 		}
 	} else if !state.StringParam.IsNull() {
 		// set state id

@@ -79,7 +79,7 @@ func (*equalMapDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 	result := maps.Equal(mapOne, mapTwo)
 	state.Result = types.BoolValue(result)
 	// assign id as concatentation of first key of each map
-	state.ID = types.Int64Value(int64(len(mapOne) + len(mapTwo)))
+	state.ID = types.Int64Value(1)
 
 	// provide more debug logging
 	ctx = tflog.SetField(ctx, "stdlib_equal_map_result", result)

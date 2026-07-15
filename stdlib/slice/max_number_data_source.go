@@ -80,7 +80,7 @@ func (*maxNumberDataSource) Read(ctx context.Context, req datasource.ReadRequest
 	tflog.Debug(ctx, fmt.Sprintf("Input list parameter \"%f\" max number is \"%f\"", inputList, maxNumber))
 
 	// store maxNumber from element(s) of list in state
-	state.ID = types.Float64Value(inputList[0])
+	state.ID = types.Float64Value(1)
 	state.Result = types.Float64Value(maxNumber)
 
 	// set state

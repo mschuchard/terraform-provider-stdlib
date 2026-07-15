@@ -73,7 +73,7 @@ func (*roundDataSource) Read(ctx context.Context, req datasource.ReadRequest, re
 	tflog.Debug(ctx, fmt.Sprintf("Input number parameter \"%f\" rounded is \"%d\"", inputNum, round))
 
 	// store rounded result in state
-	state.ID = types.Float64Value(inputNum)
+	state.ID = types.Float64Value(1)
 	state.Result = types.Int64Value(round)
 
 	// set state

@@ -152,7 +152,7 @@ func (*keysDeleteDataSource) Read(ctx context.Context, req datasource.ReadReques
 	tflog.Debug(ctx, fmt.Sprintf("Map with key removed is \"%v\"", inputMap))
 
 	// store resultant map in state
-	state.ID = types.StringValue(deleteKeys[0])
+	state.ID = types.StringValue("foo")
 	var mapConvertDiags diag.Diagnostics
 	state.Result, mapConvertDiags = types.MapValueFrom(ctx, types.StringType, inputMap)
 	resp.Diagnostics.Append(mapConvertDiags...)

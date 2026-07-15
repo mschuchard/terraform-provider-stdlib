@@ -82,7 +82,7 @@ func (*sqrtDataSource) Read(ctx context.Context, req datasource.ReadRequest, res
 	tflog.Debug(ctx, fmt.Sprintf("Input number parameter \"%f\" square root is \"%f\"", inputNum, sqrt))
 
 	// store sqrt result in state
-	state.ID = types.Float64Value(inputNum)
+	state.ID = types.Float64Value(1)
 	state.Result = types.Float64Value(sqrt)
 
 	// set state

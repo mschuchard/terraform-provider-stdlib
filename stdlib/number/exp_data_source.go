@@ -73,7 +73,7 @@ func (*expDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp
 	tflog.Debug(ctx, fmt.Sprintf("Input number parameter \"%f\" base e exponential is \"%f\"", inputNum, exponential))
 
 	// store exponential result in state
-	state.ID = types.Float64Value(inputNum)
+	state.ID = types.Float64Value(1)
 	state.Result = types.Float64Value(exponential)
 
 	// set state

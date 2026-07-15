@@ -84,9 +84,9 @@ func (*productDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 
 	// store product of set in state
 	if len(param) > 0 {
-		state.ID = types.Float64Value(param[0])
+		state.ID = types.Float64Value(1)
 	} else {
-		state.ID = types.Float64Value(0)
+		state.ID = types.Float64Value(1)
 	}
 	state.Result = types.Float64Value(result)
 

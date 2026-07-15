@@ -80,7 +80,7 @@ func (*maxStringDataSource) Read(ctx context.Context, req datasource.ReadRequest
 	tflog.Debug(ctx, fmt.Sprintf("Input list parameter \"%v\" max string is \"%s\"", inputList, maxString))
 
 	// store maxString from element(s) of list in state
-	state.ID = types.StringValue(inputList[0])
+	state.ID = types.StringValue("foo")
 	state.Result = types.StringValue(maxString)
 
 	// set state

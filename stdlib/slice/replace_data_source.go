@@ -170,7 +170,7 @@ func (*replaceDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 	tflog.Debug(ctx, fmt.Sprintf("Resulting list is \"%s\"", result))
 
 	// store zeroth element of input as id
-	state.ID = types.StringValue(listParam[0])
+	state.ID = types.StringValue("foo")
 	// store endIndex
 	state.EndIndex = types.Int64Value(int64(endIndex - 1))
 	// store list with values replaced at index in state

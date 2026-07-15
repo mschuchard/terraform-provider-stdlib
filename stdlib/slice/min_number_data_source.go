@@ -81,7 +81,7 @@ func (*minNumberDataSource) Read(ctx context.Context, req datasource.ReadRequest
 	tflog.Debug(ctx, fmt.Sprintf("Input list parameter \"%f\" min number is \"%f\"", inputList, minNumber))
 
 	// store minNumber from element(s) of list in state
-	state.ID = types.Float64Value(inputList[0])
+	state.ID = types.Float64Value(1)
 	state.Result = types.Float64Value(minNumber)
 
 	// set state

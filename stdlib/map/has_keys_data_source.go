@@ -113,7 +113,7 @@ func (*hasKeysDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 	tflog.Debug(ctx, fmt.Sprintf("Result of whether key '%s' is in map is: %t", keysCheck, keyExists))
 
 	// store resultant map in state
-	state.ID = types.StringValue(keysCheck[0])
+	state.ID = types.StringValue("foo")
 	state.Result = types.BoolValue(keyExists)
 
 	// set state

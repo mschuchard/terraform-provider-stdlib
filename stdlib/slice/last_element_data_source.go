@@ -107,7 +107,7 @@ func (*lastElementDataSource) Read(ctx context.Context, req datasource.ReadReque
 	tflog.Debug(ctx, fmt.Sprintf("Input list parameter \"%v\" last element(s) is \"%v\"", inputList, lastElement))
 
 	// store lastElement element(s) of list in state
-	state.ID = types.StringValue(inputList[0])
+	state.ID = types.StringValue("foo")
 	var resultConvertDiags diag.Diagnostics
 	state.Result, resultConvertDiags = types.ListValueFrom(ctx, types.StringType, lastElement)
 

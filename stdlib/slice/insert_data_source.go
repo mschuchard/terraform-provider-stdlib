@@ -142,9 +142,9 @@ func (*insertDataSource) Read(ctx context.Context, req datasource.ReadRequest, r
 
 	// store zeroth element of input as id
 	if len(listParam) > 0 {
-		state.ID = types.StringValue(listParam[0])
+		state.ID = types.StringValue("foo")
 	} else {
-		state.ID = types.StringValue("")
+		state.ID = types.StringValue("foo")
 	}
 
 	// store list with values inserted at index in state

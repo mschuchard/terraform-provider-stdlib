@@ -100,7 +100,7 @@ func (*cutDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp
 	tflog.Debug(ctx, fmt.Sprintf("Input string parameter \"%s\" with separator \"%s\" has before \"%s\", after \"%s\", and found \"%t\"", inputString, separator, before, after, found))
 
 	// store returned values in state
-	state.ID = types.StringValue(inputString)
+	state.ID = types.StringValue("foo")
 	state.Before = types.StringValue(before)
 	state.After = types.StringValue(after)
 	state.Found = types.BoolValue(found)

@@ -108,7 +108,7 @@ func (*lastCharDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 	tflog.Debug(ctx, fmt.Sprintf("Input string parameter \"%s\" last character is \"%s\"", inputString, lastCharacter))
 
 	// store lastChar element of list in state
-	state.ID = types.StringValue(inputString)
+	state.ID = types.StringValue("foo")
 	state.Result = types.StringValue(lastCharacter)
 
 	// set state

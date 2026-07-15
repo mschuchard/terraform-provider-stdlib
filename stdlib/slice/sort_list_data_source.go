@@ -85,7 +85,7 @@ func (*sortListDataSource) Read(ctx context.Context, req datasource.ReadRequest,
 	tflog.Debug(ctx, fmt.Sprintf("Input list \"%v\" sorted as \"%v\"", listParam, result))
 
 	// store zeroth element of input as id
-	state.ID = types.StringValue(listParam[0])
+	state.ID = types.StringValue("foo")
 	// store list with values sorted in state
 	var listConvertDiags diag.Diagnostics
 	state.Result, listConvertDiags = types.ListValueFrom(ctx, types.StringType, result)
