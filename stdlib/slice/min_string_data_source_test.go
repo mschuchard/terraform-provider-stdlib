@@ -21,7 +21,7 @@ func TestAccMinString(test *testing.T) {
 					// verify minimum string result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_min_string.test", "result", "five"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_min_string.test", "id", "zero"),
+					resource.TestCheckResourceAttr("data.stdlib_min_string.test", "id", "foo"),
 				),
 			},
 			// test minimum string
@@ -33,7 +33,7 @@ func TestAccMinString(test *testing.T) {
 					// verify minimum string result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_min_string.test", "result", "alpha"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_min_string.test", "id", "alpha"),
+					resource.TestCheckResourceAttr("data.stdlib_min_string.test", "id", "foo"),
 				),
 			},
 		},

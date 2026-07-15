@@ -39,7 +39,7 @@ func TestAccInsert(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_insert.test", "result.0", "zero"),
 					resource.TestCheckResourceAttr("data.stdlib_insert.test", "result.3", "three"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_insert.test", "id", "one"),
+					resource.TestCheckResourceAttr("data.stdlib_insert.test", "id", "foo"),
 				),
 			},
 			{
@@ -58,7 +58,7 @@ func TestAccInsert(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_insert.test", "result.0", "zero"),
 					resource.TestCheckResourceAttr("data.stdlib_insert.test", "result.5", "five"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_insert.test", "id", "zero"),
+					resource.TestCheckResourceAttr("data.stdlib_insert.test", "id", "foo"),
 				),
 			},
 			{
@@ -77,7 +77,7 @@ func TestAccInsert(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_insert.test", "result.0", "zero"),
 					resource.TestCheckResourceAttr("data.stdlib_insert.test", "result.3", "three"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_insert.test", "id", "zero"),
+					resource.TestCheckResourceAttr("data.stdlib_insert.test", "id", "foo"),
 				),
 			},
 		},

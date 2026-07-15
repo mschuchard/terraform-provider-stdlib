@@ -28,7 +28,7 @@ func TestAccCut(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_cut.test", "after", "baz"),
 					resource.TestCheckResourceAttr("data.stdlib_cut.test", "found", "true"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_cut.test", "id", "foobarbaz"),
+					resource.TestCheckResourceAttr("data.stdlib_cut.test", "id", "foo"),
 				),
 			},
 			// test basic string cut absent separator
@@ -46,7 +46,7 @@ func TestAccCut(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_cut.test", "after", ""),
 					resource.TestCheckResourceAttr("data.stdlib_cut.test", "found", "false"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_cut.test", "id", "foobarbaz"),
+					resource.TestCheckResourceAttr("data.stdlib_cut.test", "id", "foo"),
 				),
 			},
 		},

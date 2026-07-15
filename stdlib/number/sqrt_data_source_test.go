@@ -27,7 +27,7 @@ func TestAccSqrt(test *testing.T) {
 					// verify sqrt result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_sqrt.test", "result", "2"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_sqrt.test", "id", "4"),
+					resource.TestCheckResourceAttr("data.stdlib_sqrt.test", "id", "1"),
 				),
 			},
 			// test square root of zero
@@ -39,7 +39,7 @@ func TestAccSqrt(test *testing.T) {
 					// verify sqrt result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_sqrt.test", "result", "0"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_sqrt.test", "id", "0"),
+					resource.TestCheckResourceAttr("data.stdlib_sqrt.test", "id", "1"),
 				),
 			},
 			// test square root of two
@@ -51,7 +51,7 @@ func TestAccSqrt(test *testing.T) {
 					// verify sqrt result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_sqrt.test", "result", "1.4142135623730951"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_sqrt.test", "id", "2"),
+					resource.TestCheckResourceAttr("data.stdlib_sqrt.test", "id", "1"),
 				),
 			},
 		},

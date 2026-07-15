@@ -36,7 +36,7 @@ func TestAccLastChar(test *testing.T) {
 					// verify last character result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_last_char.test", "result", param[len(param)-1:]),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_last_char.test", "id", param),
+					resource.TestCheckResourceAttr("data.stdlib_last_char.test", "id", "foo"),
 				),
 			},
 			// test basic string slice last three characters
@@ -51,7 +51,7 @@ func TestAccLastChar(test *testing.T) {
 					// verify last character result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_last_char.test", "result", param[len(param)-numChars:]),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_last_char.test", "id", param),
+					resource.TestCheckResourceAttr("data.stdlib_last_char.test", "id", "foo"),
 				),
 			},
 		},

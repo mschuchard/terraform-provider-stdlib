@@ -38,7 +38,7 @@ func TestAccHasValue(test *testing.T) {
 						// verify value existence result is stored correctly
 						resource.TestCheckResourceAttr(dataSourceName, "result", strconv.FormatBool(result)),
 						// verify id stored correctly
-						resource.TestCheckResourceAttr(dataSourceName, "id", value),
+						resource.TestCheckResourceAttr(dataSourceName, "id", "foo"),
 					),
 				},
 			},

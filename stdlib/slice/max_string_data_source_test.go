@@ -21,7 +21,7 @@ func TestAccMaxString(test *testing.T) {
 					// verify maximum string result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_max_string.test", "result", "zero"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_max_string.test", "id", "zero"),
+					resource.TestCheckResourceAttr("data.stdlib_max_string.test", "id", "foo"),
 				),
 			},
 			// test maximum string
@@ -33,7 +33,7 @@ func TestAccMaxString(test *testing.T) {
 					// verify maximum string result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_max_string.test", "result", "gamma"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_max_string.test", "id", "alpha"),
+					resource.TestCheckResourceAttr("data.stdlib_max_string.test", "id", "foo"),
 				),
 			},
 		},

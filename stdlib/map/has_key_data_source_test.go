@@ -38,7 +38,7 @@ func TestAccHasKey(test *testing.T) {
 						// verify key existence result is stored correctly
 						resource.TestCheckResourceAttr(dataSourceName, "result", strconv.FormatBool(result)),
 						// verify id stored correctly
-						resource.TestCheckResourceAttr(dataSourceName, "id", key),
+						resource.TestCheckResourceAttr(dataSourceName, "id", "foo"),
 					),
 				},
 			},

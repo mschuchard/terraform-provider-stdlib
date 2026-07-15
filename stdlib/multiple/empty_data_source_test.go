@@ -20,7 +20,7 @@ func TestAccEmpty(test *testing.T) {
 					// verify input params are stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_empty.test", "list_param.#", "0"),
 					// verify emptiness result is stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_empty.test", "id", "zero"),
+					resource.TestCheckResourceAttr("data.stdlib_empty.test", "id", "foo"),
 					resource.TestCheckResourceAttr("data.stdlib_empty.test", "result", "true"),
 				),
 			},
@@ -34,7 +34,7 @@ func TestAccEmpty(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_empty.test", "map_param.%", "1"),
 					resource.TestCheckResourceAttr("data.stdlib_empty.test", "map_param.foo", "bar"),
 					// verify emptiness result is stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_empty.test", "id", "1"),
+					resource.TestCheckResourceAttr("data.stdlib_empty.test", "id", "foo"),
 					resource.TestCheckResourceAttr("data.stdlib_empty.test", "result", "false"),
 				),
 			},
@@ -45,7 +45,7 @@ func TestAccEmpty(test *testing.T) {
 					// verify input params are stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_empty.test", "set_param.#", "1"),
 					// verify emptiness result is stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_empty.test", "id", "no"),
+					resource.TestCheckResourceAttr("data.stdlib_empty.test", "id", "foo"),
 					resource.TestCheckResourceAttr("data.stdlib_empty.test", "result", "false"),
 				),
 			},
@@ -56,7 +56,7 @@ func TestAccEmpty(test *testing.T) {
 					// verify input params are stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_empty.test", "string_param", ""),
 					// verify emptiness result is stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_empty.test", "id", ""),
+					resource.TestCheckResourceAttr("data.stdlib_empty.test", "id", "foo"),
 					resource.TestCheckResourceAttr("data.stdlib_empty.test", "result", "true"),
 				),
 			},

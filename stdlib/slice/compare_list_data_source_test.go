@@ -24,7 +24,7 @@ func TestAccCompareList(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_compare_list.test", "list_two.#", "3"),
 					resource.TestCheckResourceAttr("data.stdlib_compare_list.test", "list_two.2", "baz"),
 					// verify list comparison result is stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_compare_list.test", "id", "foofoo"),
+					resource.TestCheckResourceAttr("data.stdlib_compare_list.test", "id", "foo"),
 					resource.TestCheckResourceAttr("data.stdlib_compare_list.test", "result", "-1"),
 				),
 			},
@@ -40,7 +40,7 @@ func TestAccCompareList(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_compare_list.test", "list_two.#", "2"),
 					resource.TestCheckResourceAttr("data.stdlib_compare_list.test", "list_two.1", "cake"),
 					// verify list comparison result is stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_compare_list.test", "id", "pizzapizza"),
+					resource.TestCheckResourceAttr("data.stdlib_compare_list.test", "id", "foo"),
 					resource.TestCheckResourceAttr("data.stdlib_compare_list.test", "result", "0"),
 				),
 			},
@@ -56,7 +56,7 @@ func TestAccCompareList(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_compare_list.test", "list_two.#", "3"),
 					resource.TestCheckResourceAttr("data.stdlib_compare_list.test", "list_two.1", "cake"),
 					// verify list comparison result is stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_compare_list.test", "id", "superpizza"),
+					resource.TestCheckResourceAttr("data.stdlib_compare_list.test", "id", "foo"),
 					resource.TestCheckResourceAttr("data.stdlib_compare_list.test", "result", "1"),
 				),
 			},
@@ -72,7 +72,7 @@ func TestAccCompareList(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_compare_list.test", "list_two.#", "2"),
 					resource.TestCheckResourceAttr("data.stdlib_compare_list.test", "list_two.1", "cake"),
 					// verify list comparison result is stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_compare_list.test", "id", "pizzapizza"),
+					resource.TestCheckResourceAttr("data.stdlib_compare_list.test", "id", "foo"),
 					resource.TestCheckResourceAttr("data.stdlib_compare_list.test", "result", "1"),
 				),
 			},

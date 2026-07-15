@@ -31,7 +31,7 @@ func TestAccLastElement(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_last_element.test", "result.#", "1"),
 					resource.TestCheckResourceAttr("data.stdlib_last_element.test", "result.0", "o"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_last_element.test", "id", "h"),
+					resource.TestCheckResourceAttr("data.stdlib_last_element.test", "id", "foo"),
 				),
 			},
 			// test basic reverse list slice last three elements
@@ -49,7 +49,7 @@ func TestAccLastElement(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_last_element.test", "result.1", "l"),
 					resource.TestCheckResourceAttr("data.stdlib_last_element.test", "result.2", "o"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_last_element.test", "id", "h"),
+					resource.TestCheckResourceAttr("data.stdlib_last_element.test", "id", "foo"),
 				),
 			},
 		},

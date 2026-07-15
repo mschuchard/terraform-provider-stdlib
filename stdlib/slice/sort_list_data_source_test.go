@@ -28,7 +28,7 @@ func TestAccSortList(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_sort_list.test", "result.2", "4"),
 					resource.TestCheckResourceAttr("data.stdlib_sort_list.test", "result.3", "8"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_sort_list.test", "id", "0"),
+					resource.TestCheckResourceAttr("data.stdlib_sort_list.test", "id", "foo"),
 				),
 			},
 			{
@@ -45,7 +45,7 @@ func TestAccSortList(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_sort_list.test", "result.2", "delta"),
 					resource.TestCheckResourceAttr("data.stdlib_sort_list.test", "result.3", "gamma"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_sort_list.test", "id", "gamma"),
+					resource.TestCheckResourceAttr("data.stdlib_sort_list.test", "id", "foo"),
 				),
 			},
 		},

@@ -29,7 +29,7 @@ func TestAccHasKeys(test *testing.T) {
 					// verify keys existence result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_has_keys.test", "result", "true"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_has_keys.test", "id", "bar"),
+					resource.TestCheckResourceAttr("data.stdlib_has_keys.test", "id", "foo"),
 				),
 			},
 			{
@@ -49,7 +49,7 @@ func TestAccHasKeys(test *testing.T) {
 					// verify keys existence result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_has_keys.test", "result", "false"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_has_keys.test", "id", "bar"),
+					resource.TestCheckResourceAttr("data.stdlib_has_keys.test", "id", "foo"),
 				),
 			},
 			{
@@ -71,7 +71,7 @@ func TestAccHasKeys(test *testing.T) {
 					// verify keys existence result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_has_keys.test", "result", "false"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_has_keys.test", "id", "bar"),
+					resource.TestCheckResourceAttr("data.stdlib_has_keys.test", "id", "foo"),
 				),
 			},
 			{
@@ -94,7 +94,7 @@ func TestAccHasKeys(test *testing.T) {
 					// verify keys existence result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_has_keys.test", "result", "true"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_has_keys.test", "id", "hello"),
+					resource.TestCheckResourceAttr("data.stdlib_has_keys.test", "id", "foo"),
 				),
 			},
 		},

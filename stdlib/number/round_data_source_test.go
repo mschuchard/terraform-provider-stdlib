@@ -21,7 +21,7 @@ func TestAccRound(test *testing.T) {
 					// verify rounding result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_round.test", "result", "1"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_round.test", "id", "1.2"),
+					resource.TestCheckResourceAttr("data.stdlib_round.test", "id", "1"),
 				),
 			},
 			// test 1.8 round up
@@ -33,7 +33,7 @@ func TestAccRound(test *testing.T) {
 					// verify rounding result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_round.test", "result", "2"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_round.test", "id", "1.8"),
+					resource.TestCheckResourceAttr("data.stdlib_round.test", "id", "1"),
 				),
 			},
 			// test 1.5 round up
@@ -45,7 +45,7 @@ func TestAccRound(test *testing.T) {
 					// verify rounding result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_round.test", "result", "2"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_round.test", "id", "1.5"),
+					resource.TestCheckResourceAttr("data.stdlib_round.test", "id", "1"),
 				),
 			},
 		},

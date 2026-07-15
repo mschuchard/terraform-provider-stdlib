@@ -63,7 +63,7 @@ func TestAccReplace(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.2", "two"),
 					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.4", "four"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_replace.test", "id", "zero"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "id", "foo"),
 				),
 			},
 			{
@@ -86,7 +86,7 @@ func TestAccReplace(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.2", "four"),
 					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.3", "five"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_replace.test", "id", "zero"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "id", "foo"),
 				),
 			},
 			{
@@ -107,7 +107,7 @@ func TestAccReplace(test *testing.T) {
 					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.0", "zero"),
 					resource.TestCheckResourceAttr("data.stdlib_replace.test", "result.3", "three"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_replace.test", "id", "zero"),
+					resource.TestCheckResourceAttr("data.stdlib_replace.test", "id", "foo"),
 				),
 			},
 		},

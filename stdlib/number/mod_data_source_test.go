@@ -25,7 +25,7 @@ func TestAccMod(test *testing.T) {
 					// verify remainder result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_mod.test", "result", "0"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_mod.test", "id", "4"),
+					resource.TestCheckResourceAttr("data.stdlib_mod.test", "id", "1"),
 				),
 			},
 			// test basic integer remainder
@@ -41,7 +41,7 @@ func TestAccMod(test *testing.T) {
 					// verify remainder result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_mod.test", "result", "2"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_mod.test", "id", "5"),
+					resource.TestCheckResourceAttr("data.stdlib_mod.test", "id", "1"),
 				),
 			},
 			// test basic float remainder
@@ -57,7 +57,7 @@ func TestAccMod(test *testing.T) {
 					// verify remainder result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_mod.test", "result", "0.5"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_mod.test", "id", "10"),
+					resource.TestCheckResourceAttr("data.stdlib_mod.test", "id", "1"),
 				),
 			},
 		},

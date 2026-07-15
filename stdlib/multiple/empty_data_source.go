@@ -142,7 +142,7 @@ func (*emptyDataSource) Read(ctx context.Context, req datasource.ReadRequest, re
 		}
 	} else if !state.StringParam.IsNull() {
 		// set state id
-		state.ID = state.StringParam
+		state.ID = types.StringValue("foo")
 		// determine emptiness
 		if len(state.StringParam.ValueString()) == 0 {
 			result = true

@@ -95,7 +95,7 @@ func TestAccHasValues(test *testing.T) {
 					// verify values existence result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_has_values.test", "result", "true"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_has_values.test", "id", "world"),
+					resource.TestCheckResourceAttr("data.stdlib_has_values.test", "id", "foo"),
 				),
 			},
 		},

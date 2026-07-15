@@ -22,7 +22,7 @@ func TestAccExp(test *testing.T) {
 					// verify exponential result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_exp.test", "result", "1"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_exp.test", "id", "0"),
+					resource.TestCheckResourceAttr("data.stdlib_exp.test", "id", "1"),
 				),
 			},
 			// test basic float exponential
@@ -34,7 +34,7 @@ func TestAccExp(test *testing.T) {
 					// verify exponential result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_exp.test", "result", "2.9999997339956828"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_exp.test", "id", "1.0986122"),
+					resource.TestCheckResourceAttr("data.stdlib_exp.test", "id", "1"),
 				),
 			},
 		},

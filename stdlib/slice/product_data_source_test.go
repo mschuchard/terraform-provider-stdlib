@@ -21,7 +21,7 @@ func TestAccProduct(test *testing.T) {
 					// verify product result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_product.test", "result", "0"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_product.test", "id", "0"),
+					resource.TestCheckResourceAttr("data.stdlib_product.test", "id", "1"),
 				),
 			},
 			{
@@ -32,7 +32,7 @@ func TestAccProduct(test *testing.T) {
 					// verify product result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_product.test", "result", "5"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_product.test", "id", "5"),
+					resource.TestCheckResourceAttr("data.stdlib_product.test", "id", "1"),
 				),
 			},
 			{

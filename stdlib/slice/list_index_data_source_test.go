@@ -25,7 +25,7 @@ func TestAccListIndex(test *testing.T) {
 					// verify list index result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_list_index.test", "result", "1"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_list_index.test", "id", "zero"),
+					resource.TestCheckResourceAttr("data.stdlib_list_index.test", "id", "foo"),
 				),
 			},
 			{
@@ -42,7 +42,7 @@ func TestAccListIndex(test *testing.T) {
 					// verify list index result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_list_index.test", "result", "2"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_list_index.test", "id", "a"),
+					resource.TestCheckResourceAttr("data.stdlib_list_index.test", "id", "foo"),
 				),
 			},
 			{
@@ -57,7 +57,7 @@ func TestAccListIndex(test *testing.T) {
 					// verify list index result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_list_index.test", "result", "2"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_list_index.test", "id", "zero"),
+					resource.TestCheckResourceAttr("data.stdlib_list_index.test", "id", "foo"),
 				),
 			},
 			{
@@ -72,7 +72,7 @@ func TestAccListIndex(test *testing.T) {
 					// verify list index result is stored correctly
 					resource.TestCheckResourceAttr("data.stdlib_list_index.test", "result", "-1"),
 					// verify id stored correctly
-					resource.TestCheckResourceAttr("data.stdlib_list_index.test", "id", "hundred"),
+					resource.TestCheckResourceAttr("data.stdlib_list_index.test", "id", "foo"),
 				),
 			},
 		},
