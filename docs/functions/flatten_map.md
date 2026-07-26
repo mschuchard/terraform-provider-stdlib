@@ -8,7 +8,7 @@ description: |-
 
 # function: flatten_map
 
-Return the flattened map of an input list of maps. Note that if a key is repeated between distinct element maps, then the last entry will overwrite any previous entries in the result (maps cannot contain repeated keys).
+Return the flattened map of an input list of maps. Note that if a key is repeated between distinct element maps, then the last entry will overwrite any previous entries in the result (maps cannot contain repeated keys). This function is especially helpful for the standard nested map and object flattening algorithm for use with the `for_each` meta-parameter.
 
 ## Example Usage
 

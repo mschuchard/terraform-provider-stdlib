@@ -38,5 +38,5 @@ data "stdlib_equal_map" "bar" {
 
 ### Read-Only
 
-- `id` (Number) Aliased to number input parameter(s) for efficiency and proper plan diff detection.
+- `id` (Number) Constant value for efficiency. This is not used in plugin framework.
 - `result` (Boolean) Function result storing whether the two maps are equal.

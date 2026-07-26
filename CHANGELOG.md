@@ -1,4 +1,4 @@
-### 2.3.2 (Next)
+### 2.3.2
 - Fix `last_char` and legacy `last_char` for non-ASCII strings.
 - Document behavior for missing keys in legacy `key(s)_delete` data sources.
 - Safeguard against panic in legacy `product` and `insert` data sources during state drift.

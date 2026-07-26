@@ -40,5 +40,5 @@ data "stdlib_last_element" "llo" {
 
 ### Read-Only
 
-- `id` (String) Aliased to string input parameter(s) for efficiency and proper plan diff detection.
+- `id` (String) Constant value for efficiency. This is not used in plugin framework.
 - `result` (List of String) Function result storing the list containing the last element(s) of the input list.

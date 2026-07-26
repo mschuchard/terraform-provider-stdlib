@@ -29,5 +29,5 @@ data "stdlib_min_number" "fibonacci" {
 
 ### Read-Only
 
-- `id` (Number) Aliased to number input parameter(s) for efficiency and proper plan diff detection.
+- `id` (Number) Constant value for efficiency. This is not used in plugin framework.
 - `result` (Number) Function result storing the minimum number from the element(s) of the input list.

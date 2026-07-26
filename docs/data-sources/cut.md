@@ -41,4 +41,4 @@ data "stdlib_cut" "pizza" {
 - `after` (String) Function result storing the input string after the separator.
 - `before` (String) Function result storing the input string before the separator.
 - `found` (Boolean) Function result storing whether the input string contained the separator.
-- `id` (String) Aliased to string input parameter(s) for efficiency and proper plan diff detection.
+- `id` (String) Constant value for efficiency. This is not used in plugin framework.

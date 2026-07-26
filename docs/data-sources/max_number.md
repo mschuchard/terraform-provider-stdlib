@@ -29,5 +29,5 @@ data "stdlib_max_number" "fibonacci" {
 
 ### Read-Only
 
-- `id` (Number) Aliased to number input parameter(s) for efficiency and proper plan diff detection.
+- `id` (Number) Constant value for efficiency. This is not used in plugin framework.
 - `result` (Number) Function result storing the maximum number from the element(s) of the input list.

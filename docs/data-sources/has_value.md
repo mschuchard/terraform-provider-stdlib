@@ -44,5 +44,5 @@ data "stdlib_has_value" "bar" {
 
 ### Read-Only
 
-- `id` (String) Aliased to string input parameter(s) for efficiency and proper plan diff detection.
+- `id` (String) Constant value for efficiency. This is not used in plugin framework.
 - `result` (Boolean) Function result storing whether the key exists in the map.

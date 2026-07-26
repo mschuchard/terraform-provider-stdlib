@@ -34,5 +34,5 @@ data "stdlib_min_string" "alphabet" {
 
 ### Read-Only
 
-- `id` (String) Aliased to string input parameter(s) for efficiency and proper plan diff detection.
+- `id` (String) Constant value for efficiency. This is not used in plugin framework.
 - `result` (String) Function result storing the minimum string (first by lexical ordering) from the element(s) of the input list.

@@ -58,5 +58,5 @@ data "stdlib_list_index" "infinity" {
 
 ### Read-Only
 
-- `id` (String) Aliased to string input parameter(s) for efficiency and proper plan diff detection.
+- `id` (String) Constant value for efficiency. This is not used in plugin framework.
 - `result` (Number) Function result storing the index of the element.

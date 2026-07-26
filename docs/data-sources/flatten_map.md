@@ -3,12 +3,12 @@
 page_title: "stdlib_flatten_map Data Source - stdlib"
 subcategory: ""
 description: |-
-  Return the flattened map of an input list of maps parameter. Note that if a key is repeated then the last entry will overwrite any previous entries in the result.
+  Return the flattened map of an input list of maps parameter. Note that if a key is repeated then the last entry will overwrite any previous entries in the result. This data source is especially helpful for the standard nested map and object flattening algorithm for use with the for_each meta-parameter.
 ---
 
 # stdlib_flatten_map (Data Source)
 
-Return the flattened map of an input list of maps parameter. Note that if a key is repeated then the last entry will overwrite any previous entries in the result.
+Return the flattened map of an input list of maps parameter. Note that if a key is repeated then the last entry will overwrite any previous entries in the result. This data source is especially helpful for the standard nested map and object flattening algorithm for use with the `for_each` meta-parameter.
 
 ## Example Usage
 
@@ -32,5 +32,5 @@ data "stdlib_flatten_map" "foo" {
 
 ### Read-Only
 
-- `id` (Number) Aliased to number input parameter(s) for efficiency and proper plan diff detection.
+- `id` (Number) Constant value for efficiency. This is not used in plugin framework.
 - `result` (Map of String) Function result storing the flattened map.
