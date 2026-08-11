@@ -25,7 +25,7 @@ type modDataSource struct{}
 
 // maps the data source schema data to the model
 type modDataSourceModel struct {
-	ID       types.Float64 `tfsdk:"id"`
+	ID       types.String  `tfsdk:"id"`
 	Dividend types.Float64 `tfsdk:"dividend"`
 	Divisor  types.Float64 `tfsdk:"divisor"`
 	Result   types.Float64 `tfsdk:"result"`
@@ -79,7 +79,7 @@ func (*modDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp
 	tflog.Debug(ctx, fmt.Sprintf("Input number dividend \"%f\" divided by input number divisor \"%f\" remainder is \"%f\"", dividend, divisor, remainder))
 
 	// store remainder result in state
-	state.ID = types.Float64Value(1)
+	state.ID = types.StringValue("1")
 	state.Result = types.Float64Value(remainder)
 
 	// set state

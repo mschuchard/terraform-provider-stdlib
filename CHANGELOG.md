@@ -1,3 +1,6 @@
+### 2.4.0 (Next)
+- Unify state ID for legacy data source functions.
+
 ### 2.3.2
 - Fix `last_char` and legacy `last_char` for non-ASCII strings.
 - Document behavior for missing keys in legacy `key(s)_delete` data sources.
