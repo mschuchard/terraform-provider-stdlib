@@ -40,7 +40,7 @@ func (*modDataSource) Metadata(_ context.Context, req datasource.MetadataRequest
 func (*modDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
-			"id": util.IDFloat64Attribute(),
+			"id": util.IDStringAttribute(),
 			"dividend": schema.Float64Attribute{
 				Description: "The dividend number from which to divide.",
 				Required:    true,

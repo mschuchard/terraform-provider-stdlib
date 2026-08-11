@@ -26,7 +26,7 @@ type sqrtDataSource struct{}
 
 // maps the data source schema data to the model
 type sqrtDataSourceModel struct {
-	ID     types.Float64 `tfsdk:"id"`
+	ID     types.String  `tfsdk:"id"`
 	Param  types.Float64 `tfsdk:"param"`
 	Result types.Float64 `tfsdk:"result"`
 }
@@ -40,7 +40,7 @@ func (*sqrtDataSource) Metadata(_ context.Context, req datasource.MetadataReques
 func (*sqrtDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
-			"id": util.IDFloat64Attribute(),
+			"id": util.IDStringAttribute(),
 			"param": schema.Float64Attribute{
 				Description: "Input number parameter for determining the square root.",
 				Required:    true,
@@ -82,7 +82,7 @@ func (*sqrtDataSource) Read(ctx context.Context, req datasource.ReadRequest, res
 	tflog.Debug(ctx, fmt.Sprintf("Input number parameter \"%f\" square root is \"%f\"", inputNum, sqrt))
 
 	// store sqrt result in state
-	state.ID = types.Float64Value(1)
+	state.ID = types.StringValue("1")
 	state.Result = types.Float64Value(sqrt)
 
 	// set state

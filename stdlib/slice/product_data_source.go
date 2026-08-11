@@ -27,7 +27,7 @@ type productDataSource struct{}
 
 // maps the data source schema data to the model
 type productDataSourceModel struct {
-	ID     types.Float64 `tfsdk:"id"`
+	ID     types.String  `tfsdk:"id"`
 	Param  types.Set     `tfsdk:"param"`
 	Result types.Float64 `tfsdk:"result"`
 }
@@ -41,7 +41,7 @@ func (*productDataSource) Metadata(_ context.Context, req datasource.MetadataReq
 func (*productDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
-			"id": util.IDFloat64Attribute(),
+			"id": util.IDStringAttribute(),
 			"param": schema.SetAttribute{
 				Description: "Input set parameter for determining the product. The set must contain at least one element.",
 				ElementType: types.Float64Type,
@@ -83,11 +83,7 @@ func (*productDataSource) Read(ctx context.Context, req datasource.ReadRequest, 
 	tflog.Debug(ctx, fmt.Sprintf("Input set \"%f\" product is \"%f\"", param, result))
 
 	// store product of set in state
-	if len(param) > 0 {
-		state.ID = types.Float64Value(1)
-	} else {
-		state.ID = types.Float64Value(1)
-	}
+	state.ID = types.StringValue("1")
 	state.Result = types.Float64Value(result)
 
 	// set state

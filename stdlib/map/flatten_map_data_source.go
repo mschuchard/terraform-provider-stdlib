@@ -28,9 +28,9 @@ type flattenMapDataSource struct{}
 
 // maps the data source schema data to the model
 type flattenMapDataSourceModel struct {
-	ID     types.Int64 `tfsdk:"id"`
-	Param  types.List  `tfsdk:"param"`
-	Result types.Map   `tfsdk:"result"`
+	ID     types.String `tfsdk:"id"`
+	Param  types.List   `tfsdk:"param"`
+	Result types.Map    `tfsdk:"result"`
 }
 
 // data source metadata
@@ -42,7 +42,7 @@ func (*flattenMapDataSource) Metadata(_ context.Context, req datasource.Metadata
 func (*flattenMapDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
-			"id": util.IDInt64Attribute(),
+			"id": util.IDStringAttribute(),
 			"param": schema.ListAttribute{
 				Description: "Input list of maps to flatten.",
 				ElementType: types.MapType{
@@ -93,7 +93,7 @@ func (*flattenMapDataSource) Read(ctx context.Context, req datasource.ReadReques
 	}
 
 	// store number of entries of input list as id
-	state.ID = types.Int64Value(1)
+	state.ID = types.StringValue("1")
 	// store flattened map in state
 	var mapConvertDiags diag.Diagnostics
 	state.Result, mapConvertDiags = types.MapValueFrom(ctx, types.StringType, outputMap)

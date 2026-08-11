@@ -7,20 +7,6 @@ import (
 func IDStringAttribute() schema.StringAttribute {
 	return schema.StringAttribute{
 		Computed:    true,
-		Description: "Constant value for efficiency. This is not used in plugin framework.",
-	}
-}
-
-func IDInt64Attribute() schema.Int64Attribute {
-	return schema.Int64Attribute{
-		Computed:    true,
-		Description: "Constant value for efficiency. This is not used in plugin framework.",
-	}
-}
-
-func IDFloat64Attribute() schema.Float64Attribute {
-	return schema.Float64Attribute{
-		Computed:    true,
-		Description: "Constant value for efficiency. This is not used in plugin framework.",
+		Description: "Constant value for uniformity and efficiency. This is not actually used in the terraform plugin framework, but is still required for backwards compatibility.",
 	}
 }
