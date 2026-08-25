@@ -110,6 +110,7 @@ func (*stdlibProvider) Functions(_ context.Context) []func() function.Function {
 		slicefunc.NewListIndexFunction,
 		slicefunc.NewMaxNumberFunction,
 		slicefunc.NewMaxStringFunction,
+		slicefunc.NewMeanFunction,
 		slicefunc.NewMinNumberFunction,
 		slicefunc.NewMinStringFunction,
 		slicefunc.NewProductFunction,
