@@ -1,6 +1,6 @@
 ### 2.4.0 (Next)
 - Unify state ID for legacy data source functions.
-- Add `mean` functions.
+- Add `mean`, `median` functions.
 
 ### 2.3.2
 - Fix `last_char` and legacy `last_char` for non-ASCII strings.
