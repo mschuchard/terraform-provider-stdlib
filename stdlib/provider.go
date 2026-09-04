@@ -94,6 +94,7 @@ func (*stdlibProvider) Functions(_ context.Context) []func() function.Function {
 		mapfunc.NewHasValuesFunction,
 		mapfunc.NewKeyDeleteFunction,
 		mapfunc.NewKeysDeleteFunction,
+		mapfunc.NewTransposeFunction,
 		multiple.NewEmptyFunction,
 		multiple.NewRepeatFunction,
 		numberfunc.NewCombinationsFunction,
