@@ -59,7 +59,7 @@ func (*compareStringFunction) Run(ctx context.Context, req function.RunRequest, 
 	result := strings.Compare(stringOne, stringTwo)
 	ctx = tflog.SetField(ctx, "compare_string: result", result)
 
-	// store the result as a list of strings
+	// store the result as a 32 bit integer
 	resp.Error = resp.Result.Set(ctx, &result)
 	if resp.Error != nil {
 		return
