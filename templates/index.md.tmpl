@@ -11,8 +11,6 @@ description: |-
 
 The Terraform provider plugin "stdlib" provides additional functions for Terraform available as data sources and custom functions. These data sources and custom functions enable functionality either not intrinsically available to Terraform, or instead streamlined within a single invocation. However, data sources are not as robustly invoked with inputs or returns compared to true functions. Without the true support for custom functions in Terraform >= 1.8 then this becomes the next best available option. If you are using Terraform >= 1.8 then it is advised to use the custom functions instead of the data sources, but otherwise you will need to declare the data sources instead.
 
-Please note all data sources are in maintenance mode as of release version 2.0.0.
-
 Use the navigation to the left to read about the available custom functions, and the alternative data sources which are each equivalent to Terraform functions. The documentation links are also sorted by input type below if you prefer.
 
 {{ if .HasExample -}}
@@ -34,6 +32,7 @@ The documentation overview for custom functions (available for Terraform version
 - [last_char](functions/last_char.html)
 - [last_index](functions/last_index.html)
 - [split_after](functions/split_after.html)
+- [strcontains_multiple](functions/strcontains_multiple.html)
 
 ### Number
 - [combinations](functions/combinations.html)
@@ -79,7 +78,7 @@ The documentation overview for custom functions (available for Terraform version
 - [repeat](functions/repeat.html)
 
 ## Data Sources as Functions
-The documentation overview for data sources as functions (necessary for Terraform version < 1.8). The following is an enumeration of the supported data sources as functions. These are categorized by their primary input types. Please note any custom functions that were implemented after version 2.0.0 will not have an equivalent data source.
+The documentation overview for data sources as functions (necessary for Terraform version < 1.8). The following is an enumeration of the supported data sources as functions. These are categorized by their primary input types. Please note any custom functions that were implemented after version 2.0.0 will not have an equivalent data source, and that all data sources are also in maintenance mode as of that version.
 
 ### String
 - [cut](data-sources/cut.html)

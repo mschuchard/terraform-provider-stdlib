@@ -119,13 +119,14 @@ func (*stdlibProvider) Functions(_ context.Context) []func() function.Function {
 		slicefunc.NewReplaceFunction,
 		slicefunc.NewSortListStringFunction,
 		slicefunc.NewSortListNumberFunction,
+		stringfunc.NewCompareStringFunction,
 		stringfunc.NewCountFunction,
 		stringfunc.NewCutFunction,
 		stringfunc.NewEqualFoldFunction,
 		stringfunc.NewLastCharFunction,
 		stringfunc.NewLastIndexFunction,
 		stringfunc.NewSplitAfterFunction,
-		stringfunc.NewCompareStringFunction,
+		stringfunc.NewStrcontainsMultipleFunction,
 	}
 }
 

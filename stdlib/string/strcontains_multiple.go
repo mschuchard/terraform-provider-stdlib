@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-framework/function"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 )
 
@@ -12,7 +13,7 @@ import (
 var _ function.Function = &strcontainsMultipleFunction{}
 
 // helper pseudo-constructor to simplify provider server and testing implementation
-func NewEqualFoldFunction() function.Function {
+func NewStrcontainsMultipleFunction() function.Function {
 	return &strcontainsMultipleFunction{}
 }
 
