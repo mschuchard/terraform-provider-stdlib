@@ -88,6 +88,7 @@ func (*stdlibProvider) Functions(_ context.Context) []func() function.Function {
 		mapfunc.NewCompactMapFunction,
 		mapfunc.NewEqualMapFunction,
 		mapfunc.NewFlattenMapFunction,
+		mapfunc.NewFlattenNestedMapFunction,
 		mapfunc.NewHasKeyFunction,
 		mapfunc.NewHasKeysFunction,
 		mapfunc.NewHasValueFunction,
