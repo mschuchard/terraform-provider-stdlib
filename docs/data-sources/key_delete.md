@@ -34,5 +34,5 @@ data "stdlib_key_delete" "foo" {
 
 ### Read-Only
 
-- `id` (String) Constant value for efficiency. This is not used in plugin framework.
+- `id` (String) Constant value for uniformity and efficiency. This is not actually used in the terraform plugin framework, but is still required for backwards compatibility.
 - `result` (Map of String) Function result storing the map with the key removed.

@@ -29,5 +29,5 @@ data "stdlib_max_number" "fibonacci" {
 
 ### Read-Only
 
-- `id` (Number) Constant value for efficiency. This is not used in plugin framework.
+- `id` (String) Constant value for uniformity and efficiency. This is not actually used in the terraform plugin framework, but is still required for backwards compatibility.
 - `result` (Number) Function result storing the maximum number from the element(s) of the input list.

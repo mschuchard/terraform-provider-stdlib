@@ -11,8 +11,6 @@ The stdlib provider provides additional custom functions for use within Terrafor
 
 The Terraform provider plugin "stdlib" provides additional functions for Terraform available as data sources and custom functions. These data sources and custom functions enable functionality either not intrinsically available to Terraform, or instead streamlined within a single invocation. However, data sources are not as robustly invoked with inputs or returns compared to true functions. Without the true support for custom functions in Terraform >= 1.8 then this becomes the next best available option. If you are using Terraform >= 1.8 then it is advised to use the custom functions instead of the data sources, but otherwise you will need to declare the data sources instead.
 
-Please note all data sources are in maintenance mode as of release version 2.0.0.
-
 Use the navigation to the left to read about the available custom functions, and the alternative data sources which are each equivalent to Terraform functions. The documentation links are also sorted by input type below if you prefer.
 
 ## Example Usage
@@ -40,9 +38,11 @@ The documentation overview for custom functions (available for Terraform version
 - [compare_string](functions/compare_string.html)
 - [count](functions/count.html)
 - [cut](functions/cut.html)
+- [equal_fold](functions/equal_fold.html)
 - [last_char](functions/last_char.html)
 - [last_index](functions/last_index.html)
 - [split_after](functions/split_after.html)
+- [strcontains_multiple](functions/strcontains_multiple.html)
 
 ### Number
 - [combinations](functions/combinations.html)
@@ -58,12 +58,14 @@ The documentation overview for custom functions (available for Terraform version
 - [compact_map](functions/compact_map.html)
 - [equal_map](functions/equal_map.html)
 - [flatten_map](functions/flatten_map.html)
+- [flatten_nested_map](functions/flatten_nested_map.html)
 - [has_key](functions/has_key.html)
 - [has_keys](functions/has_keys.html)
 - [has_value](functions/has_value.html)
 - [has_values](functions/has_values.html)
 - [key_delete](functions/key_delete.html)
 - [keys_delete](functions/keys_delete.html)
+- [transpose](functions/transpose.html)
 
 ### List/Set
 - [compare_list](functions/compare_list.html)
@@ -73,6 +75,8 @@ The documentation overview for custom functions (available for Terraform version
 - [list_index](functions/list_index.html)
 - [max_number](functions/max_number.html)
 - [max_string](functions/max_string.html)
+- [mean](functions/mean.html)
+- [median](functions/median.html)
 - [min_number](functions/min_number.html)
 - [min_string](functions/min_string.html)
 - [product](functions/product.html)
@@ -85,7 +89,7 @@ The documentation overview for custom functions (available for Terraform version
 - [repeat](functions/repeat.html)
 
 ## Data Sources as Functions
-The documentation overview for data sources as functions (necessary for Terraform version < 1.8). The following is an enumeration of the supported data sources as functions. These are categorized by their primary input types. Please note any custom functions that were implemented after version 2.0.0 will not have an equivalent data source.
+The documentation overview for data sources as functions (necessary for Terraform version < 1.8). The following is an enumeration of the supported data sources as functions. These are categorized by their primary input types. Please note any custom functions that were implemented after version 2.0.0 will not have an equivalent data source, and that all data sources are also in maintenance mode as of that version.
 
 ### String
 - [cut](data-sources/cut.html)

@@ -1,4 +1,4 @@
-### 2.4.0 (Next)
+### 2.4.0
 - Unify state ID for legacy data source functions.
 - Add `equal_fold`, `flatten_nested_map`, `mean`, `median`, `strcontains_multiple`, and `transpose` functions.
 
