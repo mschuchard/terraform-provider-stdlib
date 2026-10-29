@@ -58,6 +58,19 @@ func TestFlattenNestedMapFunction(test *testing.T) {
 		},
 	)
 
+	// inputs and expected values with unknown values at differing depths
+	unknownCidrSubnet := types.ObjectValueMust(subnetType.AttrTypes, map[string]attr.Value{"cidr_block": types.StringUnknown()})
+	expectedUnknownLeaf := types.ObjectValueMust(
+		map[string]attr.Type{"private.db1": returnElemType},
+		map[string]attr.Value{
+			"private.db1": types.ObjectValueMust(returnElemType.AttrTypes, map[string]attr.Value{
+				"parent_key": types.StringValue("private"),
+				"child_key":  types.StringValue("db1"),
+				"child":      unknownCidrSubnet,
+			}),
+		},
+	)
+
 	testCases := util.TestCases{
 		"map-input": {
 			Request: function.RunRequest{
@@ -88,6 +101,63 @@ func TestFlattenNestedMapFunction(test *testing.T) {
 			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{
 					types.DynamicUnknown(),
+					types.StringValue("subnets"),
+				}),
+			},
+			Expected: function.RunResponse{
+				Result: resultData,
+			},
+		},
+		"unknown-leaf": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{
+					types.DynamicValue(types.MapValueMust(networkType, map[string]attr.Value{
+						"private": network("10.1.0.0/16", map[string]attr.Value{"db1": unknownCidrSubnet}),
+					})),
+					types.StringValue("subnets"),
+				}),
+			},
+			Expected: function.RunResponse{
+				Result: function.NewResultData(types.DynamicValue(expectedUnknownLeaf)),
+			},
+		},
+		"unknown-parent": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{
+					types.DynamicValue(types.MapValueMust(networkType, map[string]attr.Value{
+						"private": types.ObjectUnknown(networkType.AttrTypes),
+						"dmz":     network("10.3.0.0/16", map[string]attr.Value{"firewall": subnet("10.3.1.0/24")}),
+					})),
+					types.StringValue("subnets"),
+				}),
+			},
+			Expected: function.RunResponse{
+				Result: resultData,
+			},
+		},
+		"unknown-dynamic-parent": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{
+					types.DynamicValue(types.ObjectValueMust(
+						map[string]attr.Type{"private": types.DynamicType},
+						map[string]attr.Value{"private": types.DynamicUnknown()},
+					)),
+					types.StringValue("subnets"),
+				}),
+			},
+			Expected: function.RunResponse{
+				Result: resultData,
+			},
+		},
+		"unknown-children": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{
+					types.DynamicValue(types.MapValueMust(networkType, map[string]attr.Value{
+						"private": types.ObjectValueMust(networkType.AttrTypes, map[string]attr.Value{
+							"cidr_block": types.StringValue("10.1.0.0/16"),
+							"subnets":    types.MapUnknown(subnetType),
+						}),
+					})),
 					types.StringValue("subnets"),
 				}),
 			},

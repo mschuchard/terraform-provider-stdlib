@@ -1,5 +1,7 @@
 ### 2.4.1 (Next)
 - Ensure `transpose` function respects lexicographical ordering.
+- Permit unknown values in `flatten_nested_map` input when keys are known.
+- Return `unknown` for an unknown dynamically typed parent in `flatten_nested_map`.
 
 ### 2.4.0
 - Unify state ID for legacy data source functions.

@@ -33,11 +33,15 @@ func (*flattenNestedMapFunction) Metadata(_ context.Context, req function.Metada
 func (*flattenNestedMapFunction) Definition(_ context.Context, _ function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:             "Flatten a map of objects that each contain a nested map into a single-level map.",
-		MarkdownDescription: "Return a single-level map with one element for each entry of each nested map in the input. Each result key is the parent key and the nested key joined by `.`. Each result element is an object with the attributes `parent_key`, `child_key`, and `child` (the nested entry). Attributes of the parent object can be retrieved by indexing the input with `parent_key`. This function replaces the standard nested map flattening algorithm (`flatten` with nested `for` expressions and `tomap`) for use with the `for_each` meta-parameter.",
+		MarkdownDescription: "Return a single-level map with one element for each entry of each nested map in the input. Each result key is the parent key and the nested key joined by `.`. Each result element is an object with the attributes `parent_key`, `child_key`, and `child` (the nested entry). Attributes of the parent object can be retrieved by indexing the input with `parent_key`. This function replaces the standard nested map flattening algorithm (`flatten` with nested `for` expressions and `tomap`) for use with the `for_each` meta-parameter. Unknown values within the input are permitted as long as the parent keys and nested keys are known; otherwise the result is unknown.",
 		Parameters: []function.Parameter{
+			// unknown values are permitted within the input, because the flattened keys depend only on the parent keys and nested keys, and not on the remaining (leaf) values
+			// otherwise a single unknown leaf value (e.g. a computed attribute of a nested entry) would cause terraform to skip the function and return an unknown result, which fails the `for_each` meta-parameter during planning
+			// the function logic returns an unknown result when the parent keys or nested keys themselves cannot be determined
 			function.DynamicParameter{
-				Name:        "input",
-				Description: "Input map (or object) of objects to flatten. Each object must contain the nested map (or object) attribute named by the `children_attribute` parameter.",
+				Name:               "input",
+				Description:        "Input map (or object) of objects to flatten. Each object must contain the nested map (or object) attribute named by the `children_attribute` parameter.",
+				AllowUnknownValues: true,
 			},
 			function.StringParameter{
 				Name:        "children_attribute",
@@ -101,16 +105,17 @@ func (*flattenNestedMapFunction) Run(ctx context.Context, req function.RunReques
 	flatTypes := map[string]attr.Type{}
 	flatValues := map[string]attr.Value{}
 	for _, parentKey := range slices.Sorted(maps.Keys(parents)) {
+		// the nested keys of an unknown parent cannot be determined, so the result is also unknown
+		// otherwise the plan would fail on a value that is only known after apply
+		// this check precedes the type validation, because an unknown parent can also be dynamically typed, in which case it is not yet an object
+		if parents[parentKey].IsUnknown() {
+			resp.Error = resp.Result.Set(ctx, types.DynamicUnknown())
+			return
+		}
 		// validate the parent
 		parent, ok := parents[parentKey].(types.Object)
 		if !ok {
 			resp.Error = function.NewArgumentFuncError(0, fmt.Sprintf("flatten_nested_map: input element '%s' must be an object", parentKey))
-			return
-		}
-		// the nested keys of an unknown parent cannot be determined, so the result is also unknown
-		// otherwise the plan would fail on a value that is only known after apply
-		if parent.IsUnknown() {
-			resp.Error = resp.Result.Set(ctx, types.DynamicUnknown())
 			return
 		}
 		if parent.IsNull() {
