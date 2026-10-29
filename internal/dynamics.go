@@ -11,7 +11,7 @@ import (
 )
 
 // validates and returns dynamic type underlying value
-func GetDynamicUnderlyingValue(dynamicType types.Dynamic, ctx context.Context) (attr.Value, bool, bool) {
+func GetDynamicUnderlyingValue(ctx context.Context, dynamicType types.Dynamic) (attr.Value, bool, bool) {
 	// initialize unknown and null vars
 	var unknown, null bool
 
@@ -29,7 +29,7 @@ func GetDynamicUnderlyingValue(dynamicType types.Dynamic, ctx context.Context) (
 }
 
 // checks if a tf dynamic type underlying value is empty
-func IsDynamicEmpty(value attr.Value, position int64, ctx context.Context) (bool, *function.FuncError) {
+func IsDynamicEmpty(ctx context.Context, value attr.Value, position int64) (bool, *function.FuncError) {
 	// convert to one of four acceptable types
 	// string
 	if stringType, ok := value.(types.String); ok {

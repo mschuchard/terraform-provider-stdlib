@@ -29,7 +29,7 @@ func (*strcontainsMultipleFunction) Metadata(_ context.Context, req function.Met
 func (*strcontainsMultipleFunction) Definition(_ context.Context, _ function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:             "Checks whether substrings are within another string.",
-		MarkdownDescription: "Determine if one or more strings are contained within another string. The optional parameter `all` can be set to true to require that all substrings are contained within the string. If `all` is `false` or not provided, the function will return `true` if any of the substrings are contained within the string. This function is analogous to the core function `strcontains`, but allows for multiple substrings to be checked at once.",
+		MarkdownDescription: "Determine if one or more strings are contained within another string. The optional parameter `all` can be set to true to require that all substrings are contained within the string. If `all` is `false` or not provided, the function will return `true` if any of the substrings are contained within the string. This function is analogous to the core function `strcontains`, but allows for multiple substrings to be checked at once. An empty list of substrings will always return `false`.",
 		Parameters: []function.Parameter{
 			function.StringParameter{
 				Name:        "the_string",

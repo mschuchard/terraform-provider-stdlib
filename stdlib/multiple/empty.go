@@ -52,14 +52,14 @@ func (*emptyFunction) Run(ctx context.Context, req function.RunRequest, resp *fu
 	ctx = tflog.SetField(ctx, "empty: input", parameter.String())
 
 	// retrieve underlying dynamic value
-	paramValue, unknown, null := util.GetDynamicUnderlyingValue(parameter, ctx)
+	paramValue, unknown, null := util.GetDynamicUnderlyingValue(ctx, parameter)
 	if unknown || null {
 		resp.Error = function.NewArgumentFuncError(0, "empty: input parameter is unknown or null")
 		return
 	}
 
 	// check if empty
-	result, funcErr := util.IsDynamicEmpty(paramValue, 0, ctx)
+	result, funcErr := util.IsDynamicEmpty(ctx, paramValue, 0)
 	if funcErr != nil {
 		resp.Error = funcErr
 		return

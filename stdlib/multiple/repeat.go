@@ -60,14 +60,14 @@ func (*repeatFunction) Run(ctx context.Context, req function.RunRequest, resp *f
 	ctx = tflog.SetField(ctx, "repeat: count", count)
 
 	// retrieve underlying dynamic value
-	repeaterValue, unknown, null := util.GetDynamicUnderlyingValue(repeater, ctx)
+	repeaterValue, unknown, null := util.GetDynamicUnderlyingValue(ctx, repeater)
 	if unknown || null {
 		resp.Error = function.NewArgumentFuncError(0, "repeat: input parameter is unknown or null")
 		return
 	}
 
 	// validation
-	if empty, err := util.IsDynamicEmpty(repeaterValue, 0, ctx); err != nil || empty {
+	if empty, err := util.IsDynamicEmpty(ctx, repeaterValue, 0); err != nil || empty {
 		// invalid type probably
 		if err != nil {
 			resp.Error = function.ConcatFuncErrors(resp.Error, err)

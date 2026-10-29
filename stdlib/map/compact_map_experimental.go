@@ -55,7 +55,7 @@ func (*compactMapExperimentalFunction) Run(ctx context.Context, req function.Run
 	// iterate through map
 	for key, value := range inputMap {
 		// retrieve underlying dynamic value
-		paramValue, unknown, null := util.GetDynamicUnderlyingValue(value, ctx)
+		paramValue, unknown, null := util.GetDynamicUnderlyingValue(ctx, value)
 
 		// skip unknown values
 		if unknown {
@@ -66,7 +66,7 @@ func (*compactMapExperimentalFunction) Run(ctx context.Context, req function.Run
 		if null {
 			// delete kv pair if null
 			delete(inputMap, key)
-		} else if empty, funcErr := util.IsDynamicEmpty(paramValue, 0, ctx); empty || funcErr != nil { // check if value is empty
+		} else if empty, funcErr := util.IsDynamicEmpty(ctx, paramValue, 0); empty || funcErr != nil { // check if value is empty
 			// check on error during emptiness check
 			if funcErr != nil {
 				resp.Error = funcErr

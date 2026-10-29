@@ -13,7 +13,7 @@ func TestGetDynamicUnderlyingValue(test *testing.T) {
 	ctx := context.Background()
 
 	dynamicValue := types.DynamicValue(types.StringValue("test"))
-	value, unknown, null := util.GetDynamicUnderlyingValue(dynamicValue, ctx)
+	value, unknown, null := util.GetDynamicUnderlyingValue(ctx, dynamicValue)
 	if unknown {
 		test.Error("expected unknown to be false")
 	}
@@ -25,7 +25,7 @@ func TestGetDynamicUnderlyingValue(test *testing.T) {
 	}
 
 	dynamicValue = types.DynamicUnknown()
-	_, unknown, null = util.GetDynamicUnderlyingValue(dynamicValue, ctx)
+	_, unknown, null = util.GetDynamicUnderlyingValue(ctx, dynamicValue)
 	if !unknown {
 		test.Error("expected unknown to be true")
 	}
@@ -34,7 +34,7 @@ func TestGetDynamicUnderlyingValue(test *testing.T) {
 	}
 
 	dynamicValue = types.DynamicNull()
-	_, unknown, null = util.GetDynamicUnderlyingValue(dynamicValue, ctx)
+	_, unknown, null = util.GetDynamicUnderlyingValue(ctx, dynamicValue)
 	if unknown {
 		test.Error("expected unknown to be false")
 	}
@@ -46,7 +46,7 @@ func TestGetDynamicUnderlyingValue(test *testing.T) {
 func TestIsDynamicEmpty(test *testing.T) {
 	ctx := context.Background()
 
-	isEmpty, err := util.IsDynamicEmpty(types.StringValue(""), 0, ctx)
+	isEmpty, err := util.IsDynamicEmpty(ctx, types.StringValue(""), 0)
 	if err != nil {
 		test.Fatalf("unexpected error: %s", err)
 	}
@@ -54,7 +54,7 @@ func TestIsDynamicEmpty(test *testing.T) {
 		test.Error("expected empty string to return true")
 	}
 
-	isEmpty, err = util.IsDynamicEmpty(types.StringValue("test"), 0, ctx)
+	isEmpty, err = util.IsDynamicEmpty(ctx, types.StringValue("test"), 0)
 	if err != nil {
 		test.Fatalf("unexpected error: %s", err)
 	}
@@ -63,7 +63,7 @@ func TestIsDynamicEmpty(test *testing.T) {
 	}
 
 	emptyList := types.ListValueMust(types.StringType, []attr.Value{})
-	isEmpty, err = util.IsDynamicEmpty(emptyList, 0, ctx)
+	isEmpty, err = util.IsDynamicEmpty(ctx, emptyList, 0)
 	if err != nil {
 		test.Fatalf("unexpected error: %s", err)
 	}
@@ -72,7 +72,7 @@ func TestIsDynamicEmpty(test *testing.T) {
 	}
 
 	nonEmptyList := types.ListValueMust(types.StringType, []attr.Value{types.StringValue("item")})
-	isEmpty, err = util.IsDynamicEmpty(nonEmptyList, 0, ctx)
+	isEmpty, err = util.IsDynamicEmpty(ctx, nonEmptyList, 0)
 	if err != nil {
 		test.Fatalf("unexpected error: %s", err)
 	}
@@ -81,7 +81,7 @@ func TestIsDynamicEmpty(test *testing.T) {
 	}
 
 	emptySet := types.SetValueMust(types.StringType, []attr.Value{})
-	isEmpty, err = util.IsDynamicEmpty(emptySet, 0, ctx)
+	isEmpty, err = util.IsDynamicEmpty(ctx, emptySet, 0)
 	if err != nil {
 		test.Fatalf("unexpected error: %s", err)
 	}
@@ -90,7 +90,7 @@ func TestIsDynamicEmpty(test *testing.T) {
 	}
 
 	nonEmptySet := types.SetValueMust(types.StringType, []attr.Value{types.StringValue("item")})
-	isEmpty, err = util.IsDynamicEmpty(nonEmptySet, 0, ctx)
+	isEmpty, err = util.IsDynamicEmpty(ctx, nonEmptySet, 0)
 	if err != nil {
 		test.Fatalf("unexpected error: %s", err)
 	}
@@ -99,7 +99,7 @@ func TestIsDynamicEmpty(test *testing.T) {
 	}
 
 	emptyMap := types.MapValueMust(types.StringType, map[string]attr.Value{})
-	isEmpty, err = util.IsDynamicEmpty(emptyMap, 0, ctx)
+	isEmpty, err = util.IsDynamicEmpty(ctx, emptyMap, 0)
 	if err != nil {
 		test.Fatalf("unexpected error: %s", err)
 	}
@@ -108,7 +108,7 @@ func TestIsDynamicEmpty(test *testing.T) {
 	}
 
 	nonEmptyMap := types.MapValueMust(types.StringType, map[string]attr.Value{"key": types.StringValue("value")})
-	isEmpty, err = util.IsDynamicEmpty(nonEmptyMap, 0, ctx)
+	isEmpty, err = util.IsDynamicEmpty(ctx, nonEmptyMap, 0)
 	if err != nil {
 		test.Fatalf("unexpected error: %s", err)
 	}
@@ -116,7 +116,7 @@ func TestIsDynamicEmpty(test *testing.T) {
 		test.Error("expected non-empty map to return false")
 	}
 
-	_, err = util.IsDynamicEmpty(types.BoolValue(true), 1, ctx)
+	_, err = util.IsDynamicEmpty(ctx, types.BoolValue(true), 1)
 	if err == nil || err.Error() != "IsDynamicEmpty (helper): invalid input parameter type" {
 		if err == nil {
 			test.Error("expected error for invalid type")

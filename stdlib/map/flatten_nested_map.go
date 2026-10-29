@@ -78,7 +78,7 @@ func (*flattenNestedMapFunction) Run(ctx context.Context, req function.RunReques
 	ctx = tflog.SetField(ctx, "flatten_nested_map: children attribute", childrenAttribute)
 
 	// retrieve underlying dynamic value; the concrete type is only known at runtime, so the structure is validated manually in the remainder of the function
-	inputValue, unknown, null := util.GetDynamicUnderlyingValue(input, ctx)
+	inputValue, unknown, null := util.GetDynamicUnderlyingValue(ctx, input)
 	if null {
 		resp.Error = function.NewArgumentFuncError(0, "flatten_nested_map: input parameter is null")
 		return
