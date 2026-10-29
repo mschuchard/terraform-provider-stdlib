@@ -33,7 +33,7 @@ func TestTransposeFunction(test *testing.T) {
 				}),
 			},
 			Expected: function.RunResponse{
-				Result: function.NewResultData(types.MapValueMust(types.StringType, map[string]attr.Value{"world": types.StringValue("hello"), "bar": types.StringValue("baz")})),
+				Result: function.NewResultData(types.MapValueMust(types.StringType, map[string]attr.Value{"world": types.StringValue("hello"), "bar": types.StringValue("foo")})),
 			},
 		},
 	}

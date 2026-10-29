@@ -2,6 +2,8 @@ package mapfunc
 
 import (
 	"context"
+	"maps"
+	"slices"
 
 	"github.com/hashicorp/terraform-plugin-framework/function"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -28,7 +30,7 @@ func (*transposeFunction) Metadata(_ context.Context, req function.MetadataReque
 func (*transposeFunction) Definition(_ context.Context, _ function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:             "Transpose keys and values of a single-level map of strings.",
-		MarkdownDescription: "Return a map of key value pairs where the keys and values are swapped. The input map must be single-level and contain string type values. This is analogous to the core function `transpose`, but for `map(string)` instead of `map(list(string))`. If a value is repeated in the input map, then the return will contain only the last occurrence. A warning is emitted in this situation.",
+		MarkdownDescription: "Return a map of key value pairs where the keys and values are swapped. The input map must be single-level and contain string type values. This is analogous to the core function `transpose`, but for `map(string)` instead of `map(list(string))`. If a value is repeated in the input map, then the return will contain only the last occurrence by standard Terraform lexicographical ordering. A warning is emitted in this situation.",
 		Parameters: []function.Parameter{
 			function.MapParameter{
 				ElementType: types.StringType,
@@ -53,8 +55,11 @@ func (*transposeFunction) Run(ctx context.Context, req function.RunRequest, resp
 
 	// allocate a new map to hold the transposed key-value pairs
 	transposedMap := make(map[string]string, len(inputMap))
+	// sort the input map keys to imitate terraform's lexicographical ordering of map keys
+	sortedKeys := slices.Sorted(maps.Keys(inputMap))
 	// iterate through the input map and transpose keys and values
-	for key, value := range inputMap {
+	for _, key := range sortedKeys {
+		value := inputMap[key]
 		// validate that the value is not already present in the transposed map
 		if _, exists := transposedMap[value]; exists {
 			tflog.Warn(ctx, "transpose: duplicate value found in input map; only the last occurrence will exist in the transposed map", map[string]any{"duplicate_value": value})
