@@ -38,6 +38,19 @@ func TestRepeatFunction(test *testing.T) {
 				Result: function.NewResultData(types.DynamicValue(types.StringValue("pizzapizza"))),
 			},
 		},
+		"tuple-double": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{
+					types.DynamicValue(types.TupleValueMust([]attr.Type{types.StringType, types.BoolType}, []attr.Value{types.StringValue("foo"), types.BoolValue(true)})),
+					types.Int32Value(2),
+				}),
+			},
+			Expected: function.RunResponse{
+				Result: function.NewResultData(
+					types.DynamicValue(types.TupleValueMust([]attr.Type{types.StringType, types.BoolType, types.StringType, types.BoolType}, []attr.Value{types.StringValue("foo"), types.BoolValue(true), types.StringValue("foo"), types.BoolValue(true)})),
+				),
+			},
+		},
 		"list-empty": {
 			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{
@@ -58,6 +71,17 @@ func TestRepeatFunction(test *testing.T) {
 			},
 			Expected: function.RunResponse{
 				Result: function.NewResultData(types.DynamicValue(types.StringValue(""))),
+			},
+		},
+		"tuple-empty": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{
+					types.DynamicValue(types.TupleValueMust([]attr.Type{types.StringType, types.Int64Type}, []attr.Value{types.StringValue("foo"), types.Int64Value(2)})),
+					types.Int32Value(0),
+				}),
+			},
+			Expected: function.RunResponse{
+				Result: function.NewResultData(types.DynamicValue(types.TupleValueMust([]attr.Type{}, []attr.Value{}))),
 			},
 		},
 		"repeater-list-length": {

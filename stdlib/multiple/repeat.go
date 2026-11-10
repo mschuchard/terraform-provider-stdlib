@@ -30,12 +30,12 @@ func (*repeatFunction) Metadata(_ context.Context, req function.MetadataRequest,
 // define the provider-level definition for the function
 func (*repeatFunction) Definition(_ context.Context, _ function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
-		Summary:             "Return a repeated list or string.",
-		MarkdownDescription: "Return a list or string that repeats the input list or string the specified number of times.",
+		Summary:             "Return a repeated list, tuple, or string.",
+		MarkdownDescription: "Return a list, tuple, or string that repeats the input list or string the specified number of times.",
 		Parameters: []function.Parameter{
 			function.DynamicParameter{
 				Name:        "repeater",
-				Description: "Input list or string parameter for repeating. The list or string must contain at least one element.",
+				Description: "Input list, tuple, or string parameter for repeating. The list or string must contain at least one element.",
 			},
 			function.Int32Parameter{
 				Name:        "count",
@@ -114,6 +114,20 @@ func (*repeatFunction) Run(ctx context.Context, req function.RunRequest, resp *f
 
 		// convert to dynamic type
 		repeated = types.DynamicValue(repeatedTFList)
+	} else if tuple, ok := repeaterValue.(types.Tuple); ok { // check if tuple type
+		// repeat the element types and the elements together, because the tuple type encodes both the length and the type of each element
+		repeatedElementTypes := slices.Repeat(tuple.ElementTypes(ctx), count)
+		repeatedElements := slices.Repeat(tuple.Elements(), count)
+
+		// convert to explicit tuple type
+		repeatedTFTuple, diags := types.TupleValue(repeatedElementTypes, repeatedElements)
+		if diags.HasError() {
+			resp.Error = function.FuncErrorFromDiags(ctx, diags)
+			return
+		}
+
+		// convert to dynamic type
+		repeated = types.DynamicValue(repeatedTFTuple)
 	} else {
 		resp.Error = function.NewArgumentFuncError(0, "repeat: invalid input parameter type")
 		return
