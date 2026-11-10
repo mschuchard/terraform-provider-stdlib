@@ -48,6 +48,22 @@ func TestEmptyFunction(test *testing.T) {
 				Result: function.NewResultData(types.BoolValue(false)),
 			},
 		},
+		"tuple": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{types.DynamicValue(types.TupleValueMust([]attr.Type{}, []attr.Value{}))}),
+			},
+			Expected: function.RunResponse{
+				Result: function.NewResultData(types.BoolValue(true)),
+			},
+		},
+		"object": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{types.DynamicValue(types.ObjectValueMust(map[string]attr.Type{"foo": types.StringType}, map[string]attr.Value{"foo": types.StringValue("bar")}))}),
+			},
+			Expected: function.RunResponse{
+				Result: function.NewResultData(types.BoolValue(false)),
+			},
+		},
 		"invalid type": {
 			Request: function.RunRequest{
 				Arguments: function.NewArgumentsData([]attr.Value{types.DynamicValue(types.BoolValue(false))}),
