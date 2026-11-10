@@ -30,7 +30,7 @@ func GetDynamicUnderlyingValue(ctx context.Context, dynamicType types.Dynamic) (
 
 // checks if a tf dynamic type underlying value is empty
 func IsDynamicEmpty(ctx context.Context, value attr.Value, position int64) (bool, *function.FuncError) {
-	// convert to one of four acceptable types
+	// convert to one of six acceptable types
 	// string
 	if stringType, ok := value.(types.String); ok {
 		// emptiness check
@@ -50,6 +50,16 @@ func IsDynamicEmpty(ctx context.Context, value attr.Value, position int64) (bool
 	if mapType, ok := value.Type(ctx).(types.MapType); ok {
 		// emptiness check
 		return value.Equal(types.MapValueMust(mapType.ElementType(), map[string]attr.Value{})), nil
+	}
+	// tuple
+	if tuple, ok := value.(types.Tuple); ok {
+		// emptiness check
+		return len(tuple.Elements()) == 0, nil
+	}
+	// object
+	if object, ok := value.(types.Object); ok {
+		// emptiness check
+		return len(object.Attributes()) == 0, nil
 	}
 
 	// invalid type for emptiness check; log error and return function error

@@ -116,6 +116,42 @@ func TestIsDynamicEmpty(test *testing.T) {
 		test.Error("expected non-empty map to return false")
 	}
 
+	emptytuple := types.TupleValueMust([]attr.Type{}, []attr.Value{})
+	isEmpty, err = util.IsDynamicEmpty(ctx, emptytuple, 0)
+	if err != nil {
+		test.Fatalf("unexpected error: %s", err)
+	}
+	if !isEmpty {
+		test.Error("expected empty tuple to return true")
+	}
+
+	nonEmptyTuple := types.TupleValueMust([]attr.Type{types.StringType}, []attr.Value{types.StringValue("item")})
+	isEmpty, err = util.IsDynamicEmpty(ctx, nonEmptyTuple, 0)
+	if err != nil {
+		test.Fatalf("unexpected error: %s", err)
+	}
+	if isEmpty {
+		test.Error("expected non-empty tuple to return false")
+	}
+
+	emptyObject := types.ObjectValueMust(map[string]attr.Type{}, map[string]attr.Value{})
+	isEmpty, err = util.IsDynamicEmpty(ctx, emptyObject, 0)
+	if err != nil {
+		test.Fatalf("unexpected error: %s", err)
+	}
+	if !isEmpty {
+		test.Error("expected empty object to return true")
+	}
+
+	nonEmptyObject := types.ObjectValueMust(map[string]attr.Type{"key": types.StringType}, map[string]attr.Value{"key": types.StringValue("value")})
+	isEmpty, err = util.IsDynamicEmpty(ctx, nonEmptyObject, 0)
+	if err != nil {
+		test.Fatalf("unexpected error: %s", err)
+	}
+	if isEmpty {
+		test.Error("expected non-empty object to return false")
+	}
+
 	_, err = util.IsDynamicEmpty(ctx, types.BoolValue(true), 1)
 	if err == nil || err.Error() != "IsDynamicEmpty (helper): invalid input parameter type" {
 		if err == nil {
