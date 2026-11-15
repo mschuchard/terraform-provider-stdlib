@@ -8,7 +8,7 @@ description: |-
 
 # function: empty
 
-Return whether the input parameter of one of four possible different types (String, Set, List, or Map) is empty or not. Other types will error due to lack of definition for emptiness.
+Return whether the input parameter of one of six possible different types (String, Set, List, Map, Tuple, Object) is empty or not. Other types will error due to lack of definition for emptiness.
 
 ## Example Usage
 
@@ -22,6 +22,14 @@ provider::stdlib::empty(toset(["no"]))
 # result => false
 
 # Returns whether the list is empty.
+provider::stdlib::empty(tolist([]))
+# result => true
+
+# Returns whether the map is empty.
+provider::stdlib::empty(tomap({ "foo" = "bar" }))
+# result => false
+
+# Returns whether the tuple is empty.
 provider::stdlib::empty([])
 # result => true
 

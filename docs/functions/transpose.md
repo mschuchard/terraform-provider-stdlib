@@ -8,7 +8,7 @@ description: |-
 
 # function: transpose
 
-Return a map of key value pairs where the keys and values are swapped. The input map must be single-level and contain string type values. This is analogous to the core function `transpose`, but for `map(string)` instead of `map(list(string))`. If a value is repeated in the input map, then the return will contain only the last occurrence. A warning is emitted in this situation.
+Return a map of key value pairs where the keys and values are swapped. The input map must be single-level and contain string type values. This is analogous to the core function `transpose`, but for `map(string)` instead of `map(list(string))`. If a value is repeated in the input map, then the return will contain only the last occurrence by standard Terraform lexicographical ordering. A warning is emitted in this situation.
 
 ## Example Usage
 

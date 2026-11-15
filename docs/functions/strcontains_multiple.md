@@ -8,7 +8,7 @@ description: |-
 
 # function: strcontains_multiple
 
-Determine if one or more strings are contained within another string. The optional parameter `all` can be set to true to require that all substrings are contained within the string. If `all` is `false` or not provided, the function will return `true` if any of the substrings are contained within the string. This function is analogous to the core function `strcontains`, but allows for multiple substrings to be checked at once.
+Determine if one or more strings are contained within another string. The optional parameter `all` can be set to true to require that all substrings are contained within the string. If `all` is `false` or not provided, the function will return `true` if any of the substrings are contained within the string. This function is analogous to the core function `strcontains`, but allows for multiple substrings to be checked at once. An empty list of substrings will always return `false`.
 
 ## Example Usage
 

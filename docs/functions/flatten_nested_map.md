@@ -8,7 +8,7 @@ description: |-
 
 # function: flatten_nested_map
 
-Return a single-level map with one element for each entry of each nested map in the input. Each result key is the parent key and the nested key joined by `.`. Each result element is an object with the attributes `parent_key`, `child_key`, and `child` (the nested entry). Attributes of the parent object can be retrieved by indexing the input with `parent_key`. This function replaces the standard nested map flattening algorithm (`flatten` with nested `for` expressions and `tomap`) for use with the `for_each` meta-parameter.
+Return a single-level map with one element for each entry of each nested map in the input. Each result key is the parent key and the nested key joined by `.`. Each result element is an object with the attributes `parent_key`, `child_key`, and `child` (the nested entry). Attributes of the parent object can be retrieved by indexing the input with `parent_key`. This function replaces the standard nested map flattening algorithm (`flatten` with nested `for` expressions and `tomap`) for use with the `for_each` meta-parameter. Unknown values within the input are permitted as long as the parent keys and nested keys are known; otherwise the result is unknown.
 
 ## Example Usage
 
