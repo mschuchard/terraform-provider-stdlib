@@ -82,6 +82,10 @@ func (*lastElementDataSource) Read(ctx context.Context, req datasource.ReadReque
 	// convert tf list to go slice, and initialize number of terminating elems
 	var inputList []string
 	resp.Diagnostics.Append(state.Param.ElementsAs(ctx, &inputList, false)...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
 	numElements := 1
 
 	// validate num_elements if input, and re-assign from default value

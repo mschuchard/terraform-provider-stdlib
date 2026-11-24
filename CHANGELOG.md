@@ -1,6 +1,7 @@
 ### 2.4.2 (Next)
 - Fix 64-bit integer bound check in `round` and `truncate`.
 - Add overflow check in `factorial` function for input greater than 20.
+- immediately validate input type conversion in `last_element` legacy function.
 
 ### 2.4.1
 - Ensure `transpose` function respects lexicographical ordering.

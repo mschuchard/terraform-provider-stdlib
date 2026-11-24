@@ -65,7 +65,7 @@ func (*countFunction) Run(ctx context.Context, req function.RunRequest, resp *fu
 	count := strings.Count(inputString, subString)
 	ctx = tflog.SetField(ctx, "count: result", count)
 
-	// store the result as a string
+	// store the result as an int32
 	resp.Error = resp.Result.Set(ctx, &count)
 	if resp.Error != nil {
 		return

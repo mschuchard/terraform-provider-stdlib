@@ -26,17 +26,17 @@ func (*lastCharFunction) Metadata(_ context.Context, req function.MetadataReques
 // define the provider-level definition for the function
 func (*lastCharFunction) Definition(_ context.Context, _ function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
-		Summary:             "Determine last character(s) of a string",
-		MarkdownDescription: "Return the last character(s) of an input string parameter. Only the terminating character is returned by default unless a value for `num_chars` is defined.",
+		Summary:             "Determine last character(s) of a Unicode string",
+		MarkdownDescription: "Return the last character(s) of an input Unicode string parameter. Only the terminating character is returned by default unless a value for `num_chars` is defined.",
 		Parameters: []function.Parameter{
 			function.StringParameter{
 				Name:        "string",
-				Description: "Input string parameter for determining the last character.",
+				Description: "Input Unicode string parameter for determining the last character.",
 			},
 		},
 		VariadicParameter: function.Int32Parameter{
 			Name:        "number_of_characters",
-			Description: "Optional: The number of terminating characters at the end of the string to return (default: 1). This must be less than or equal to the number of characters in the input string.",
+			Description: "Optional: The number of terminating characters at the end of the Unicode string to return (default: 1). This must be less than or equal to the number of characters in the input Unicode string.",
 		},
 		Return: function.StringReturn{},
 	}
