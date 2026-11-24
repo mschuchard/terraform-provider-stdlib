@@ -41,6 +41,15 @@ func TestFactorialFunction(test *testing.T) {
 				Result: resultData,
 			},
 		},
+		"overflow": {
+			Request: function.RunRequest{
+				Arguments: function.NewArgumentsData([]attr.Value{types.Int64Value(21)}),
+			},
+			Expected: function.RunResponse{
+				Error:  function.NewArgumentFuncError(0, "factorial: the input number cannot be greater than 20"),
+				Result: resultData,
+			},
+		},
 	}
 
 	util.UnitTests(testCases, resultData, numberfunc.NewFactorialFunction(), test)

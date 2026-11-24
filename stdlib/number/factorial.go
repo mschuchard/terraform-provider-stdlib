@@ -32,7 +32,7 @@ func (*factorialFunction) Definition(_ context.Context, _ function.DefinitionReq
 		Parameters: []function.Parameter{
 			function.Int64Parameter{
 				Name:        "integer",
-				Description: "Input number parameter for determining the factorial. This value cannot be negative since the resultant 'NaN' is not allowed in Terraform types.",
+				Description: "Input number parameter for determining the factorial. This value cannot be negative since the resultant 'NaN' is not allowed in Terraform types. It also cannot be greater than 20 since the result exceeds the maximum int64 value.",
 			},
 		},
 		Return: function.Int64Return{},
@@ -53,6 +53,10 @@ func (*factorialFunction) Run(ctx context.Context, req function.RunRequest, resp
 	// validate input parameters
 	if inputNumber < 0 {
 		resp.Error = function.NewArgumentFuncError(0, "factorial: the input number cannot be negative")
+		return
+	}
+	if inputNumber > 20 {
+		resp.Error = function.NewArgumentFuncError(0, "factorial: the input number cannot be greater than 20")
 		return
 	}
 
