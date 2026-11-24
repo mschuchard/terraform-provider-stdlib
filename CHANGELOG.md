@@ -1,3 +1,6 @@
+### 2.4.2 (Next)
+- Fix 64-bit integer bound check in `round` and `truncate`.
+
 ### 2.4.1
 - Ensure `transpose` function respects lexicographical ordering.
 - Permit unknown values in `flatten_nested_map` input when keys are known.

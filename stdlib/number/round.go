@@ -75,7 +75,7 @@ func (*roundFunction) Run(ctx context.Context, req function.RunRequest, resp *fu
 	}
 
 	// validate result
-	if round > float64(math.MaxInt64) || round < float64(math.MinInt64) {
+	if round >= float64(math.MaxInt64) || round < float64(math.MinInt64) {
 		resp.Error = function.NewArgumentFuncError(0, "round: rounded input number is beyond the limits of int64")
 		return
 	}

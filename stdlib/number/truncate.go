@@ -60,7 +60,7 @@ func (*truncateFunction) Run(ctx context.Context, req function.RunRequest, resp 
 
 	// determine the truncated integer
 	truncate := math.Trunc(float)
-	if truncate > float64(math.MaxInt64) || truncate < float64(math.MinInt64) {
+	if truncate >= float64(math.MaxInt64) || truncate < float64(math.MinInt64) {
 		resp.Error = function.NewArgumentFuncError(0, "truncate: truncated input number is beyond the limits of int64")
 		return
 	}
